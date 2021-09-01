@@ -14,7 +14,7 @@ print(__doc__)
 centers = [[1, 1], [-1, -1], [1, -1]]
 X, labels_true = make_blobs(
     #n_samples=50, centers=centers, cluster_std=0.5, random_state=0
-    n_samples=10, cluster_std=0.5, random_state=0
+    n_samples=10, cluster_std=0.5, random_state=0, max_iter=2
 )
 
 
