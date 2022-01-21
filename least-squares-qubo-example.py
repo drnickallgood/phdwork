@@ -100,12 +100,19 @@ def qubo_to_real(binstr,n,prec_list):
 #x will be np.array([3,1])
 
 #Declare A and b
+# Linear system to solve
+# 2x + y = 7
+# x + 3y = 6
+
 A = np.array([[2,1],[1,3]])
 b = np.array([7,6])
 n = 2
 
 prec_list = [1,0] #bitspower will go from -4 to 3
 Q = qubo_prep(A,b,n,prec_list) #prepare qubo
+
+for k,v in Q.items():
+    print(k,v)
 
 #Use Exactsolver to solve the qubo
 sampler = dimod.ExactSolver()
