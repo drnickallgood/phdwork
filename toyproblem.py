@@ -24,6 +24,40 @@ from sklearn.cluster import KMeans
 ## Each column is a cluster, every two rows = x and y coordinates
 #####
 #### SAMPLES ###
+
+'''
+Example pcode for paper
+
+Given V
+Find W, H
+
+Radix-2
+----
+
+
+QUBOPrep 
+---
+
+
+
+---- 
+
+main
+-----
+
+Q := quboPrep(W,H,bitsPower)
+
+S := QuantumQUBOSolver(Q)
+
+S := S.first_sample
+
+S := PostProcess(S)
+
+
+
+
+'''
+
 '''
 
 --- Sampple V Matrix ---
