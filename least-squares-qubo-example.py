@@ -112,7 +112,7 @@ prec_list = [1,0] #bitspower will go from -4 to 3
 Q = qubo_prep(A,b,n,prec_list) #prepare qubo
 
 for k,v in Q.items():
-    print(k,v)
+    print(k)
 
 #Use Exactsolver to solve the qubo
 sampler = dimod.ExactSolver()
