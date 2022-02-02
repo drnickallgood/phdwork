@@ -146,11 +146,26 @@ def make_qubo(v,w,h,n,bitspower):
 
 # scikit learn stuff.. prep
 
+start_centers=np.array([(2,2),(5,5)])
+
 X, y = make_blobs(
     n_samples=10, n_features=2,
-    centers=2, cluster_std=0.5,
+    centers=start_centers, cluster_std=0.5,
     shuffle=True, random_state=0
 )
+
+'''
+# Plotting
+
+plt.scatter(X[:,0], X[:,1], s=50,c='blue', marker='o', edgecolor='black')
+
+#Plot centroids
+plt.scatter(centers[0,:], centers[1,:], s=250, marker='*', c='red', edgecolor='black', label='centroids')
+
+plt.legend(scatterpoints=1)
+plt.grid()
+plt.show()
+'''
 
 
 
