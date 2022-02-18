@@ -167,5 +167,108 @@ plt.grid()
 plt.show()
 '''
 
+# -- Testing area -- #
+## Ax - b ##
+
+## In this first example know the solution for x1 and x2, which is x1=0, x1=1
+
+A = np.array([ [2,1], [1,3] ])
+b = np.array([1,3])
+
+# Qubi dictionary, qn means qubibi #
+Q = {}
+
+# Individual coefficients here
+# Based on the L2 Norm, where , we square the xample above
+## ||Ax - b||^2
+#
+# 2 * (2 - (2*1) ) + (1 * (1 - (2*3)))
+
+Q['q0','q0'] = A[0,0] * (A[0,0] - 2*b[0]) + A[1,0] * (A[1,0] - 2*b[1])
+Q['q1','q1'] = A[0,1] * (A[0,1] - 2*b[0]) + A[1,1] * (A[1,1] - 2*b[1])
+
+# Interation between qubits 0 and 1 as QUBO
+Q['q0','q1'] = 2 * (A[0,0] * A[0,1] + A[1,0] * A[1,1])
+
+print("-- Our current Qubo setup ---")
+print(Q)
+
+# Let us try the excat solver
+
+sampler = dimod.ExactSolver()
+
+sampleset = sampler.sample_qubo(Q)
+
+# Get best energy
+
+print("Result is: ", sampleset.first.sample)
+
+### Second example ###
+
+## First was easy, now we need to focus on quadratics
+
+# Find x0, x1, x2 such that we minimize (2 - x2 - x1 -x0)^2
+# We know going in, the best solution will have 2 variables = 1
+
+# (2 - x2 - x1 - x0)^2 =
+# x0^2 + x1^2 + x2^2 + 2(-x0)(-x1) + 2(-x1)(-x2) + 2(-x0)(-x2) + 2(2)(-x0) + 2(2)(-x1) + 2(2)(-x2) + 4
+
+# x0^2 = x0, x1^2 = x1, x2^2 = x2 .. so this is the same as
+
+# 1(1-2(2)x0 - 1(1-2(2))x1 - 1(1-2(2))x2 + 2x0x1 + 2x1x2 + 2x0x2 + 4
+
+## Lets make this into a QUBO
+
+Q2 = {}
+
+Q2['x0','x0'] = 1 * (1-2*(2))
+Q2['x1','x1'] = 1 * (1-2*(2))
+Q2['x2','x2'] = 1 * (1-2*(2))
+
+# Our quadratic coefficients  / interactions
+Q2['x0','x1'] = 2
+Q2['x0','x2'] = 2
+Q2['x1','x2'] = 2
+
+print(Q2)
+
+# let us solve with exactsolver
+
+sampleset2 = sampler.sample_qubo(Q2)
+
+print(sampleset2)
+
+print("Result is: ", sampleset2.first.sample)
+
+for k,v in Q.items():
+    print(k,v)
+
+
+print("\n\n ----- Binary vector ----\n")
+
+# now we have a binary vector with 3 unknowns, x0, x1, and x2
+# Let us minimize (3 + 4x2 - 2x1 - x0)^2
+# We can tell our answer by looking, x0 = 1, x1 = 1 , x2 = 0
+## But convert this to QUBO
+
+# (3 + 4x2 - 2x1 - x0)^2 =
+# (4x2)^2 + 2x1^2 + x0^2 + 2(4x2(-2x1) + 2(-2x1)(-x0) + 2(4x2)(-x0) + 2(3)(4x2) + 2(3)(-2x1) + 2(3)(-x0) + 9
+# Qubo we can ignore the consant, which is 9
+#
+Q3 = {}
+Q3['x0','x0'] = 1*(1-2*(3))
+Q3['x1','x1'] = 2*(2-2*(3))
+Q3['x2','x2'] = 4*(4+2*(3))
+
+Q3['x0','x1'] = 2 * (2)
+Q3['x0','x2'] = -2 * (4)
+Q3['x1','x2'] = -2 * (8)
+
+for k,v in Q3.items():
+    print(k,v)
+
+sampleset3 = sampler.sample_qubo(Q3)
+print(sampleset3)
+print(sampleset3.first.sample)
 
 
