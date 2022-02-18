@@ -271,4 +271,78 @@ sampleset3 = sampler.sample_qubo(Q3)
 print(sampleset3)
 print(sampleset3.first.sample)
 
+## Ok now let us try this for V=WH
+## W and H are unknowns ##
+
+'''
+
+  V          W                H
+[1,2]    [w11 w12]      [h11, h12]
+[3,4]    [w21 w22]      [h21, h22]
+
+
+          WH
+[w1h1 + w2h3  w1h2 + w2h4 ]
+[w3h1 + w4h3  w3h2 + w4h4 ]
+
+( (w1h1 + w2h3) + (w1h2 + w2h4) + (w3h1 + w4h3) + (w3h2 + w4h4) )^2 = 
+
+# thanks Mathematica Expand!
+
+w1h1^2 + 2*w1h1 w1h2 + w1h2^2 + 2*w1h1 w2h3 + 2*w1h2*w2h3 + w2h3^2 + 
+ 2*w1h1 w2h4 + 2*w1h2*w2h4 + 2*w2h3 w2h4 + w2h4^2 + 2*w1h1 w3h1 + 
+ 2*w1h2*w3h1 + 2*w2h3 w3h1 + 2*w2h4 w3h1 + w3h1^2 + 2*w1h1 w3h2 + 
+ 2*w1h2*w3h2 + 2*w2h3 w3h2 + 2*w2h4 w3h2 + 2*w3h1 w3h2 + w3h2^2 + 
+ 2*w1h1 w4h3 + 2*w1h2*w4h3 + 2*w2h3 w4h3 + 2*w2h4 w4h3 + 
+ 2*w3h1 w4h3 + 2*w3h2*w4h3 + w4h3^2 + 2*w1h1 w4h4 + 2*w1h2*w4h4 + 
+ 2*w2h3 w4h4 + 2*w2h4 w4h4 + 2*w3h1 w4h4 + 2*w3h2*w4h4 + 
+ 2*w4h3 w4h4 + w4h4^2
+
+
+'''
+
+# 8 unknowns
+
+Q4 = {}
+Q4['x0', 'x0'] =
+Q4['x1', 'x1'] =
+Q4['x2', 'x2'] =
+Q4['x3', 'x3'] =
+
+Q4['x4', 'x4'] =
+Q4['x5', 'x5'] =
+Q4['x6', 'x6'] =
+Q4['x7', 'x7'] =
+
+#Coefficients
+Q4['x0', 'x1'] =
+Q4['x0', 'x2'] =
+Q4['x0', 'x3'] =
+Q4['x0', 'x4'] =
+Q4['x0', 'x5'] =
+Q4['x0', 'x6'] =
+Q4['x0', 'x7'] =
+Q4['x1', 'x2'] =
+Q4['x1', 'x3'] =
+Q4['x1', 'x4'] =
+Q4['x1', 'x5'] =
+Q4['x1', 'x6'] =
+Q4['x1', 'x7'] =
+Q4['x2', 'x3'] =
+Q4['x2', 'x4'] =
+Q4['x2', 'x5'] =
+Q4['x2', 'x6'] =
+Q4['x2', 'x7'] =
+Q4['x3', 'x4'] =
+Q4['x3', 'x5'] =
+Q4['x3', 'x6'] =
+Q4['x3', 'x7'] =
+Q4['x4', 'x5'] =
+Q4['x4', 'x6'] =
+Q4['x4', 'x7'] =
+Q4['x5', 'x6'] =
+Q4['x5', 'x7'] =
+Q4['x6', 'x7'] =
+
+
 
