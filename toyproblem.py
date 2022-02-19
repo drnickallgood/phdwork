@@ -277,6 +277,10 @@ print(sampleset3.first.sample)
 '''
 (2 + x0 - 4x1 + 2x4 + 3x3 - x4 - 6x7 + x5 + 9x6 - 5x2)^2
 
+{'x0': 1, 'x1': 1, 'x2': 0, 'x3': 0, 'x4': 0, 'x5': 1, 'x6': 0, 'x7': 0}
+
+
+
 Expanded:
 
 4 +
@@ -404,14 +408,24 @@ print("Result with 8 unknowns: ", sampleset4.first.sample)
 
 '''
 
-  V          W                H
-[1,2]    [w11 w12]      [h11, h12]
-[3,4]    [w21 w22]      [h21, h22]
+General Info about NMF, not used for this formulation, but used for reference 
+V = WH
+
+V_i = Wh_i
+
+where V_i = i column vector of the product matrix V and h_i is the i column vector matrix H
 
 
-          WH
-[w1h1 + w2h3  w1h2 + w2h4 ]
-[w3h1 + w4h3  w3h2 + w4h4 ]
+-- This is per iteration of the algorithm --
+-- Done per element ---
+-- W and H are initialized to some non negative values --
+-- ^T = transpose, _[ij] = current element, n = current iteration, n+1 = next iteratin
+
+H^(n+1)_[ij] = H^n_[ij] * (W^n)^T_[ij] * V_[ij] / (W^n)_[ij]^T * W^n_[ij] * H^n_[ij]
+
+W^(n+1)_[ij] = W^n_[ij] * V_[ij] * H^(n+1)_[ij]^T / W^n_[ij] * H^(n+1)_[ij] * H^(n+1)_[ij]^T
+
+
 
 ( (w1h1 + w2h3) + (w1h2 + w2h4) + (w3h1 + w4h3) + (w3h2 + w4h4) )^2 = 
 
@@ -426,12 +440,99 @@ w1h1^2 + 2*w1h1 w1h2 + w1h2^2 + 2*w1h1 w2h3 + 2*w1h2*w2h3 + w2h3^2 +
  2*w2h3 w4h4 + 2*w2h4 w4h4 + 2*w3h1 w4h4 + 2*w3h2*w4h4 + 
  2*w4h3 w4h4 + w4h4^2
 
+'''
+
+'''
+
+-- In the paper, we use w11 and h11.. but for this we will use x0 - x7 as unknowns
+
+We do the norm of ||V-WH||^2
+
+This is what binds the values in V to WH
+
+
+  V          W                H
+[1,2]    [x0, x1]      [x4, x5]
+[3,4]    [x2, x3]      [x6, x7]
+
+
+          WH
+[w1h1 + w2h3  w1h2 + w2h4 ]
+[w3h1 + w4h3  w3h2 + w4h4 ]
+
+becomes
+
+[ x0x4 + x1x6, x0x5 + x1x7 ] 
+[ x2x4 + x3x6, x2x5 + x3x7 ]
+
+x0^2 = x0 , idempotency
+
+V - WH = 
+
+[ 1-x0 x4-x1 x6	2-x0 x5-x1 x7 ]
+[ 3-x2 x4-x3 x6	4-x2 x5-x3 x7 ]
+
+( ((1 - (x0x4)) - (x1x6) ) + ((2 - (x0x5)) - (x1x7)) + ((3 - (x2x4)) - (x3x6)) + ((4 - (x2x5)) - (x3x7)) )^2
+
+-- Expanded ---
+
+100 - 20 x0x4 + x0x4^2 - 20 x0x5 + 2 x0x4 x0x5 + x0x5^2 - 20 x1x6 + 
+ 2 x0x4 x1x6 + 2 x0x5 x1x6 + x1x6^2 - 20 x1x7 + 2 x0x4 x1x7 + 
+ 2 x0x5 x1x7 + 2 x1x6 x1x7 + x1x7^2 - 20 x2x4 + 2 x0x4 x2x4 + 
+ 2 x0x5 x2x4 + 2 x1x6 x2x4 + 2 x1x7 x2x4 + x2x4^2 - 20 x2x5 + 
+ 2 x0x4 x2x5 + 2 x0x5 x2x5 + 2 x1x6 x2x5 + 2 x1x7 x2x5 + 
+ 2 x2x4 x2x5 + x2x5^2 - 20 x3x6 + 2 x0x4 x3x6 + 2 x0x5 x3x6 + 
+ 2 x1x6 x3x6 + 2 x1x7 x3x6 + 2 x2x4 x3x6 + 2 x2x5 x3x6 + x3x6^2 - 
+ 20 x3x7 + 2 x0x4 x3x7 + 2 x0x5 x3x7 + 2 x1x6 x3x7 + 2 x1x7 x3x7 + 
+ 2 x2x4 x3x7 + 2 x2x5 x3x7 + 2 x3x6 x3x7 + x3x7^2
+
 
 '''
 
 # 8 unknowns
 
 
+Q5 = {}
+
+#linear coefficients
+Q5['x0', 'x0'] = 
+Q5['x1', 'x1'] = 
+Q5['x2', 'x2'] = 
+Q5['x3', 'x3'] = 
+Q5['x4', 'x4'] = 
+Q5['x5', 'x5'] = 
+Q5['x6', 'x6'] = 
+Q5['x7', 'x7'] = 
+
+#Quadratic Coefficients
+Q5['x0', 'x1'] = 
+Q5['x0', 'x2'] = 
+Q5['x0', 'x3'] = 
+Q5['x0', 'x4'] = 
+Q5['x0', 'x5'] = 
+Q5['x0', 'x6'] = 
+Q5['x0', 'x7'] = 
+Q5['x1', 'x2'] = 
+Q5['x1', 'x3'] = 
+Q5['x1', 'x4'] = 
+Q5['x1', 'x5'] = 
+Q5['x1', 'x6'] = 
+Q5['x1', 'x7'] = 
+Q5['x2', 'x3'] = 
+Q5['x2', 'x4'] = 
+Q5['x2', 'x5'] = 
+Q5['x2', 'x6'] = 
+Q5['x2', 'x7'] = 
+Q5['x3', 'x4'] = 
+Q5['x3', 'x5'] = 
+Q5['x3', 'x6'] = 
+Q5['x3', 'x7'] = 
+Q5['x4', 'x5'] = 
+Q5['x4', 'x6'] = 
+Q5['x4', 'x7'] = 
+Q5['x5', 'x6'] = 
+Q5['x5', 'x7'] = 
+Q5['x6', 'x7'] = 
 
 
 
