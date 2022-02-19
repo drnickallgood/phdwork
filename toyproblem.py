@@ -271,6 +271,134 @@ sampleset3 = sampler.sample_qubo(Q3)
 print(sampleset3)
 print(sampleset3.first.sample)
 
+
+
+## Ok lets do another with 8 unknowns x0 - x7
+'''
+(2 + x0 - 4x1 + 2x4 + 3x3 - x4 - 6x7 + x5 + 9x6 - 5x2)^2
+
+Expanded:
+
+4 +
+ 4 x0
++ x0^2
+ - 16 x1
+ - 8 x0 x1
+ + 16 x1^2
+ - 20 x2
+ - 10 x0 x2
+ +  40 x1 x2
+ + 25 x2^2
+ + 12 x3 +
+ 6 x0 x3
+ - 24 x1 x3
+ - 30 x2 x3
+ +  9 x3^2 
++ 4 x4 
++ 2 x0 x4
+ - 8 x1 x4
+ - 10 x2 x4
+ + 6 x3 x4
+ + x4^2
+ + 4 x5 
++ 2 x0 x5 
+- 8 x1 x5 
+- 10 x2 x5 
++ 6 x3 x5 
++ 2 x4 x5 
++ x5^2
+ +  36 x6 
++ 18 x0 x6
+ - 72 x1 x6
+ - 90 x2 x6
+ + 54 x3 x6
+ + 18 x4 x6  
+ + 18 x5 x6 
++ 81 x6^2 
+- 24 x7 
+- 12 x0 x7 
++ 48 x1 x7 
++ 60 x2 x7
+ - 36 x3 x7
+ - 12 x4 x7
+ - 12 x5 x7
+ - 108 x6 x7
+ + 36 x7^2
+
+Simplified:
+
+(2 + x0 - 4 x1 - 5 x2 + 3 x3 + x4 + x5 + 9 x6 - 6 x7)^2
+
+Solution:
+
+x0 = 0
+x1 = 1
+x2 = 1
+x3 = 0
+x4 = 0
+x5 = 0
+x6 = 0
+x7 = 1
+
+Drop constants, 2 in this case
+
+Binary variables idempotent, ie: x0^2 = x0
+
+
+'''
+
+Q4 = {}
+
+#linear coefficients
+Q4['x0', 'x0'] = 5    #4x0 + x0^2
+Q4['x1', 'x1'] = (-16+16)
+Q4['x2', 'x2'] = (-20+25)
+Q4['x3', 'x3'] = 21  #12x3 + 9x3
+Q4['x4', 'x4'] = 5   # 4x4 + 1x4^2
+Q4['x5', 'x5'] = 5   #4x5 + 1x5^2
+Q4['x6', 'x6'] = (36+81) #36x6 + 81x6^2
+Q4['x7', 'x7'] = (-24+36) #-24x7 + 36x7^2
+
+#Quadratic Coefficients
+Q4['x0', 'x1'] = -8
+Q4['x0', 'x2'] = -10
+Q4['x0', 'x3'] = 6
+Q4['x0', 'x4'] = 2
+Q4['x0', 'x5'] = 2
+Q4['x0', 'x6'] = 18
+Q4['x0', 'x7'] = -12
+Q4['x1', 'x2'] = 40
+Q4['x1', 'x3'] = -24
+Q4['x1', 'x4'] = -8
+Q4['x1', 'x5'] = -8 
+Q4['x1', 'x6'] = -72
+Q4['x1', 'x7'] = 48
+Q4['x2', 'x3'] = -30
+Q4['x2', 'x4'] = -10
+Q4['x2', 'x5'] = -10 
+Q4['x2', 'x6'] = -90
+Q4['x2', 'x7'] = 60 
+Q4['x3', 'x4'] = 6
+Q4['x3', 'x5'] = 6
+Q4['x3', 'x6'] = 54
+Q4['x3', 'x7'] = -36
+Q4['x4', 'x5'] = 2
+Q4['x4', 'x6'] = 18
+Q4['x4', 'x7'] = -12
+Q4['x5', 'x6'] = 18
+Q4['x5', 'x7'] = -12
+Q4['x6', 'x7'] = 18
+
+
+#for k,v in Q4.items():
+#    print(k,v)
+
+sampleset4 = sampler.sample_qubo(Q4)
+#print(sampleset4)
+print("Result with 8 unknowns: ", sampleset4.first.sample)
+
+
+
 ## Ok now let us try this for V=WH
 ## W and H are unknowns ##
 
@@ -303,46 +431,7 @@ w1h1^2 + 2*w1h1 w1h2 + w1h2^2 + 2*w1h1 w2h3 + 2*w1h2*w2h3 + w2h3^2 +
 
 # 8 unknowns
 
-Q4 = {}
-Q4['x0', 'x0'] =
-Q4['x1', 'x1'] =
-Q4['x2', 'x2'] =
-Q4['x3', 'x3'] =
 
-Q4['x4', 'x4'] =
-Q4['x5', 'x5'] =
-Q4['x6', 'x6'] =
-Q4['x7', 'x7'] =
-
-#Coefficients
-Q4['x0', 'x1'] =
-Q4['x0', 'x2'] =
-Q4['x0', 'x3'] =
-Q4['x0', 'x4'] =
-Q4['x0', 'x5'] =
-Q4['x0', 'x6'] =
-Q4['x0', 'x7'] =
-Q4['x1', 'x2'] =
-Q4['x1', 'x3'] =
-Q4['x1', 'x4'] =
-Q4['x1', 'x5'] =
-Q4['x1', 'x6'] =
-Q4['x1', 'x7'] =
-Q4['x2', 'x3'] =
-Q4['x2', 'x4'] =
-Q4['x2', 'x5'] =
-Q4['x2', 'x6'] =
-Q4['x2', 'x7'] =
-Q4['x3', 'x4'] =
-Q4['x3', 'x5'] =
-Q4['x3', 'x6'] =
-Q4['x3', 'x7'] =
-Q4['x4', 'x5'] =
-Q4['x4', 'x6'] =
-Q4['x4', 'x7'] =
-Q4['x5', 'x6'] =
-Q4['x5', 'x7'] =
-Q4['x6', 'x7'] =
 
 
 
