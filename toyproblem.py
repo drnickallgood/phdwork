@@ -170,7 +170,7 @@ plt.show()
 # -- Testing area -- #
 ## Ax - b ##
 
-## In this first example know the solution for x1 and x2, which is x1=0, x1=1
+## In this first example know the solution for w12and x2, which is x1=0, x1=1
 
 A = np.array([ [2,1], [1,3] ])
 b = np.array([1,3])
@@ -207,15 +207,15 @@ print("Result is: ", sampleset.first.sample)
 
 ## First was easy, now we need to focus on quadratics
 
-# Find x0, x1, x2 such that we minimize (2 - x2 - x1 -x0)^2
+# Find x0, x1, x2 such that we minimize (2 - x2 - w12-x0)^2
 # We know going in, the best solution will have 2 variables = 1
 
-# (2 - x2 - x1 - x0)^2 =
+# (2 - x2 - w12- x0)^2 =
 # x0^2 + x1^2 + x2^2 + 2(-x0)(-x1) + 2(-x1)(-x2) + 2(-x0)(-x2) + 2(2)(-x0) + 2(2)(-x1) + 2(2)(-x2) + 4
 
 # x0^2 = x0, x1^2 = x1, x2^2 = x2 .. so this is the same as
 
-# 1(1-2(2)x0 - 1(1-2(2))x1 - 1(1-2(2))x2 + 2x0x1 + 2x1x2 + 2x0x2 + 4
+# 1(1-2(2)x0 - 1(1-2(2))w12- 1(1-2(2))x2 + 2x0w12+ 2x1x2 + 2x0x2 + 4
 
 ## Lets make this into a QUBO
 
@@ -247,11 +247,11 @@ for k,v in Q.items():
 print("\n\n ----- Binary vector ----\n")
 
 # now we have a binary vector with 3 unknowns, x0, x1, and x2
-# Let us minimize (3 + 4x2 - 2x1 - x0)^2
-# We can tell our answer by looking, x0 = 1, x1 = 1 , x2 = 0
+# Let us minimize (3 + 4x2 - 2w12- x0)^2
+# We can tell our answer by looking, x0 = 1, w12= 1 , x2 = 0
 ## But convert this to QUBO
 
-# (3 + 4x2 - 2x1 - x0)^2 =
+# (3 + 4x2 - 2w12- x0)^2 =
 # (4x2)^2 + 2x1^2 + x0^2 + 2(4x2(-2x1) + 2(-2x1)(-x0) + 2(4x2)(-x0) + 2(3)(4x2) + 2(3)(-2x1) + 2(3)(-x0) + 9
 # Qubo we can ignore the consant, which is 9
 #
@@ -275,7 +275,7 @@ print(sampleset3.first.sample)
 
 ## Ok lets do another with 8 unknowns x0 - x7
 '''
-(2 + x0 - 4x1 + 2x4 + 3x3 - x4 - 6x7 + x5 + 9x6 - 5x2)^2
+(2 + x0 - 4w12+ 2x4 + 3x3 - x4 - 6x7 + x5 + 9x6 - 5x2)^2
 
 {'x0': 1, 'x1': 1, 'x2': 0, 'x3': 0, 'x4': 0, 'x5': 1, 'x6': 0, 'x7': 0}
 
@@ -291,29 +291,29 @@ Expanded:
  + 16 x1^2
  - 20 x2
  - 10 x0 x2
- +  40 x1 x2
+ +  40 w12x2
  + 25 x2^2
  + 12 x3 +
  6 x0 x3
- - 24 x1 x3
+ - 24 w12x3
  - 30 x2 x3
  +  9 x3^2 
 + 4 x4 
 + 2 x0 x4
- - 8 x1 x4
+ - 8 w12x4
  - 10 x2 x4
  + 6 x3 x4
  + x4^2
  + 4 x5 
 + 2 x0 x5 
-- 8 x1 x5 
+- 8 w12x5 
 - 10 x2 x5 
 + 6 x3 x5 
 + 2 x4 x5 
 + x5^2
  +  36 x6 
 + 18 x0 x6
- - 72 x1 x6
+ - 72 w12x6
  - 90 x2 x6
  + 54 x3 x6
  + 18 x4 x6  
@@ -321,7 +321,7 @@ Expanded:
 + 81 x6^2 
 - 24 x7 
 - 12 x0 x7 
-+ 48 x1 x7 
++ 48 w12x7 
 + 60 x2 x7
  - 36 x3 x7
  - 12 x4 x7
@@ -331,12 +331,12 @@ Expanded:
 
 Simplified:
 
-(2 + x0 - 4 x1 - 5 x2 + 3 x3 + x4 + x5 + 9 x6 - 6 x7)^2
+(2 + x0 - 4 w12- 5 x2 + 3 x3 + x4 + x5 + 9 x6 - 6 x7)^2
 
 Solution:
 
 x0 = 0
-x1 = 1
+w12= 1
 x2 = 1
 x3 = 0
 x4 = 0
@@ -444,44 +444,64 @@ w1h1^2 + 2*w1h1 w1h2 + w1h2^2 + 2*w1h1 w2h3 + 2*w1h2*w2h3 + w2h3^2 +
 
 '''
 
--- In the paper, we use w11 and h11.. but for this we will use x0 - x7 as unknowns
+-- In the paper, we use w11 and h11.. but for this we will use w11 - x7 as unknowns
 
 We do the norm of ||V-WH||^2
-x0^2 = x0 , idempotency
+w11^2 = w11 , idempotency
 
 This is what binds the values in V to WH
 
 
   V          W                H
-[1,2]    [x0, x1]      [x4, x5]
-[3,4]    [x2, x3]      [x6, x7]
+[1,2]    [w11, w12]      [h11, h12]
+[3,4]    [w21, w22]      [h21, h22]
 
 
           WH
-[ x0x4 + x1x6, x0x5 + x1x7 ] 
-[ x2x4 + x3x6, x2x5 + x3x7 ]
+[ w11h11 + w12h21, w11h12 + w12h22 ] 
+[ w21h11 + w22h21, w21h12 + w22h22 ]
 
 
 V - WH  = 
 
-[ 1-x0 x4-x1 x6	2-x0 x5-x1 x7 ]
-[ 3-x2 x4-x3 x6	4-x2 x5-x3 x7 ]
+[ 1-w11 h11-w12h21	2-w11 h12-w12h22 ]
+[ 3-w21 h11-w22 h21	4-w21 h12-w22 h22 ]
 
 ||V-WH||^2_2 = 
 
-( (1-(x0*x4)-(x1*x6))^2 + (2-(x0*x5)-(x1*x7))^2 + (3-(x2*x4)-(x3*x6))^2 + (4-(x2*x5)-(x3*x7))^2 )
+( (1-(w11*h11)-(w12*h21))^2 + (2-(w11*h12)-(w12*h22))^2 + (3-(w21*h11)-(w22*h21))^2 + (4-(w21*h12)-(w22*h22))^2 )
 
 
 -- Expanded ---
 
-30 - 2 x0 x4 - 6 x2 x4 + x0^2 x4^2 + x2^2 x4^2 - 4 x0 x5 - 8 x2 x5 + 
- x0^2 x5^2 + x2^2 x5^2 - 2 x1 x6 - 6 x3 x6 + 2 x0 x1 x4 x6 + 
- 2 x2 x3 x4 x6 + x1^2 x6^2 + x3^2 x6^2 - 4 x1 x7 - 8 x3 x7 + 
- 2 x0 x1 x5 x7 + 2 x2 x3 x5 x7 + x1^2 x7^2 + x3^2 x7^2
+w^2 = w ..etc idempotent
+
+30
+-2 h11 w11
+-4 h12 w11
++h11^2 w11^2
++h12^2 w11^2
+-2 h21 w12
+-4 h22 w12
++2 h11 h21 w11 w12
++2 h12 h22 w11 w12
++h21^2 w12^2
++h22^2 w12^2
+-6 h11 w21
+-8 h12 w21
++h11^2 w21^2
++h12^2 w21^2
+-6 h21 w22
+-8 h22 w22
++2 h11 h21 w21 w22
++2 h12 h22 w21 w22
++h21^2 w22^2
++h22^2 w22^2
+
 
 --- Simplified ---
 
-(-1 + x0 x4 + x1 x6)^2 + (-3 + x2 x4 + x3 x6)^2 + (-2 + x0 x5 + x1 x7)^2 + (-4 + x2 x5 + x3 x7)^2
+(-1 + w11 h11 + w12h21)^2 + (-3 + w21 h11 + w22 h21)^2 + (-2 + w11 h12 + w12h22)^2 + (-4 + w21 h12 + w22 h22)^2
 
 '''
 
@@ -489,44 +509,44 @@ V - WH  =
 Q5 = {}
 
 #linear coefficients
-Q5['x0', 'x0'] =
-Q5['x1', 'x1'] =
-Q5['x2', 'x2'] =
-Q5['x3', 'x3'] =
-Q5['x4', 'x4'] =
-Q5['x5', 'x5'] =
-Q5['x6', 'x6'] =
-Q5['x7', 'x7'] =
+Q5['w11', 'w11'] =
+Q5['w12', 'w12'] =
+Q5['w21', 'w21'] =
+Q5['w22', 'w22'] =
+Q5['h11', 'h11'] =
+Q5['h12', 'h12'] =
+Q5['h21', 'h21'] =
+Q5['h22', 'h22'] =
 
 #Quadratic Coefficients
-Q5['x0', 'x1'] =
-Q5['x0', 'x2'] =
-Q5['x0', 'x3'] =
-Q5['x0', 'x4'] =
-Q5['x0', 'x5'] =
-Q5['x0', 'x6'] =
-Q5['x0', 'x7'] =
-Q5['x1', 'x2'] =
-Q5['x1', 'x3'] =
-Q5['x1', 'x4'] =
-Q5['x1', 'x5'] =
-Q5['x1', 'x6'] =
-Q5['x1', 'x7'] =
-Q5['x2', 'x3'] =
-Q5['x2', 'x4'] =
-Q5['x2', 'x5'] =
-Q5['x2', 'x6'] =
-Q5['x2', 'x7'] =
-Q5['x3', 'x4'] =
-Q5['x3', 'x5'] =
-Q5['x3', 'x6'] =
-Q5['x3', 'x7'] =
-Q5['x4', 'x5'] =
-Q5['x4', 'x6'] =
-Q5['x4', 'x7'] =
-Q5['x5', 'x6'] =
-Q5['x5', 'x7'] =
-Q5['x6', 'x7'] =
+Q5['w11', 'w12'] =
+Q5['w11', 'w21'] =
+Q5['w11', 'w22'] =
+Q5['w11', 'h11'] =
+Q5['w11', 'h12'] =
+Q5['w11', 'h21'] =
+Q5['w11', 'h22'] =
+Q5['w12', 'w21'] =
+Q5['w12', 'w22'] =
+Q5['w12', 'h11'] =
+Q5['w12', 'h12'] =
+Q5['w12', 'h21'] =
+Q5['w12', 'h22'] =
+Q5['w21', 'w22'] =
+Q5['w21', 'h11'] =
+Q5['w21', 'h12'] =
+Q5['w21', 'h21'] =
+Q5['w21', 'h22'] =
+Q5['w22', 'h11'] =
+Q5['w22', 'h12'] =
+Q5['w22', 'h21'] =
+Q5['w22', 'h22'] =
+Q5['h11', 'h12'] =
+Q5['h11', 'h21'] =
+Q5['h11', 'h22'] =
+Q5['h12', 'h21'] =
+Q5['h12', 'h22'] =
+Q5['h21', 'h22'] =
 
 ## Need code to do the power of 2 approximation to input data
 
