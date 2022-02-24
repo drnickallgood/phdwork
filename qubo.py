@@ -58,10 +58,21 @@ def make_qubo(a):
     Q = {}
     varname = 'x'
 
+    # Linear coefficients
+    # still need to do squaring , subtracting, adding..etc
+    # see other notebook, need to do those things..
     for i in range(a.size):
-        Q[varname+str(i)] = a[i][0]
+        Q[varname+str(i), varname+str(i)] = a[i][0]**2
+
+
+    # Go through and do quadratic coefficients
+
+
+    # Do linearization
 
     return Q
+
+    
 
     
 ###
