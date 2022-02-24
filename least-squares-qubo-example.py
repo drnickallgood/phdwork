@@ -111,8 +111,9 @@ n = 2
 prec_list = [1,0] #bitspower will go from -4 to 3
 Q = qubo_prep(A,b,n,prec_list) #prepare qubo
 
-for k,v in Q.items():
-    print(k)
+#for k,v in Q.items():
+    #int(k)
+print(Q)
 
 #Use Exactsolver to solve the qubo
 sampler = dimod.ExactSolver()
@@ -120,8 +121,10 @@ sampleset = sampler.sample_qubo(Q)
 
 #Get the solution
 soln_dict = sampleset.first.sample
+print("soln_dict: ", soln_dict)
 #convert dict to string
 soln_bin= get_bin_str(soln_dict,isising=False)
+print("soln_bin: ", soln_bin)
 #convert string to np.array x
 x = qubo_to_real(soln_bin,n,prec_list)
 
