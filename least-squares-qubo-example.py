@@ -30,12 +30,16 @@ def qubo_prep(A,b,n,bitspower):
             powersoftwo[i] = (2**(bitspower[i]+1))*(-1)
         else:
             powersoftwo[i] = 2**(bitspower[i-1])
+
+    print("\n powersoftwo: ", powersoftwo)
     Qinit = np.zeros([n,n])
     Qdict = {} #Same qubo but in dictionary format
     for i in range(0,n):
         for j in range(i,n):
             Qinit[i,j] = 2*sum(A[:,i]*A[:,j])    
     bnew = 2*b
+
+    print("\n Qinit: ", Qinit)
     
     for i in range(0,n*len(powersoftwo)):
         if i%len(powersoftwo)==0 and i>0:
@@ -46,11 +50,14 @@ def qubo_prep(A,b,n,bitspower):
         for j in range(i,n*len(powersoftwo)):
             if i==j:
                 Qdict[i,i] = (powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
+                print("\n Qdict inside first if: \n", Qdict)
+                
             else:
                 if j%len(powersoftwo)==0 and j>0:
                     n_j_ctr = n_j_ctr + 1
                     j_powerctr = 0
                 Qdict[i,j] = powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
+                print("\n Qdict inside else after first if: \n", Qdict)
             
             j_powerctr = j_powerctr + 1
         i_powerctr = i_powerctr + 1
@@ -113,7 +120,7 @@ Q = qubo_prep(A,b,n,prec_list) #prepare qubo
 
 #for k,v in Q.items():
     #int(k)
-print(Q)
+print("\ndict returned by qubo_prep: \n", Q, "\n")
 
 #Use Exactsolver to solve the qubo
 sampler = dimod.ExactSolver()

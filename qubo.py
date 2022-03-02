@@ -55,12 +55,16 @@ a       b
 '''
 
 # Annealer will return binary value, need to convert back to reals
-# using approximation 
-def approx_binstr(binstr):
-    return 0
+# using approximation
+# Convert real value by taking floor of float value then make binary
+def approx_real(r):
+    return bin(math.floor(r).split('0b')[1])
+
+def bin_to_real(binstr):
+    return int(binstr,2)
     
 def make_qubo(v,k):
-    
+
     Q = {}
     penalty_var_name = 'x'
 
@@ -81,21 +85,30 @@ def make_qubo(v,k):
     w = np.zeros([n,k])
     h = np.zeros([k,n])
 
+    Qinit = np.zeros([n,n])
+
+    # This gives us our quadratic expansino of an input matrix
+    # aborle dissertation (3.6) - w_jk = 2 * sum(A_ij * A_ik)
+    for i in range(0,n):
+        for j in range(i,n):
+            Qinit[i,j] = 2 * sum(v[:,i] * v[:,j])
+    
+
     # initialize w and h to all 1's
     # This will allow us to do numerical stuff on it
     for i in range(0,len(w)):
-        for j in range(0,len(w)):
+        for j in range(i,len(w)):
             w[i,j] = 1
 
-    for i in range(0,len(w)):
-        for j in range(0,len(w)):
-            w[i,j] = 1
-    
+    for i in range(0,len(h)):
+        for j in range(i,len(h)):
+            h[i,j] = 1
 
+            
     # (v0 - (w0 * h0) + (w1 * h2) )^2 +
-    for i in range(0,len(a)):
-        for j in range(0,len(a)):
-            Q[i,j] = v[i,j]
+   # for i in range(0,len(a)):
+       # for j in range(0,len(a)):
+        #    Q[i,j] = v[i,j]
             # Do we have this already?, if so add it to existing
            # if (j,i) in Q.keys():
                # Q[j,i] += a[i][j]
@@ -126,7 +139,7 @@ def make_qubo(v,k):
 
     '''
 
-    return Q
+    return Qinit
 
     
 
