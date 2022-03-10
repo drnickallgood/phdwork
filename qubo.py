@@ -8,7 +8,7 @@ import dimod
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is n x k
-# h = our H matrix which is k x p
+# h = our H matrix which is k x n
 # k = # of clusters
 
 def approx(v):
@@ -24,32 +24,18 @@ def approx(v):
 
 
     V        W        H
-[v0, v1]  [w0, w1]  [h0, h1]
-[v2, v3]  [w2, w3]  [h2, h3]
+[v11, v12]  [w11, w12]  [h11, h12]
+[v21, v22]  [w21, w22]  [h21, h22]
 
-(v0 - (w0 * h0) + (w1 * h2) )^2 +
-(v1 - (w0 * h1) + (w1 * h3) )^2 +
-(v2 - (w2 * h0) + (w3 * h2) )^2 + 
-(v3 - (w2 * h1) + (w3 * h3) )^2
+(v11 - (w11 * h11) + (w12 * h21) )^2 +
+(v12 - (w11 * h12) + (w12 * h22) )^2 +
+(v21 - (w21 * h11) + (w22 * h21) )^2 + 
+(v22 - (w21 * h12) + (w22 * h22) )^2
 
 
----
+00 00 + 01 10
+00 01 + 01 11
 
-(2 - x2 - x1 + x0)^2
-
-coefficents x0: 1, x1: -1, x2: -1
-
-x0 =  1 * x0
-x1 = -1 * x1
-x2 = -1 * x2
-
-a       b
-
-[1]    [x0]
-[-1]   [x1]
-[-1]   [x2]
-
-1 * x0 - 1 * x1 - 1 * x2
 
 
 '''
@@ -62,12 +48,97 @@ def approx_real(r):
 
 def bin_to_real(binstr):
     return int(binstr,2)
+
+# Figure out all v_ij - sum_h w_ih * h_hj
+# pass in k , # of clusters
+'''
+    V        W        H
+[0, 1]    [0, 1]    [0, 1]
+[2, 3]    [2, 3]    [2, 3]
+
+'''
+
+def find_vars(v,k):
+
+    v_list = list()
+    x_dict = {}
+ 
+    # Get correct dimensions
+    p = v.shape[0]
+    n = v.shape[1]
+
+    w_rows = p
+    w_cols = k
+
+    h_rows = k
+    h_cols = n
+
+
+    #Get the V's
+    for i in range(0,len(v)):
+        for j in range(0,len(v)):
+            # stringify what is in V at this location
+            v_str = str(v[i][j]) + "-"
+            v_list.append(v_str)
+
+    # Build WH
+    wh_cnt = 0
+    for i in range(0,w_rows):
+        for j in range(0,w_cols):
+            for l in range(0,h_rows):
+                #print("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
+                x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
+                wh_cnt += 1
+               # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
+
+
+    for k,v in x_dict.items():
+        print(k,":", v)
+                      
+            
+
+            
+            
+            
+            
+
     
-def make_qubo(v,k):
+
+# Ax-b is similar to V-WH
+# V = b here
+# W = A
+# H = x ??
+
+def make_qubo(v,bits,n):
 
     Q = {}
-    penalty_var_name = 'x'
 
+    # Create a np array that has our listing of powers including an extra for the
+    # sign qubit
+    #
+    # V-WH == -V + WH = -WH + V , V=WH && WH-V = 0
+    powersoftwo = np.zeros(len(bits)+1)
+
+    
+    # Fill up our powersof two by taking 2^bit in our list
+    for i in range(0, len(bits)+1):
+        if i == 0:
+            powersoftwo[i] = (2 ** bits[i]+1) * (-1) # Sign qubit
+        else:
+            powersoftwo[i] = (2 ** bits[i-1])
+            
+    
+    lvar = 'l'
+    pvar = 'x'
+    qvar = 'q'
+    #n is our column vector length
+    col_cnt = 0
+    power_ctr = 0
+    twosymb_ctr = 0
+
+    # We need to do a quadratic expansion that includes the unknowns
+    
+    
     # Linear coefficients
     # still need to do squaring , subtracting, adding..etc
     # see other notebook, need to do those things..
@@ -81,28 +152,19 @@ def make_qubo(v,k):
     p = v.shape[0]
     n = v.shape[1]
 
-    # Init W and H matrices
-    w = np.zeros([n,k])
-    h = np.zeros([k,n])
-
     Qinit = np.zeros([n,n])
 
     # This gives us our quadratic expansino of an input matrix
     # aborle dissertation (3.6) - w_jk = 2 * sum(A_ij * A_ik)
-    for i in range(0,n):
-        for j in range(i,n):
-            Qinit[i,j] = 2 * sum(v[:,i] * v[:,j])
+    # v is our constants
     
+    vnew = 2*v
+    
+   # for i in range(0,n):
+        #for j in range(i,n):
+          #  Qinit[i,j] = 2 * sum(V[:,i] * V[:,j])
 
-    # initialize w and h to all 1's
-    # This will allow us to do numerical stuff on it
-    for i in range(0,len(w)):
-        for j in range(i,len(w)):
-            w[i,j] = 1
-
-    for i in range(0,len(h)):
-        for j in range(i,len(h)):
-            h[i,j] = 1
+            
 
             
     # (v0 - (w0 * h0) + (w1 * h2) )^2 +
@@ -148,12 +210,17 @@ def make_qubo(v,k):
 
 #V = np.array([[2.5,7.3],[3.5,2]]
 
-a = np.array([[1,2], [3,4]])
+v = np.array([[1,2], [3,4]])
 
-Q = make_qubo(a, 2)
+bits = [1,0]    # gets us range -4 to +3
+k = 2
 
-print(Q)
+#Q = make_qubo(v,bits,n)
 
+#print(Q)
+
+
+find_vars(v, k)
 
 
 
