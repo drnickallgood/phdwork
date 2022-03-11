@@ -62,6 +62,7 @@ def find_vars(v,k):
 
     v_list = list()
     x_dict = {}
+    x_dict_rev = {}
  
     # Get correct dimensions
     p = v.shape[0]
@@ -89,11 +90,15 @@ def find_vars(v,k):
                 #print("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
                 #x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
                 x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))
+                x_dict_rev[("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))] = 'x'+str(wh_cnt)
                 wh_cnt += 1
                # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
 
 
     for k,v in x_dict.items():
+        print(k,":", v)
+
+    for k,v in x_dict_rev.items():
         print(k,":", v)
                       
             
