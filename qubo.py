@@ -82,12 +82,13 @@ def find_vars(v,k):
             v_list.append(v_str)
 
     # Build WH
-    wh_cnt = 0
+    wh_cnt = 1
     for i in range(0,w_rows):
         for j in range(0,w_cols):
-            for l in range(0,h_rows):
+            for l in range(0,h_rows):   # This is the column vector selection
                 #print("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
-                x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
+                #x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
+                x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))
                 wh_cnt += 1
                # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
 
