@@ -11,18 +11,7 @@ import dimod
 # h = our H matrix which is k x n
 # k = # of clusters
 
-def approx(v):
-
-    return np.floor(v)
-
-    
-    
-# Equation is good, but we only will have matrix to work with
-# do not make equation and parse it as a string
-#
 '''
-
-
     V        W        H
 [v11, v12]  [w11, w12]  [h11, h12]
 [v21, v22]  [w21, w22]  [h21, h22]
@@ -31,13 +20,6 @@ def approx(v):
 (v12 - (w11 * h12) + (w12 * h22) )^2 +
 (v21 - (w21 * h11) + (w22 * h21) )^2 + 
 (v22 - (w21 * h12) + (w22 * h22) )^2
-
-
-00 00 + 01 10
-00 01 + 01 11
-
-
-
 '''
 
 # Annealer will return binary value, need to convert back to reals
@@ -51,12 +33,6 @@ def bin_to_real(binstr):
 
 # Figure out all v_ij - sum_h w_ih * h_hj
 # pass in k , # of clusters
-'''
-    V        W        H
-[0, 1]    [0, 1]    [0, 1]
-[2, 3]    [2, 3]    [2, 3]
-
-'''
 
 def find_vars(v,k):
 
@@ -130,111 +106,183 @@ def find_vars(v,k):
         print(k,":",v)
             
 
-            
-            
-            
-            
-
-    
-
 # Ax-b is similar to V-WH
 # V = b here
 # W = A
 # H = x ??
+## Code from Ajinkya Borle in nick_quadratic_automated
 
-def make_qubo(v,bits,n):
-
-    Q = {}
-
-    # Create a np array that has our listing of powers including an extra for the
-    # sign qubit
-    #
-    # V-WH == -V + WH = -WH + V , V=WH && WH-V = 0
-    powersoftwo = np.zeros(len(bits)+1)
-
+#Converts a ||Ax-b|| problem into a QUBO
+def qubo_prep(A,b,n,bitspower,varnames=None):
+    #Input:
+    #'A' is the matrix which is a np.array(), a matrix which is m x n
+    #b is the vector in the expression : Ax-b, an np.array() of length m
+    #n is an integer value that is the length of the column vector x
+    #bitspower is a list of powers that would be applied in a 2s complement way, 
+    #eg : [2,1,0] would be applied with another bit tacked on front as : -2^(len(bitspower) + 2^(2) + 2^(1) + 2^(0)
+    #varnames if provided is a list of variable name. eg : varnames = [x1,x2,x3]
+    #Note : the implementation requires the list to be a set of decreasing and consecutive numbers, sorry!
+    #Output:
+    #A dictionary Qdict which is the QUBO for this problem
+    #A dictionary Qdict_alt which the same QUBO but with alphanumeric variable (keys) names
+    n_i_ctr = 0
+    i_powerctr = 0
+    i_twosymb = 0
     
-    # Fill up our powersof two by taking 2^bit in our list
-    for i in range(0, len(bits)+1):
-        if i == 0:
-            powersoftwo[i] = (2 ** bits[i]+1) * (-1) # Sign qubit
+    str_bitspower = ['null'] + [str(item) for item in bitspower]
+    powersoftwo = np.zeros(len(bitspower)+1)
+    
+    for i in range(0,len(bitspower)+1):
+        if i==0:
+            powersoftwo[i] = (2**(bitspower[i]+1))*(-1)
         else:
-            powersoftwo[i] = (2 ** bits[i-1])
+            powersoftwo[i] = 2**(bitspower[i-1])
+    Qinit = np.zeros([n,n]) #A proto-QUBO that preprocesses some values for the actual QUBO. Initial QUBO if you will
+    Qdict = {} #A dictionary that stores the final QUBO
+    
+    Qdict_alt = {} #This dictionary saves the alternate QUBO with alphanumeric variable (keys) names
+    index_dict = {} #Dictionary that maps alphanumeric variables to the integer ones
+    
+    for i in range(0,n):
+        for j in range(i,n):
+            Qinit[i,j] = 2*sum(A[:,i]*A[:,j])    
+    bnew = 2*b
+    
+    
+    for i in range(0,n*len(powersoftwo)):
+        if i%len(powersoftwo)==0 and i>0:
+            n_i_ctr = n_i_ctr + 1
+            i_powerctr=0
+        n_j_ctr = n_i_ctr
+        j_powerctr = i_powerctr
+        for j in range(i,n*len(powersoftwo)):
+            if i==j:#Linear coefficient
+                Qdict[i,i] = (powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
+                if varnames != None:
+                    tempvar1 = varnames[n_i_ctr] + '_' + str_bitspower[i_powerctr]
+                    index_dict[tempvar1] = i
+                    Qdict_alt[tempvar1,tempvar1] = Qdict[i,i]
+            else:#Quadratic coefficient
+                if j%len(powersoftwo)==0 and j>0:
+                    n_j_ctr = n_j_ctr + 1
+                    j_powerctr = 0
+                Qdict[i,j] = powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
+                if varnames != None:
+                    tempvar2 = varnames[n_j_ctr] + '_' + str_bitspower[j_powerctr]
+                    Qdict_alt[tempvar1,tempvar2] = Qdict[i,j]
             
+            j_powerctr = j_powerctr + 1
+        i_powerctr = i_powerctr + 1
     
-    lvar = 'l'
-    pvar = 'x'
-    qvar = 'q'
-    #n is our column vector length
-    col_cnt = 0
-    power_ctr = 0
-    twosymb_ctr = 0
+    if varnames != None:
+        return Qdict, Qdict_alt, index_dict
+    else:
+        return Qdict #just return the bare bones if varnames not requested
 
-    # We need to do a quadratic expansion that includes the unknowns
-    
-    
-    # Linear coefficients
-    # still need to do squaring , subtracting, adding..etc
-    # see other notebook, need to do those things..
-    # We need to match existing coefficients..
-    # i.e x0,x1 = x1,x0
-    # V = p x n
-    # W = n x k
-    # H = k x n
-    # k = # of clusters
-    
-    p = v.shape[0]
-    n = v.shape[1]
+#This is just to convert a dictionary based result into a binary string based result
+def get_bin_str(config,isising=True):
+    #Input:
+    #config is a dictionary
+    #isising is True if config has -1 or +1 and False if config has 0 or 1
+    #Output:
+    # a binary string of 0s and 1s
+    binstr = ""
+    if isising == True:
+        for i in range(0,len(config)):
+            if config[i] == 1:
+                binstr += str(1)
+            elif config[i] == -1:
+                binstr += str(0)
+    else:
+        for i in range(0,len(config)):
+            if config[i] == 1:
+                binstr += str(1)
+            elif config[i] == 0:
+                binstr += str(0)
+    return binstr
 
-    Qinit = np.zeros([n,n])
-
-    # This gives us our quadratic expansino of an input matrix
-    # aborle dissertation (3.6) - w_jk = 2 * sum(A_ij * A_ik)
-    # v is our constants
+#processes the binary string into a np.array vector.
+def qubo_to_real(binstr,n,prec_list):
+    #prepare the powers_of_two list
     
-    vnew = 2*v
+    powers_of_two = []
+    powers_of_two.append(-2**(prec_list[0]+1))
     
-   # for i in range(0,n):
-        #for j in range(i,n):
-          #  Qinit[i,j] = 2 * sum(V[:,i] * V[:,j])
+    
+    for i in range(0,len(prec_list)):
+        powers_of_two.append(2**(prec_list[i]))
+    #Now the actual number
+    bin_ctr=0
+    cur_real = np.zeros(n)
+    for i in range(0,n):
+        for j in range(0,len(powers_of_two)):
+            cur_real[i] += powers_of_two[j]*int(binstr[bin_ctr])
+            bin_ctr += 1
+    
+    return cur_real
 
-            
-
-            
-    # (v0 - (w0 * h0) + (w1 * h2) )^2 +
-   # for i in range(0,len(a)):
-       # for j in range(0,len(a)):
-        #    Q[i,j] = v[i,j]
-            # Do we have this already?, if so add it to existing
-           # if (j,i) in Q.keys():
-               # Q[j,i] += a[i][j]
-            #else:
-                #Q[i,j] = a[i][j] 
+def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):
+    #Same as qubo_prep but only for non-negative values
+    #bitspower = [0] for binary values
+    
+    
+    n_i_ctr = 0
+    i_powerctr = 0
+    i_twosymb = 0
+    
+    str_bitspower =[str(item) for item in bitspower]
+    powersoftwo = np.zeros(len(bitspower))
+    
+    for i in range(0,len(bitspower)):
+        powersoftwo[i] = 2**(bitspower[i])
         
-    #for i in range(a.size):
-     #   Q[varname+str(i), varname+str(i)] = a[i][0]**2
+    Qinit = np.zeros([n,n])
+    Qdict = {} #The dictionary for our qubo
+    
+    Qdict_alt = {} #This dictionary saves the alternate QUBO with alphanumeric variable (keys) names
+    index_dict = {} #Dictionary that maps alphanumeric variables to the integer ones
+    
+    for i in range(0,n):
+        for j in range(i,n):
+            Qinit[i,j] = 2*sum(A[:,i]*A[:,j])    
+    bnew = 2*b   
+    
+    for i in range(0,n*len(powersoftwo)):
+        if i%len(powersoftwo)==0 and i>0:
+            n_i_ctr = n_i_ctr + 1
+            i_powerctr=0
+        n_j_ctr = n_i_ctr
+        j_powerctr = i_powerctr
+        for j in range(i,n*len(powersoftwo)):
+            if i==j: #Linear coefficient
+                Qdict[i,i] = (powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
+                if varnames != None:
+                    tempvar1 = varnames[n_i_ctr] + '_' + str_bitspower[i_powerctr]
+                    index_dict[tempvar1] = i
+                    Qdict_alt[tempvar1,tempvar1] = Qdict[i,i]
+            else: #Quadratic coefficient
+                if j%len(powersoftwo)==0 and j>0:
+                    n_j_ctr = n_j_ctr + 1
+                    j_powerctr = 0
+                Qdict[i,j] = powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
+                if varnames != None:
+                    tempvar2 = varnames[n_j_ctr] + '_' + str_bitspower[j_powerctr]
+                    Qdict_alt[tempvar1,tempvar2] = Qdict[i,j]
+            
+            j_powerctr = j_powerctr + 1
+        i_powerctr = i_powerctr + 1
+    
+    if varnames != None:
+        return Qdict, Qdict_alt, index_dict
+    else:
+        return Qdict #just return the bare bones if varnames not requested
 
-
-    # Go through and do quadratic coefficients
-    # In the event we have something like w11h11, we apply penalties
-    # and we map them 
-
-    # Do linearization, peanlty stuf
-    #Penalty coeff for w11h11 substitution to x1 : 2(w11h11 - 2x1(w11 + h11) + 3x1)
-    '''
-      x0 = w11h11
-      x1 = w12h21
-      x2 = w11h12
-      x3 = w12h22
-      
-      x4 = w21h11
-      x5 = w22h21
-      x6 = w21h12
-      x7 = w22h22
-
-
-    '''
-
-    return Qinit
+#Function to convert the solution dictionary from alphanumeric variables to integer 
+def convert_result(soln_dict,index):
+    new_dict = {}
+    for key,value in soln_dict.items():
+        new_dict[index[key]] = value
+    return new_dict
 
     
 
