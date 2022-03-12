@@ -61,8 +61,25 @@ def bin_to_real(binstr):
 def find_vars(v,k):
 
     v_list = list()
+
+    # Store our wh values and in reverse
     x_dict = {}
     x_dict_rev = {}
+
+    # store our v values
+    # This will essentially be a set of nested dictionaries
+    '''
+       (x, y) : { 
+                   v_val: { v} , 
+                   wh: { (wh_ik, wh_kj) }
+                }
+
+    '''
+    # Dict for our V position and values in V
+    v_dict = {}
+
+    # 
+    wh_dict = {}
  
     # Get correct dimensions
     p = v.shape[0]
@@ -79,18 +96,26 @@ def find_vars(v,k):
     for i in range(0,len(v)):
         for j in range(0,len(v)):
             # stringify what is in V at this location
-            v_str = str(v[i][j]) + "-"
-            v_list.append(v_str)
+            i_idx = i+1
+            j_idx = j+1
+            v_dict[i_idx,j_idx] = {}
+            v_dict[i_idx,j_idx]['v_val'] = str(v[i][j])
+            v_dict[i_idx,j_idx]['wh'] = []
+            #v_str = str(v[i][j]) + "-"
+            #v_list.append(v_str)
 
     # Build WH
     wh_cnt = 1
     for i in range(0,w_rows):
         for j in range(0,w_cols):
+            i_idx = i+1
+            j_idx = j+1
             for l in range(0,h_rows):   # This is the column vector selection
                 #print("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
                 #x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
                 x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))
                 x_dict_rev[("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))] = 'x'+str(wh_cnt)
+                v_dict[i_idx,j_idx]['wh'].append( ("w"+str(i+1) + str(l+1), "h"+str(l+1)+str(j+1)) )
                 wh_cnt += 1
                # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
 
@@ -100,7 +125,9 @@ def find_vars(v,k):
 
     for k,v in x_dict_rev.items():
         print(k,":", v)
-                      
+
+    for k,v in v_dict.items():
+        print(k,":",v)
             
 
             
