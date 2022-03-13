@@ -7,7 +7,7 @@ from math import log
 import dimod
 
 # v = our V matrix which is p x n matrix
-# w = our W matrix which is n x k
+# w = our W matrix which is p x k
 # h = our H matrix which is k x n
 # k = # of clusters
 
@@ -58,19 +58,23 @@ def find_vars(v,k):
     wh_dict = {}
  
     # Get correct dimensions
+    # V is p x n 
     p = v.shape[0]
     n = v.shape[1]
 
+    # W is p x k
     w_rows = p
     w_cols = k
 
+    # H is k x n
     h_rows = k
     h_cols = n
 
 
     #Get the V's
-    for i in range(0,len(v)):
-        for j in range(0,len(v)):
+    # V is p x n 
+    for i in range(0,p):
+        for j in range(0, n):
             # stringify what is in V at this location
             i_idx = i+1
             j_idx = j+1
@@ -81,12 +85,14 @@ def find_vars(v,k):
             #v_list.append(v_str)
 
     # Build WH
+    # WH will be same as V , so p x n
     wh_cnt = 1
     for i in range(0,w_rows):
-        for j in range(0,w_cols):
+        for j in range(0,h_cols):
+            # This is just indexing to make it match and not index from 0
             i_idx = i+1
             j_idx = j+1
-            for l in range(0,h_rows):   # This is the column vector selection
+            for l in range(0,w_cols):   # This is the column vector selection
                 #print("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
                 #x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
                 x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))
@@ -291,7 +297,78 @@ def convert_result(soln_dict,index):
 
 #V = np.array([[2.5,7.3],[3.5,2]]
 
-v = np.array([[1,2], [3,4]])
+v = np.array([[1,2], [3,4]])   #2x2
+a = np.array([ [1,2,3], [3,4,5] ])  # 2 x 3
+b = np.array([ [1,2,3], [4,5,6], [7,8,9] ])   # 3x3
+# v = our V matrix which is p x n matrix
+# w = our W matrix which is p x k
+# h = our H matrix which is k x n
+# k = # of clusters
+
+'''
+p x n 
+2 x 3
+
+p x k 
+2 x 2
+
+k x n 
+2 x 3
+
+[v11, v12]  [w11, w12]  [h11, h12]
+[v21, v22]  [w21, w22]  [h21, h22]
+
+(v11 - (w11 * h11) + (w12 * h21) )^2 +
+(v12 - (w11 * h12) + (w12 * h22) )^2 +
+(v21 - (w21 * h11) + (w22 * h21) )^2 + 
+(v22 - (w21 * h12) + (w22 * h22) )^2
+
+
+2 x 3 
+
+V          W             H
+[1,2,3]  [w11, w12]     [h11, h12, h13]
+[4,5,6]  [w21, w22]     [h21, h22, h23] 
+
+w11h11 + w12h21, w11h12 + w12h22, w11h13 + w12h23
+w21h11 + w22h21, w21h12 + w22h22, w21h13 + w22h23
+
+V - WH
+
+(1 - (w11h11 + w12h21))^2 + 
+(2 - (w11h12 + w12h22))^2 + 
+(3 - (w11h13 + w12h23))^2 + 
+(4 - (w21h11 + w22h21))^2 + 
+(5 - (w21h12 + w22h22))^2 + 
+(6 - (w21h13 + w22h23))^2 
+
+
+3 x 3 
+
+V (3x3)         W (3 x 2)        H(2 x 3)
+
+[1,2,3]       [w11, w12]        [h11, h12, h13]
+[4,5,6]       [w21, w22]        [h21, h22, h23]
+[7,8,9]       [w31, w32]
+
+w11h11 + w12h21, w11h12 + w12h22, w11h13 + w12h23
+w21h11 + w22h21, w21h12 + w22h22, w21h13 + w22h23
+w31h11 + w32h21, w31h12 + w32h22, w31h13 + w32h23
+
+(1- (w11h11 + w12h21))^2 + 
+(2- (w11h12 + w12h22))^2 + 
+(3-
+(4-
+(5-
+(6-
+(7-
+(8-
+(9- (w31h13 + w32h23))^2
+
+'''
+
+
+
 
 bits = [1,0]    # gets us range -4 to +3
 k = 2
@@ -301,7 +378,14 @@ k = 2
 #print(Q)
 
 
+print("\n2x2\n")
 find_vars(v, k)
+
+print("\n2x3\n")
+find_vars(a, k)
+
+print("\n3x3\n")
+find_vars(b,k)
 
 
 
