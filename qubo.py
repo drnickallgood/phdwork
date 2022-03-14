@@ -101,7 +101,7 @@ def find_vars(v,k):
                 wh_cnt += 1
                # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
 
-
+    '''
     for k,v in x_dict.items():
         print(k,":", v)
 
@@ -110,6 +110,8 @@ def find_vars(v,k):
 
     for k,v in v_dict.items():
         print(k,":",v)
+    '''
+    return v_dict, x_dict, n
             
 
 # Ax-b is similar to V-WH
@@ -292,18 +294,6 @@ def convert_result(soln_dict,index):
 
     
 
-    
-###
-
-#V = np.array([[2.5,7.3],[3.5,2]]
-
-v = np.array([[1,2], [3,4]])   #2x2
-a = np.array([ [1,2,3], [3,4,5] ])  # 2 x 3
-b = np.array([ [1,2,3], [4,5,6], [7,8,9] ])   # 3x3
-# v = our V matrix which is p x n matrix
-# w = our W matrix which is p x k
-# h = our H matrix which is k x n
-# k = # of clusters
 
 '''
 p x n 
@@ -370,23 +360,146 @@ w31h11 + w32h21, w31h12 + w32h22, w31h13 + w32h23
 
 
 
-bits = [1,0]    # gets us range -4 to +3
-k = 2
 
-#Q = make_qubo(v,bits,n)
+#print("\n2x2\n")
+#find_vars(v, k)
 
-#print(Q)
+#print("\n2x3\n")
+#find_vars(a, k)
+
+#print("\n3x3\n")
+#find_vars(b,k)
 
 
-print("\n2x2\n")
-find_vars(v, k)
-
-print("\n2x3\n")
-find_vars(a, k)
-
-print("\n3x3\n")
-find_vars(b,k)
+#for k,v in x_dict.items():
+   # print(k,":",v)
 
 
 
              
+#(6 - x1 - x2)^2
+#Inorder to repurpose a code for ||Ax - b|| for individual quadratic equations for n variables,THe Dimensions for A is 1 x n, for x : n x 1 and b : 1 x 1
+#A = np.array([[1,1]]) 
+#prec_list = [1,0]
+#b = np.array([6])
+#n=2
+#varnames = ['x1','x2']
+###Q,Q_alt,index = qubo_prep(A,b,n,prec_list,varnames=varnames)
+#sampler = dimod.ExactSolver()
+#sampleset = sampler.sample_qubo(Q_alt)
+#print(sampleset.first.sample)
+
+
+#multiply Ax
+# Ax is the sum of w times h vars
+# wh elements are substituded by x variables
+# do b - Ax for the values)
+# A is a matrix
+#   rows are all 1's
+#   columns are # of variables
+
+
+'''
+    V        W        H
+[v11, v12]  [w11, w12]  [h11, h12]
+[v21, v22]  [w21, w22]  [h21, h22]
+
+(v11 - (w11 * h11) + (w12 * h21) )^2 +   #v11 - (w11h11) + (w12h21) 
+(v12 - (w11 * h12) + (w12 * h22) )^2 +   #v12 - (w11h12) + (w12h22)
+(v21 - (w21 * h11) + (w22 * h21) )^2 +   #v21 - (w21h11) + (w22h21)
+(v22 - (w21 * h12) + (w22 * h22) )^2     #v22 - (w21h12) + (w22h22)
+
+w11h11(w11h11 + w12h21) + w12h21(w11h11 + w12h21) 
+
+w11h11^2 + w11h11w12h21 + w12h21w11h11 + w12h21^2 = w11h11^2 + 2(w11h11w12h12) + w12h21^2 
+
+w11h12(w11h12 + w12h22) + w12h22(w11h12 + w12h22) = w11h12^2 + 2(w11h12w12h22) + w12h22^2
+
+w21h11(w21h11+w22h21) + w22h21(w21h11+w22h21) = w21h11^2 + 2(w21h11w22h21) + w22h21^2
+
+w21h12(w21h12 + w22h22) + w22h22(w21h12+w22h22) = w21h12^2 + 2(w21h12w22h22) + w22h22^2
+
+
+
+(v11 - w11h11^2 + 2(w11h11w12h12) + w12h21^2) + (v12 -  w11h12^2 + 2(w11h12w12h22) + w12h22^2 ) +
+ (v21 - w21h11^2 + 2(w21h11w22h21) + w22h21^2) + (v22 - w21h12^2 + 2(w21h12w22h22) + w22h22^2 )
+
+
+(v11 - x1^2 + 2(x1 * x2) + x2^2) + (v12 - x3^2 + 2(x3 * x4) + x4^2 ) + (v21 - x5^2 + 2(x5 * x6) + x6^2 ) + (v22 - x7^2 + 2(x7 * x8) + x8^2)
+
+
+(a+b)^2 = (a+b)(a+b) = a^2 + b^2 + 2ab
+
+x1 : ('w11', 'h11')
+x2 : ('w12', 'h21')
+x3 : ('w11', 'h12')
+x4 : ('w12', 'h22')
+x5 : ('w21', 'h11')
+x6 : ('w22', 'h21')
+x7 : ('w21', 'h12')
+x8 : ('w22', 'h22')
+
+
+
+
+'''
+
+# In a 2x2 situation, we basicallay have to send one quadratic expression at a time
+Q = {}
+Q_alt = {}
+index = {}
+Q_total = {}
+    
+###
+
+#V = np.array([[2.5,7.3],[3.5,2]]
+
+v = np.array([[1,2], [3,4]])   #2x2
+#a = np.array([ [1,2,3], [3,4,5] ])  # 2 x 3
+#b = np.array([ [1,2,3], [4,5,6], [7,8,9] ])   # 3x3
+
+
+#for make qubo, V = B as our input
+prec_list = [1,0]
+b = v
+
+# v = our V matrix which is p x n matrix
+# w = our W matrix which is p x k
+# h = our H matrix which is k x n
+# k = # of clusters
+
+
+k = 2
+A = np.zeros([1,k])
+A += 1  # make matrix all 1's
+
+v_rows = v.shape[0]
+v_cols = v.shape[1]
+
+v_dict, x_dict, n = find_vars(v,k)
+
+#print(v_dict)
+#print(x_dict)
+varnames = []
+
+# Get x vector names/symbols
+for k,v in x_dict.items():
+    varnames.append(k)
+
+
+
+Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
+
+print("\nQ\n")
+for i,j in Q.items():
+    print(i,":",j)
+
+print("\nQ_alt\n")
+for i,j in Q_alt.items():
+    print(i,":",j)
+
+print("\nindex\n")
+for i,j in index.items():
+    print(i,":",j)
+
+#qubo_prep(A,b,n,prec_lifst,varnames=varnames)
