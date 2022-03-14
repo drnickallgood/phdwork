@@ -449,6 +449,7 @@ Q = {}
 Q_alt = {}
 index = {}
 Q_total = {}
+Q_total_list = list()
     
 ###
 
@@ -483,13 +484,21 @@ v_dict, x_dict, n = find_vars(v,k)
 varnames = []
 
 # Get x vector names/symbols
-for k,v in x_dict.items():
-    varnames.append(k)
+for i,j in x_dict.items():
+    varnames.append(i)
 
 
+#Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
 
-Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
+for q in range(0,v_rows):
+    for r in range(0,v_cols):
+        print(v[q][r])
+        #A = np.zeros([1,k])
+        #A += 1  # make matrix all 1's
+        #Q,Q_alt,index = qubo_prep_nonneg(A,b[q][r],n,prec_list,varnames=varnames)
+    #Q_total_list.append(Q_alt)
 
+'''
 print("\nQ\n")
 for i,j in Q.items():
     print(i,":",j)
@@ -501,5 +510,5 @@ for i,j in Q_alt.items():
 print("\nindex\n")
 for i,j in index.items():
     print(i,":",j)
+'''
 
-#qubo_prep(A,b,n,prec_lifst,varnames=varnames)
