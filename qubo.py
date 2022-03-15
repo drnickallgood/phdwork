@@ -111,7 +111,7 @@ def find_vars(v,k):
     for k,v in v_dict.items():
         print(k,":",v)
     '''
-    return v_dict, x_dict, n
+    return v_dict, x_dict, x_dict_rev, n
             
 
 # Ax-b is similar to V-WH
@@ -449,7 +449,7 @@ Q = {}
 Q_alt = {}
 index = {}
 Q_total = {}
-Q_total_list = list()
+
     
 ###
 
@@ -477,7 +477,7 @@ A += 1  # make matrix all 1's
 v_rows = v.shape[0]
 v_cols = v.shape[1]
 
-v_dict, x_dict, n = find_vars(v,k)
+v_dict, x_dict, x_dict_rev, n = find_vars(v,k)
 
 #print(v_dict)
 #print(x_dict)
@@ -487,16 +487,49 @@ varnames = []
 for i,j in x_dict.items():
     varnames.append(i)
 
+#for key, val in v_dict.items():
+   # print(key,":",val)
 
+#for key, val in x_dict.items():
+#    print(key, ":", val)
+
+'''
+(1, 1) : {'v_val': '1', 'wh': [('w11', 'h11'), ('w12', 'h21')]}
+(1, 2) : {'v_val': '2', 'wh': [('w11', 'h12'), ('w12', 'h22')]}
+(2, 1) : {'v_val': '3', 'wh': [('w21', 'h11'), ('w22', 'h21')]}
+(2, 2) : {'v_val': '4', 'wh': [('w21', 'h12'), ('w22', 'h22')]}
+'''
+
+# v_11 - x1 - x2
+# v_12 - x3 - x4
+# v_21 - x5 - x6
+# v_22 - x7 - x8
+
+#print(v_dict[(1,1)['v_val'])
+#print(v_dict[(1,1)]['wh'])
+#print(v_dict[(1,1)]['wh'][0][0])
+#print(x_dict_rev)
+
+# So we need to go through and do one quadratic at a time
+# We send only the varnames associated with the v - wh
+# we loop through everything in v_dict
+# We get all WH's as indexes to x_dict_rev
+# We use this to get our x values to pass to varnames
+# once we get everything we then call make_qubo
+# We get the q_alt return and add it to q_total
+#print(v_dict[(1,1)]['wh'][1])
+
+    
+    
 #Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
 
-for q in range(0,v_rows):
-    for r in range(0,v_cols):
-        print(v[q][r])
+#for q in range(0,v_rows):
+#    for r in range(0,v_cols):
+#        print(v[q][r])
         #A = np.zeros([1,k])
         #A += 1  # make matrix all 1's
         #Q,Q_alt,index = qubo_prep_nonneg(A,b[q][r],n,prec_list,varnames=varnames)
-    #Q_total_list.append(Q_alt)
+
 
 '''
 print("\nQ\n")
