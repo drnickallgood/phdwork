@@ -5,6 +5,7 @@ import random
 import math
 from math import log
 import dimod
+import pprint
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is p x k
@@ -481,11 +482,11 @@ v_dict, x_dict, x_dict_rev, n = find_vars(v,k)
 
 #print(v_dict)
 #print(x_dict)
-varnames = []
+#varnames = []
 
 # Get x vector names/symbols
-for i,j in x_dict.items():
-    varnames.append(i)
+#for i,j in x_dict.items():
+    #varnames.append(i)
 
 #for key, val in v_dict.items():
    # print(key,":",val)
@@ -519,7 +520,22 @@ for i,j in x_dict.items():
 # We get the q_alt return and add it to q_total
 #print(v_dict[(1,1)]['wh'][1])
 
-    
+# Go through main dictionary to get data
+for key, val in v_dict.items():
+   #print(v_dict[key]['wh'])
+    # Go through individual list of tuples
+    varnames = []
+    for item in v_dict[key]['wh']:
+        # Get our corresponding wh values
+        for z in item:
+            varnames.append(z)
+        A = np.zeros([1,k])
+        A += 1
+        Q, Q_alt, index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
+        Q_total[item] = Q_alt
+
+#print(Q_total)
+pprint.pprint(Q_total)
     
 #Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
 
@@ -530,6 +546,35 @@ for i,j in x_dict.items():
         #A += 1  # make matrix all 1's
         #Q,Q_alt,index = qubo_prep_nonneg(A,b[q][r],n,prec_list,varnames=varnames)
 
+'''
+
+For testing, make up a WH and get a result of V, then test
+Make sure to put this in dissertation as test
+
+
+V = p x n
+W = p x k
+H = k x n
+
+V = 2 x 2
+W = 2 x 2
+H = 2 x 2
+
+
+W           H      =      V
+[1, 2]   [2, 3]       [2, 6]
+[2, 1]   [3, 2]       [6, 2]
+
+
+linearization penalty == lagarange multiplier 
+w11h11 = x1 + 2(w11h11 - 2x1(w11 + h11) + 3x1)
+Penatly piece = 2(w11h11 - 2x1(w11 + h11) + 3x1)
+Not messing with powers of 2
+have to do this penalty for every bit that makes up w value.. 
+
+
+
+'''
 
 '''
 print("\nQ\n")
@@ -545,3 +590,91 @@ for i,j in index.items():
     print(i,":",j)
 '''
 
+
+
+'''
+
+Example output from Q_total for 2x2 matrix
+
+{('w11', 'h11'): {('h11_0', 'h11_0'): array([ -7., -11.]),
+                  ('h11_1', 'h11_0'): 4.0,
+                  ('h11_1', 'h11_1'): array([-12., -20.]),
+                  ('w11_0', 'h11_0'): 2.0,
+                  ('w11_0', 'h11_1'): 4.0,
+                  ('w11_0', 'w11_0'): array([ -7., -11.]),
+                  ('w11_1', 'h11_0'): 4.0,
+                  ('w11_1', 'h11_1'): 8.0,
+                  ('w11_1', 'w11_0'): 4.0,
+                  ('w11_1', 'w11_1'): array([-12., -20.])},
+ ('w11', 'h12'): {('h12_0', 'h12_0'): array([ -7., -11.]),
+                  ('h12_1', 'h12_0'): 4.0,
+                  ('h12_1', 'h12_1'): array([-12., -20.]),
+                  ('w11_0', 'h12_0'): 2.0,
+                  ('w11_0', 'h12_1'): 4.0,
+                  ('w11_0', 'w11_0'): array([ -7., -11.]),
+                  ('w11_1', 'h12_0'): 4.0,
+                  ('w11_1', 'h12_1'): 8.0,
+                  ('w11_1', 'w11_0'): 4.0,
+                  ('w11_1', 'w11_1'): array([-12., -20.])},
+ ('w12', 'h21'): {('h11_0', 'h11_0'): array([ -7., -11.]),
+                  ('h11_1', 'h11_0'): 4.0,
+                  ('h11_1', 'h11_1'): array([-12., -20.]),
+                  ('w11_0', 'h11_0'): 2.0,
+                  ('w11_0', 'h11_1'): 4.0,
+                  ('w11_0', 'w11_0'): array([ -7., -11.]),
+                  ('w11_1', 'h11_0'): 4.0,
+                  ('w11_1', 'h11_1'): 8.0,
+                  ('w11_1', 'w11_0'): 4.0,
+                  ('w11_1', 'w11_1'): array([-12., -20.])},
+ ('w12', 'h22'): {('h12_0', 'h12_0'): array([ -7., -11.]),
+                  ('h12_1', 'h12_0'): 4.0,
+                  ('h12_1', 'h12_1'): array([-12., -20.]),
+                  ('w11_0', 'h12_0'): 2.0,
+                  ('w11_0', 'h12_1'): 4.0,
+                  ('w11_0', 'w11_0'): array([ -7., -11.]),
+                  ('w11_1', 'h12_0'): 4.0,
+                  ('w11_1', 'h12_1'): 8.0,
+                  ('w11_1', 'w11_0'): 4.0,
+                  ('w11_1', 'w11_1'): array([-12., -20.])},
+ ('w21', 'h11'): {('h11_0', 'h11_0'): array([ -7., -11.]),
+                  ('h11_1', 'h11_0'): 4.0,
+                  ('h11_1', 'h11_1'): array([-12., -20.]),
+                  ('w21_0', 'h11_0'): 2.0,
+                  ('w21_0', 'h11_1'): 4.0,
+                  ('w21_0', 'w21_0'): array([ -7., -11.]),
+                  ('w21_1', 'h11_0'): 4.0,
+                  ('w21_1', 'h11_1'): 8.0,
+                  ('w21_1', 'w21_0'): 4.0,
+                  ('w21_1', 'w21_1'): array([-12., -20.])},
+ ('w21', 'h12'): {('h12_0', 'h12_0'): array([ -7., -11.]),
+                  ('h12_1', 'h12_0'): 4.0,
+                  ('h12_1', 'h12_1'): array([-12., -20.]),
+                  ('w21_0', 'h12_0'): 2.0,
+                  ('w21_0', 'h12_1'): 4.0,
+                  ('w21_0', 'w21_0'): array([ -7., -11.]),
+                  ('w21_1', 'h12_0'): 4.0,
+                  ('w21_1', 'h12_1'): 8.0,
+                  ('w21_1', 'w21_0'): 4.0,
+                  ('w21_1', 'w21_1'): array([-12., -20.])},
+ ('w22', 'h21'): {('h11_0', 'h11_0'): array([ -7., -11.]),
+                  ('h11_1', 'h11_0'): 4.0,
+                  ('h11_1', 'h11_1'): array([-12., -20.]),
+                  ('w21_0', 'h11_0'): 2.0,
+                  ('w21_0', 'h11_1'): 4.0,
+                  ('w21_0', 'w21_0'): array([ -7., -11.]),
+                  ('w21_1', 'h11_0'): 4.0,
+                  ('w21_1', 'h11_1'): 8.0,
+                  ('w21_1', 'w21_0'): 4.0,
+                  ('w21_1', 'w21_1'): array([-12., -20.])},
+ ('w22', 'h22'): {('h12_0', 'h12_0'): array([ -7., -11.]),
+                  ('h12_1', 'h12_0'): 4.0,
+                  ('h12_1', 'h12_1'): array([-12., -20.]),
+                  ('w21_0', 'h12_0'): 2.0,
+                  ('w21_0', 'h12_1'): 4.0,
+                  ('w21_0', 'w21_0'): array([ -7., -11.]),
+                  ('w21_1', 'h12_0'): 4.0,
+                  ('w21_1', 'h12_1'): 8.0,
+                  ('w21_1', 'w21_0'): 4.0,
+                  ('w21_1', 'w21_1'): array([-12., -20.])}}
+
+'''
