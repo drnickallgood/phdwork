@@ -22,6 +22,8 @@ Expanded
 -4 x0 x1 x2
 +x0^2 x1^2 x2^2
 
+Solution should be: x0: 1, x1: 1, x2: 1
+
 
 '''
 
@@ -37,7 +39,6 @@ q1['x1','x2'] = -4+1
 
 #q1['x0','x1x2'] = -4+1    # result is {'x0': 1, 'x1': 0, 'x1x2': 1, 'x2': 0}
 #q1['x0x1','x2'] = -4+1    #  Result is:  {'x0': 0, 'x0x1': 1, 'x1': 0, 'x2': 1}
-
 
 
 sampleset1 = sampler.sample_qubo(q1)

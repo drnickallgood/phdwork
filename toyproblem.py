@@ -549,8 +549,8 @@ Q5['h12', 'h22'] =
 Q5['h21', 'h22'] =
 
 ## Need code to do the power of 2 approximation to input data
-
-
+## input will be a floating point or integer
+## if floating point, need to round down to integer, then approximate (floor)
 
 
 

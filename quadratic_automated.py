@@ -193,7 +193,7 @@ sampler = dimod.ExactSolver()
 sampleset = sampler.sample_qubo(Q_alt)
 print(sampleset.first.sample)
 
-print("\n---NEW QUBO---")
+
 #Get the solution
 soln_dict = convert_result(sampleset.first.sample,index)
 #convert dict to string
@@ -207,7 +207,7 @@ sampler = dimod.ExactSolver()
 sampleset = sampler.sample_qubo(Q)
 print(sampleset.first.sample)
 
-print("\n---OLD QUBO---")
+
 #Get the solution
 soln_dict = sampleset.first.sample
 #convert dict to string
