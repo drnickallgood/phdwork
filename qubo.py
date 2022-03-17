@@ -531,15 +531,15 @@ for key, val in v_dict.items():
         A = np.zeros([1,k])
         A += 1
         # Get each element of V for qubo_prep
-   # print(varnames)
-    for i_idx in range(0,v_rows):
-        for j_idx in range(0,v_cols):
-            b = v[i_idx][j_idx]
-            #print(b)
-            Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
-            # Put everything from each Q_alt dict into master Q_total
-            for key, val in Q_alt.items():
-                Q_total[key] = val
+        # print(varnames)
+        # Also store them as a floating point number vs a string
+    for v_key, v_val in v_dict.items():
+        b = float(v_dict[v_key]['v_val'])
+        #print(b)
+        Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
+        # Put everything from each Q_alt dict into master Q_total
+        for key, val in Q_alt.items():
+            Q_total[key] = val
 
 
 #print(Q_total)
