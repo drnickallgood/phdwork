@@ -6,6 +6,7 @@ import math
 from math import log
 import dimod
 import pprint
+import neal
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is p x k
@@ -456,17 +457,22 @@ Q_total = {}
 
 #V = np.array([[2.5,7.3],[3.5,2]]
 
-v = np.array([[1,2], [3,4]])   #2x2
+#v = np.array([[1,2], [3,4]])   #2x2
+v = np.array([[3,2], [3,1]])
 #a = np.array([ [1,2,3], [3,4,5] ])  # 2 x 3
 #b = np.array([ [1,2,3], [4,5,6], [7,8,9] ])   # 3x3
 
 
 #for make qubo, V = B as our input
+# Prec List won't always be like this, prob need to dynamically figure it out based
+# on inputs..
 prec_list = [1,0]
+prec_list_str = ['null', '1', '0']
+
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is p x k
-# h = our H matrix which is k x n
+# h = our H matrix which is k x n (binary)
 # k = # of clusters
 
 
@@ -539,12 +545,70 @@ for key, val in v_dict.items():
         Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
         # Put everything from each Q_alt dict into master Q_total
         for key, val in Q_alt.items():
-            Q_total[key] = val
+            # Check if key is already here, if so add to it
+            if key in Q_total:
+                Q_total[key] += val
+            else:
+                Q_total[key] = val
 
 
 #print(Q_total)
-pprint.pprint(Q_total)
-    
+#pprint.pprint(Q_total)
+
+# linearization
+# Delta == lagaragne param
+delta = 5
+for x_key, x_val in x_dict.items():
+    temp_h = x_val[1]
+    #print(temp_h)
+    for prec in prec_list_str:
+        temp_x = x_key + "_" + prec
+        #print(test)
+        temp_w = x_val[0] + "_" + prec
+        #print(temp_w)
+        Q_total[temp_w, temp_h] = 2 * delta
+        Q_total[temp_x, temp_w] = -4 * delta
+        Q_total[temp_x, temp_h] = -4 * delta
+        Q_total[temp_x, temp_x] += 6 * delta
+
+#pprint.pprint(Q_total)
+
+sampler = neal.SimulatedAnnealingSampler()
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=10000)
+solution_dict = {}
+solution_dict = sampleset.first.sample
+
+p = v.shape[0]
+n = v.shape[1]
+
+W = np.zeros([p,k])
+H = np.zeros([k,n])
+
+for i in range(0,k):
+    for j in range(0,n):
+        temp_h = "h" + str(i+1) + str(j+1)
+        H[i,j] = solution_dict[temp_h]
+        
+for i in range(0,p):
+    for j in range(0,k):
+        temp_w = "w" + str(i+1) + str(j+1)
+        for sol_key, sol_val in solution_dict.items():
+            if temp_w in sol_key:
+                #print(temp_w, sol_key)
+                temp_str = sol_key.split('_')[1]
+                #print(temp_str)
+                if temp_str == "null":
+                    W[i,j] += -(2**(prec_list[0]+1))*sol_val
+                else:
+                    W[i,j] += (2**int(temp_str))*sol_val
+print(W)
+print(H)
+print(np.matmul(W,H))
+
+
+#pprint.pprint(sampleset.first.sample)
+
+        
 #Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
 
 #for q in range(0,v_rows):
@@ -570,8 +634,8 @@ H = 2 x 2
 
 
 W           H      =      V
-[1, 2]   [2, 3]       [2, 6]
-[2, 1]   [3, 2]       [6, 2]
+[1, 2]   [1, 0]        [3, 2]       
+[2, 1]   [1, 1]        [3, 1]
 
 
 linearization penalty == lagarange multiplier 
