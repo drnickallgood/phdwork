@@ -7,6 +7,7 @@ from math import log
 import dimod
 import pprint
 import neal
+import numpy.linalg as LA
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is p x k
@@ -485,6 +486,7 @@ v_cols = v.shape[1]
 
 v_dict, x_dict, x_dict_rev, n = find_vars(v,k)
 
+
 #print(v_dict)
 #print(x_dict)
 #varnames = []
@@ -539,17 +541,17 @@ for key, val in v_dict.items():
         # Get each element of V for qubo_prep
         # print(varnames)
         # Also store them as a floating point number vs a string
-    for v_key, v_val in v_dict.items():
-        b = float(v_dict[v_key]['v_val'])
-        #print(b)
-        Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
-        # Put everything from each Q_alt dict into master Q_total
-        for key, val in Q_alt.items():
-            # Check if key is already here, if so add to it
-            if key in Q_total:
-                Q_total[key] += val
-            else:
-                Q_total[key] = val
+    #for v_key, v_val in v_dict.items():
+    b = float(v_dict[key]['v_val'])
+    #print(b)
+    Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
+    # Put everything from each Q_alt dict into master Q_total
+    for key, val in Q_alt.items():
+        # Check if key is already here, if so add to it
+        if key in Q_total:
+            Q_total[key] += val
+        else:
+            Q_total[key] = val
 
 
 #print(Q_total)
@@ -574,7 +576,7 @@ for x_key, x_val in x_dict.items():
 #pprint.pprint(Q_total)
 
 sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=10000)
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=40)
 solution_dict = {}
 solution_dict = sampleset.first.sample
 
@@ -601,9 +603,14 @@ for i in range(0,p):
                     W[i,j] += -(2**(prec_list[0]+1))*sol_val
                 else:
                     W[i,j] += (2**int(temp_str))*sol_val
-print(W)
-print(H)
-print(np.matmul(W,H))
+print("V = ", v)
+print("W = ", W)
+print("H = ", H)
+print("WH = ", np.matmul(W,H))
+print("First energy: ", sampleset.first.energy)
+
+print("Norm: ", LA.norm(v - np.matmul(W,H)))
+print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
 
 
 #pprint.pprint(sampleset.first.sample)
