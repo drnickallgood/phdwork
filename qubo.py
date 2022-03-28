@@ -615,6 +615,7 @@ print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
 
 #pprint.pprint(sampleset.first.sample)
 
+
         
 #Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
 
@@ -624,6 +625,31 @@ print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
         #A = np.zeros([1,k])
         #A += 1  # make matrix all 1's
         #Q,Q_alt,index = qubo_prep_nonneg(A,b[q][r],n,prec_list,varnames=varnames)
+
+
+## So here we are going to try the H penalty where we ensure H only has 1 selection
+
+#Lets try (1 - h11 - h21 - h31)^2
+A2 = np.array([[1,1,1]])
+prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
+b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
+varnames2 = ['h11','h21','h31'] #just an example
+n2=3
+Q,Q_alt,index = qubo_prep_nonneg(A2,b2,n2,prec_list2,varnames=varnames2) #Use the non-negative qubo_prep version!!!
+
+delta2 = 1 #delta2 is also a lagrange  multiplier, increase if constraint is not satisfied
+Q_alt2 = {} #New dictionary to store Q_alt but which altertered key names
+for key,value in Q_alt.items():
+    #Erase all the characters in the key after underscore
+    temp_key = (key[0].split('_')[0],key[1].split('_')[0])
+    Q_alt2[temp_key] = value*delta2
+
+
+sampler2 = dimod.ExactSolver()
+sampleset2 = sampler2.sample_qubo(Q_alt2)
+print(sampleset2.first.sample)
+
+print(sampleset2.first.energy)
 
 '''
 
