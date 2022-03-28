@@ -628,6 +628,9 @@ print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
 
 
 ## So here we are going to try the H penalty where we ensure H only has 1 selection
+# We go through this process for H only , then we add the results to Q_Total dict
+# n will be length of h colum, so this is k
+# A matrix will be all A 1's length of k
 
 #Lets try (1 - h11 - h21 - h31)^2
 A2 = np.array([[1,1,1]])
