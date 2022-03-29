@@ -575,42 +575,17 @@ for x_key, x_val in x_dict.items():
 
 #pprint.pprint(Q_total)
 
-sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=40)
-solution_dict = {}
-solution_dict = sampleset.first.sample
-
 p = v.shape[0]
 n = v.shape[1]
 
 W = np.zeros([p,k])
 H = np.zeros([k,n])
 
-for i in range(0,k):
-    for j in range(0,n):
-        temp_h = "h" + str(i+1) + str(j+1)
-        H[i,j] = solution_dict[temp_h]
-        
-for i in range(0,p):
-    for j in range(0,k):
-        temp_w = "w" + str(i+1) + str(j+1)
-        for sol_key, sol_val in solution_dict.items():
-            if temp_w in sol_key:
-                #print(temp_w, sol_key)
-                temp_str = sol_key.split('_')[1]
-                #print(temp_str)
-                if temp_str == "null":
-                    W[i,j] += -(2**(prec_list[0]+1))*sol_val
-                else:
-                    W[i,j] += (2**int(temp_str))*sol_val
-print("V = ", v)
-print("W = ", W)
-print("H = ", H)
-print("WH = ", np.matmul(W,H))
-print("First energy: ", sampleset.first.energy)
 
-print("Norm: ", LA.norm(v - np.matmul(W,H)))
-print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
+
+
+
+
 
 
 #pprint.pprint(sampleset.first.sample)
@@ -633,26 +608,72 @@ print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
 # A matrix will be all A 1's length of k
 
 #Lets try (1 - h11 - h21 - h31)^2
-A2 = np.array([[1,1,1]])
+#A2 = np.array([[1,1,1,1]])
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
-varnames2 = ['h11','h21','h31'] #just an example
-n2=3
-Q,Q_alt,index = qubo_prep_nonneg(A2,b2,n2,prec_list2,varnames=varnames2) #Use the non-negative qubo_prep version!!!
+varnames2 = ['h11','h12','h21', 'h22'] #just an example
+#n2=4
+Q2,Q2_alt,index = qubo_prep_nonneg(A,b2,n,prec_list2,varnames=varnames2) #Use the non-negative qubo_prep version!!!
 
 delta2 = 1 #delta2 is also a lagrange  multiplier, increase if constraint is not satisfied
 Q_alt2 = {} #New dictionary to store Q_alt but which altertered key names
-for key,value in Q_alt.items():
+for key,value in Q2_alt.items():
     #Erase all the characters in the key after underscore
     temp_key = (key[0].split('_')[0],key[1].split('_')[0])
     Q_alt2[temp_key] = value*delta2
 
+pprint.pprint(Q_total)
+print("\n---\n")
+pprint.pprint(Q_alt2)
+
+
+## Temp stopping point! 
+exit(1)
+'''
+Current H output 
+
+{('h11', 'h11'): -1.0, ('h11', 'h12'): 2.0, ('h12', 'h12'): -1.0}
+'''
+
 
 sampler2 = dimod.ExactSolver()
 sampleset2 = sampler2.sample_qubo(Q_alt2)
-print(sampleset2.first.sample)
 
-print(sampleset2.first.energy)
+
+sampler = neal.SimulatedAnnealingSampler()
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=40)
+
+solution_dict = {}
+solution_dict = sampleset.first.sample
+
+## This is the verification part
+for i in range(0,k):
+    for j in range(0,n):
+        temp_h = "h" + str(i+1) + str(j+1)
+        H[i,j] = solution_dict[temp_h]
+        
+for i in range(0,p):
+    for j in range(0,k):
+        temp_w = "w" + str(i+1) + str(j+1)
+        for sol_key, sol_val in solution_dict.items():
+            if temp_w in sol_key:
+                #print(temp_w, sol_key)
+                temp_str = sol_key.split('_')[1]
+                #print(temp_str)
+                if temp_str == "null":
+                    W[i,j] += -(2**(prec_list[0]+1))*sol_val
+                else:
+                    W[i,j] += (2**int(temp_str))*sol_val
+
+
+print("V = ", v)
+print("W = ", W)
+print("H = ", H)
+print("WH = ", np.matmul(W,H))
+print("First energy: ", sampleset.first.energy)
+
+print("Norm: ", LA.norm(v - np.matmul(W,H)))
+print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
 
 '''
 
@@ -687,109 +708,3 @@ WH with a V, and if we get close, we can verify this.
 
 '''
 
-'''
-print("\nQ\n")
-for i,j in Q.items():
-    print(i,":",j)
-
-print("\nQ_alt\n")
-for i,j in Q_alt.items():
-    print(i,":",j)
-
-print("\nindex\n")
-for i,j in index.items():
-    print(i,":",j)
-'''
-
-
-
-'''
-
-Example output from Q_total for 2x2 matrix
-
-{('x1_0', 'x1_0'): -7.0,
- ('x1_0', 'x2_0'): 2.0,
- ('x1_0', 'x2_1'): 4.0,
- ('x1_0', 'x2_null'): -8.0,
- ('x1_1', 'x1_0'): 4.0,
- ('x1_1', 'x1_1'): -12.0,
- ('x1_1', 'x2_0'): 4.0,
- ('x1_1', 'x2_1'): 8.0,
- ('x1_1', 'x2_null'): -16.0,
- ('x1_null', 'x1_0'): -8.0,
- ('x1_null', 'x1_1'): -16.0,
- ('x1_null', 'x1_null'): 48.0,
- ('x1_null', 'x2_0'): -8.0,
- ('x1_null', 'x2_1'): -16.0,
- ('x1_null', 'x2_null'): 32.0,
- ('x2_0', 'x2_0'): -7.0,
- ('x2_1', 'x2_0'): 4.0,
- ('x2_1', 'x2_1'): -12.0,
- ('x2_null', 'x2_0'): -8.0,
- ('x2_null', 'x2_1'): -16.0,
- ('x2_null', 'x2_null'): 48.0,
- ('x3_0', 'x3_0'): -7.0,
- ('x3_0', 'x4_0'): 2.0,
- ('x3_0', 'x4_1'): 4.0,
- ('x3_0', 'x4_null'): -8.0,
- ('x3_1', 'x3_0'): 4.0,
- ('x3_1', 'x3_1'): -12.0,
- ('x3_1', 'x4_0'): 4.0,
- ('x3_1', 'x4_1'): 8.0,
- ('x3_1', 'x4_null'): -16.0,
- ('x3_null', 'x3_0'): -8.0,
- ('x3_null', 'x3_1'): -16.0,
- ('x3_null', 'x3_null'): 48.0,
- ('x3_null', 'x4_0'): -8.0,
- ('x3_null', 'x4_1'): -16.0,
- ('x3_null', 'x4_null'): 32.0,
- ('x4_0', 'x4_0'): -7.0,
- ('x4_1', 'x4_0'): 4.0,
- ('x4_1', 'x4_1'): -12.0,
- ('x4_null', 'x4_0'): -8.0,
- ('x4_null', 'x4_1'): -16.0,
- ('x4_null', 'x4_null'): 48.0,
- ('x5_0', 'x5_0'): -7.0,
- ('x5_0', 'x6_0'): 2.0,
- ('x5_0', 'x6_1'): 4.0,
- ('x5_0', 'x6_null'): -8.0,
- ('x5_1', 'x5_0'): 4.0,
- ('x5_1', 'x5_1'): -12.0,
- ('x5_1', 'x6_0'): 4.0,
- ('x5_1', 'x6_1'): 8.0,
- ('x5_1', 'x6_null'): -16.0,
- ('x5_null', 'x5_0'): -8.0,
- ('x5_null', 'x5_1'): -16.0,
- ('x5_null', 'x5_null'): 48.0,
- ('x5_null', 'x6_0'): -8.0,
- ('x5_null', 'x6_1'): -16.0,
- ('x5_null', 'x6_null'): 32.0,
- ('x6_0', 'x6_0'): -7.0,
- ('x6_1', 'x6_0'): 4.0,
- ('x6_1', 'x6_1'): -12.0,
- ('x6_null', 'x6_0'): -8.0,
- ('x6_null', 'x6_1'): -16.0,
- ('x6_null', 'x6_null'): 48.0,
- ('x7_0', 'x7_0'): -7.0,
- ('x7_0', 'x8_0'): 2.0,
- ('x7_0', 'x8_1'): 4.0,
- ('x7_0', 'x8_null'): -8.0,
- ('x7_1', 'x7_0'): 4.0,
- ('x7_1', 'x7_1'): -12.0,
- ('x7_1', 'x8_0'): 4.0,
- ('x7_1', 'x8_1'): 8.0,
- ('x7_1', 'x8_null'): -16.0,
- ('x7_null', 'x7_0'): -8.0,
- ('x7_null', 'x7_1'): -16.0,
- ('x7_null', 'x7_null'): 48.0,
- ('x7_null', 'x8_0'): -8.0,
- ('x7_null', 'x8_1'): -16.0,
- ('x7_null', 'x8_null'): 32.0,
- ('x8_0', 'x8_0'): -7.0,
- ('x8_1', 'x8_0'): 4.0,
- ('x8_1', 'x8_1'): -12.0,
- ('x8_null', 'x8_0'): -8.0,
- ('x8_null', 'x8_1'): -16.0,
- ('x8_null', 'x8_null'): 48.0}
-
-'''
