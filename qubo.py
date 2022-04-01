@@ -576,10 +576,16 @@ for x_key, x_val in x_dict.items():
 #pprint.pprint(Q_total)
 
 p = v.shape[0]
-n = v.shape[1]
+#n = v.shape[1]
 
-W = np.zeros([p,k])
-H = np.zeros([k,n])
+
+## Need to do like we did above with the h variables and not send them in all at once
+## Make as nay Q_alt2 as there are columns in H
+## Each column call qubo_prep_nonneg with the correct varnames to that column
+'''
+col1 = 11, 21, 31...
+col2 = 12, 22, 32...
+'''
 
 
 
@@ -606,34 +612,71 @@ H = np.zeros([k,n])
 # We go through this process for H only , then we add the results to Q_Total dict
 # n will be length of h colum, so this is k
 # A matrix will be all A 1's length of k
+# Call qubo_noneg n times
+# This is really bad analysis space wise, but we can approximate, can optmize somewhat
+#       x: p * k * n
+#       w: c * p * k  where c = precision
+#       h: k * n
+#   (pn + cp + n) , k is out because it's present in all of them , c doesn't grow with inputsize
+# Accuracy / Time -- Ratio.. more accurate with less time, than clasical
+
+# I feel like we could basically just create those varnames dynamically based on number of columns
+#And length of columns of course
+
+# refresh on quantum complexity classes...committie will ask
+
 
 #Lets try (1 - h11 - h21 - h31)^2
 #A2 = np.array([[1,1,1,1]])
+
+#A2 = np.zeros([1,k])
+#A2 += 1
+
+'''
+
+NEW STUFF for H penalty
+
+'''
+
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
-varnames2 = ['h11','h12','h21', 'h22'] #just an example
-#n2=4
-Q2,Q2_alt,index = qubo_prep_nonneg(A,b2,n,prec_list2,varnames=varnames2) #Use the non-negative qubo_prep version!!!
+varnames2 = list()
+delta2 = 1  # lagarange multiplier
+Q_alt2 = {} # new dict for Q_alt but diff key names
 
-delta2 = 1 #delta2 is also a lagrange  multiplier, increase if constraint is not satisfied
-Q_alt2 = {} #New dictionary to store Q_alt but which altertered key names
-for key,value in Q2_alt.items():
-    #Erase all the characters in the key after underscore
-    temp_key = (key[0].split('_')[0],key[1].split('_')[0])
-    Q_alt2[temp_key] = value*delta2
+for h_i in range(0, k):
+    for h_j in range(0, n):
+        varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
+        
+    Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, n, prec_list2, varnames=varnames2)
+    # Multiply everything by delta 
+    for key,value in Q2_alt.items():
+        #Erase all the characters in the key after underscore
+        #temp_key = (key[0].split('_')[0],key[1].split('_')[0])
+        Q_alt2[key] = value*delta2
 
-pprint.pprint(Q_total)
-print("\n---\n")
+for key, val in Q_alt2.items():
+    if key in Q_total:
+        Q_total[key] += val
+    else:
+        Q_total[key] = val
+    
+
 pprint.pprint(Q_alt2)
+print ("\n---\n")
+pprint.pprint(Q_total)
 
 
-## Temp stopping point! 
+'''
+Current H output, 
+
+{('h11_0', 'h11_0'): -1.0, ('h11_0', 'h21_0'): 2.0, ('h21_0', 'h21_0'): -1.0}
+
+'''
+
+# Stopping here for debugging
 exit(1)
-'''
-Current H output 
 
-{('h11', 'h11'): -1.0, ('h11', 'h12'): 2.0, ('h12', 'h12'): -1.0}
-'''
 
 
 sampler2 = dimod.ExactSolver()
@@ -647,6 +690,10 @@ solution_dict = {}
 solution_dict = sampleset.first.sample
 
 ## This is the verification part
+
+W = np.zeros([p,k])
+H = np.zeros([k,n])
+
 for i in range(0,k):
     for j in range(0,n):
         temp_h = "h" + str(i+1) + str(j+1)
