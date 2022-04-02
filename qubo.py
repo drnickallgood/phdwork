@@ -460,6 +460,8 @@ Q_total = {}
 
 #v = np.array([[1,2], [3,4]])   #2x2
 v = np.array([[3,2], [3,1]])
+#v = np.array([ [3,2,1], [1,3,2] ]) # 2 x 3
+#v = np.array([ [1,0,3], [2,1,2], [3,3,2] ])
 #a = np.array([ [1,2,3], [3,4,5] ])  # 2 x 3
 #b = np.array([ [1,2,3], [4,5,6], [7,8,9] ])   # 3x3
 
@@ -536,8 +538,8 @@ for key, val in v_dict.items():
         # Get our corresponding x values to WH values
         varnames.append(x_dict_rev[item])
         # Build a row vector of 1's for A
-        A = np.zeros([1,k])
-        A += 1
+        #A = np.zeros([1,k])
+        #A += 1
         # Get each element of V for qubo_prep
         # print(varnames)
         # Also store them as a floating point number vs a string
@@ -644,17 +646,25 @@ varnames2 = list()
 delta2 = 1  # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
-for h_i in range(0, k):
-    for h_j in range(0, n):
+# Make as many q_alt2s as there are columns in H
+for h_i in range(0, k):        # row
+    varnames2 = []
+    for h_j in range(0, n):    # col
         varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
-        
+        #pprint.pprint(varnames2)
+
+    #pprint.pprint(varnames2)    
     Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, n, prec_list2, varnames=varnames2)
+    #varnames2 = []
+    #pprint.pprint(Q2_alt)
     # Multiply everything by delta 
     for key,value in Q2_alt.items():
         #Erase all the characters in the key after underscore
-        #temp_key = (key[0].split('_')[0],key[1].split('_')[0])
-        Q_alt2[key] = value*delta2
+        temp_key = (key[0].split('_')[0],key[1].split('_')[0])
+        Q_alt2[temp_key] = value*delta2
 
+
+# Add all to Q_total for H
 for key, val in Q_alt2.items():
     if key in Q_total:
         Q_total[key] += val
@@ -662,25 +672,12 @@ for key, val in Q_alt2.items():
         Q_total[key] = val
     
 
-pprint.pprint(Q_alt2)
-print ("\n---\n")
-pprint.pprint(Q_total)
+#pprint.pprint(Q_alt2)
+#print ("\n---\n")
+#pprint.pprint(Q_total)
 
-
-'''
-Current H output, 
-
-{('h11_0', 'h11_0'): -1.0, ('h11_0', 'h21_0'): 2.0, ('h21_0', 'h21_0'): -1.0}
-
-'''
-
-# Stopping here for debugging
-exit(1)
-
-
-
-sampler2 = dimod.ExactSolver()
-sampleset2 = sampler2.sample_qubo(Q_alt2)
+#sampler2 = dimod.ExactSolver()
+#sampleset2 = sampler2.sample_qubo(Q_alt2)
 
 
 sampler = neal.SimulatedAnnealingSampler()
@@ -713,14 +710,87 @@ for i in range(0,p):
                     W[i,j] += (2**int(temp_str))*sol_val
 
 
-print("V = ", v)
-print("W = ", W)
-print("H = ", H)
-print("WH = ", np.matmul(W,H))
-print("First energy: ", sampleset.first.energy)
+print("\n--- Sampleset ---\n")
+print(sampleset)
+print("\n--- Verification ---\n")
+print("V = \n", v)
+print("W = \n", W)
+print("H = \n", H)
+print("WH = \n ", np.matmul(W,H))
+print("\nFirst energy: ", sampleset.first.energy)
 
 print("Norm: ", LA.norm(v - np.matmul(W,H)))
 print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
+
+''' 
+
+Output:
+
+--- Sampleset ---
+
+   h11 h12 h21 h22 w11_0 w11_1 w11_null w12_0 w12_1 ... x8_null energy num_oc.
+10   1   0   0   1     1     1        0     0     1 ...       0  -25.0       1
+7    0   1   1   0     0     1        0     1     1 ...       0  -24.0       1
+11   0   1   1   0     1     1        0     1     1 ...       0  -24.0       1
+12   0   1   1   1     1     1        1     1     1 ...       0  -24.0       1
+19   0   1   1   0     0     1        0     1     1 ...       0  -24.0       1
+34   0   1   1   0     0     1        0     1     1 ...       0  -24.0       1
+2    0   1   1   0     0     1        0     0     1 ...       0  -23.0       1
+5    1   0   1   1     1     0        0     0     1 ...       0  -23.0       1
+8    1   0   0   1     0     1        0     0     1 ...       0  -23.0       1
+23   1   0   1   1     0     1        0     0     1 ...       0  -23.0       1
+30   1   0   0   1     1     1        0     1     1 ...       0  -23.0       1
+31   1   0   0   1     1     1        0     1     1 ...       0  -23.0       1
+36   1   0   0   1     1     1        0     1     1 ...       0  -23.0       1
+0    1   1   0   1     1     1        0     0     1 ...       1  -22.0       1
+3    0   0   1   1     1     0        1     0     1 ...       0  -22.0       1
+4    1   1   0   1     1     1        0     1     1 ...       0  -22.0       1
+6    1   1   1   0     1     0        0     0     1 ...       0  -22.0       1
+14   1   1   0   0     1     1        0     0     1 ...       0  -22.0       1
+15   0   0   1   1     0     0        0     0     1 ...       0  -22.0       1
+16   1   1   0   0     0     1        0     1     0 ...       0  -22.0       1
+17   0   0   1   1     0     0        0     1     1 ...       0  -22.0       1
+18   1   1   0   0     0     1        0     1     0 ...       0  -22.0       1
+20   0   0   1   1     1     0        0     1     1 ...       0  -22.0       1
+24   0   0   1   1     0     0        0     1     1 ...       0  -22.0       1
+25   0   0   1   1     1     0        1     1     1 ...       0  -22.0       1
+29   0   0   1   1     1     0        1     0     1 ...       0  -22.0       1
+32   0   0   1   1     1     0        0     1     1 ...       0  -22.0       1
+33   1   1   0   0     1     1        0     1     0 ...       0  -22.0       1
+37   0   0   1   1     1     0        1     1     1 ...       0  -22.0       1
+38   1   1   0   0     1     1        0     1     1 ...       0  -22.0       1
+26   1   1   1   0     1     0        0     1     0 ...       0  -21.0       1
+39   1   1   1   0     1     0        0     1     0 ...       0  -21.0       1
+13   1   1   0   0     1     1        0     0     1 ...       0  -20.0       1
+27   0   0   1   1     0     0        1     1     1 ...       0  -20.0       1
+28   1   1   1   1     1     1        1     1     1 ...       1  -20.0       1
+9    1   1   1   0     0     1        0     1     0 ...       0  -19.0       1
+1    1   0   0   0     0     1        0     1     0 ...       0  -18.0       1
+21   0   0   1   0     1     1        1     1     1 ...       0  -18.0       1
+22   0   0   1   0     0     1        0     0     1 ...       0  -18.0       1
+35   1   1   0   1     0     1        0     0     1 ...       1  -18.0       1
+['BINARY', 40 rows, 40 samples, 40 variables]
+
+--- Verification ---
+
+V =
+ [[3 2]
+ [3 1]]
+W =
+ [[3. 2.]
+ [3. 1.]]
+H =
+ [[1. 0.]
+ [0. 1.]]
+WH =
+  [[3. 2.]
+ [3. 1.]]
+
+First energy:  -25.0
+Norm:  0.0
+Verifying best energy via Frobenius Norm:  22.999999999999996
+
+'''
 
 '''
 
