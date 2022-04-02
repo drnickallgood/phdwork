@@ -114,7 +114,7 @@ def find_vars(v,k):
     for k,v in v_dict.items():
         print(k,":",v)
     '''
-    return v_dict, x_dict, x_dict_rev, n
+    return v_dict, x_dict, x_dict_rev, p, n
             
 
 # Ax-b is similar to V-WH
@@ -360,25 +360,6 @@ w31h11 + w32h21, w31h12 + w32h22, w31h13 + w32h23
 
 '''
 
-
-
-
-
-#print("\n2x2\n")
-#find_vars(v, k)
-
-#print("\n2x3\n")
-#find_vars(a, k)
-
-#print("\n3x3\n")
-#find_vars(b,k)
-
-
-#for k,v in x_dict.items():
-   # print(k,":",v)
-
-
-
              
 #(6 - x1 - x2)^2
 #Inorder to repurpose a code for ||Ax - b|| for individual quadratic equations for n variables,THe Dimensions for A is 1 x n, for x : n x 1 and b : 1 x 1
@@ -458,18 +439,31 @@ Q_total = {}
 
 #V = np.array([[2.5,7.3],[3.5,2]]
 
+# 2 x 2 tests, -4 to +3
 #v = np.array([[1,2], [3,4]])   #2x2
-v = np.array([[3,2], [3,1]])
-#v = np.array([ [3,2,1], [1,3,2] ]) # 2 x 3
+#v = np.array([[-1,-3], [2,3]])
+#v = np.array([[-4,-4], [-4,-4]])
+#v = np.array([[-4,3], [-2,1]])
+#v = np.array([[-1,-4], [2,-3]])
+
+# 2 x 3 tests , -4 to +3
+
+v = np.array([ [3,2,1], [1,3,2] ])
+#v = np.array([ [-4,0,1], [-1,-2,3]])
+
+
+# 3 x 3 tests, -4 to +3
 #v = np.array([ [1,0,3], [2,1,2], [3,3,2] ])
-#a = np.array([ [1,2,3], [3,4,5] ])  # 2 x 3
-#b = np.array([ [1,2,3], [4,5,6], [7,8,9] ])   # 3x3
+
+
 
 
 #for make qubo, V = B as our input
 # Prec List won't always be like this, prob need to dynamically figure it out based
 # on inputs..
-prec_list = [1,0]
+
+
+prec_list = [1,0]     # -4 to +3
 prec_list_str = ['null', '1', '0']
 
 
@@ -479,36 +473,17 @@ prec_list_str = ['null', '1', '0']
 # k = # of clusters
 
 
+# K must be adjusted accordingly with size of matrix
 k = 2
-A = np.zeros([1,k])
-A += 1  # make matrix all 1's
+
 
 v_rows = v.shape[0]
 v_cols = v.shape[1]
 
-v_dict, x_dict, x_dict_rev, n = find_vars(v,k)
+v_dict, x_dict, x_dict_rev, p, n = find_vars(v,k)
 
+print("p:", p, "n:", n)
 
-#print(v_dict)
-#print(x_dict)
-#varnames = []
-
-# Get x vector names/symbols
-#for i,j in x_dict.items():
-    #varnames.append(i)
-
-#for key, val in v_dict.items():
-   # print(key,":",val)
-
-#for key, val in x_dict.items():
-#    print(key, ":", val)
-
-'''
-(1, 1) : {'v_val': '1', 'wh': [('w11', 'h11'), ('w12', 'h21')]}
-(1, 2) : {'v_val': '2', 'wh': [('w11', 'h12'), ('w12', 'h22')]}
-(2, 1) : {'v_val': '3', 'wh': [('w21', 'h11'), ('w22', 'h21')]}
-(2, 2) : {'v_val': '4', 'wh': [('w21', 'h12'), ('w22', 'h22')]}
-'''
 
 # v_11 - x1 - x2
 # v_12 - x3 - x4
@@ -529,6 +504,7 @@ v_dict, x_dict, x_dict_rev, n = find_vars(v,k)
 # We get the q_alt return and add it to q_total
 #print(v_dict[(1,1)]['wh'][1])
 
+
 # Go through main dictionary to get data
 for key, val in v_dict.items():
    #print(v_dict[key]['wh'])
@@ -544,8 +520,10 @@ for key, val in v_dict.items():
         # print(varnames)
         # Also store them as a floating point number vs a string
     #for v_key, v_val in v_dict.items():
+    # Build a row vector of 1's for A
+    A = np.zeros([1,k])
+    A += 1
     b = float(v_dict[key]['v_val'])
-    #print(b)
     Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
     # Put everything from each Q_alt dict into master Q_total
     for key, val in Q_alt.items():
@@ -561,7 +539,7 @@ for key, val in v_dict.items():
 
 # linearization
 # Delta == lagaragne param
-delta = 5
+delta = 1
 for x_key, x_val in x_dict.items():
     temp_h = x_val[1]
     #print(temp_h)
@@ -577,27 +555,13 @@ for x_key, x_val in x_dict.items():
 
 #pprint.pprint(Q_total)
 
-p = v.shape[0]
-#n = v.shape[1]
+
+
 
 
 ## Need to do like we did above with the h variables and not send them in all at once
 ## Make as nay Q_alt2 as there are columns in H
 ## Each column call qubo_prep_nonneg with the correct varnames to that column
-'''
-col1 = 11, 21, 31...
-col2 = 12, 22, 32...
-'''
-
-
-
-
-
-
-
-
-#pprint.pprint(sampleset.first.sample)
-
 
         
 #Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
@@ -628,18 +592,14 @@ col2 = 12, 22, 32...
 # refresh on quantum complexity classes...committie will ask
 
 
-#Lets try (1 - h11 - h21 - h31)^2
-#A2 = np.array([[1,1,1,1]])
 
-#A2 = np.zeros([1,k])
-#A2 += 1
 
 '''
 
 NEW STUFF for H penalty
 
 '''
-
+#p = v.shape[0]
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 varnames2 = list()
@@ -653,6 +613,8 @@ for h_i in range(0, k):        # row
         varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
         #pprint.pprint(varnames2)
 
+    A = np.zeros([1,k])
+    A += 1
     #pprint.pprint(varnames2)    
     Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, n, prec_list2, varnames=varnames2)
     #varnames2 = []
@@ -678,6 +640,7 @@ for key, val in Q_alt2.items():
 
 #sampler2 = dimod.ExactSolver()
 #sampleset2 = sampler2.sample_qubo(Q_alt2)
+#sampleset2 = sampler2.sample_qubo(Q_total)
 
 
 sampler = neal.SimulatedAnnealingSampler()
@@ -685,6 +648,7 @@ sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=40)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
+#solution_dict = sampleset2.first.sample
 
 ## This is the verification part
 
@@ -710,8 +674,8 @@ for i in range(0,p):
                     W[i,j] += (2**int(temp_str))*sol_val
 
 
-print("\n--- Sampleset ---\n")
-print(sampleset)
+#print("\n--- Sampleset ---\n")
+#print(sampleset)
 print("\n--- Verification ---\n")
 print("V = \n", v)
 print("W = \n", W)
@@ -720,77 +684,8 @@ print("WH = \n ", np.matmul(W,H))
 print("\nFirst energy: ", sampleset.first.energy)
 
 print("Norm: ", LA.norm(v - np.matmul(W,H)))
-print("Verifying best energy via Frobenius Norm: ", LA.norm(v)**2)
+print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2)
 
-''' 
-
-Output:
-
---- Sampleset ---
-
-   h11 h12 h21 h22 w11_0 w11_1 w11_null w12_0 w12_1 ... x8_null energy num_oc.
-10   1   0   0   1     1     1        0     0     1 ...       0  -25.0       1
-7    0   1   1   0     0     1        0     1     1 ...       0  -24.0       1
-11   0   1   1   0     1     1        0     1     1 ...       0  -24.0       1
-12   0   1   1   1     1     1        1     1     1 ...       0  -24.0       1
-19   0   1   1   0     0     1        0     1     1 ...       0  -24.0       1
-34   0   1   1   0     0     1        0     1     1 ...       0  -24.0       1
-2    0   1   1   0     0     1        0     0     1 ...       0  -23.0       1
-5    1   0   1   1     1     0        0     0     1 ...       0  -23.0       1
-8    1   0   0   1     0     1        0     0     1 ...       0  -23.0       1
-23   1   0   1   1     0     1        0     0     1 ...       0  -23.0       1
-30   1   0   0   1     1     1        0     1     1 ...       0  -23.0       1
-31   1   0   0   1     1     1        0     1     1 ...       0  -23.0       1
-36   1   0   0   1     1     1        0     1     1 ...       0  -23.0       1
-0    1   1   0   1     1     1        0     0     1 ...       1  -22.0       1
-3    0   0   1   1     1     0        1     0     1 ...       0  -22.0       1
-4    1   1   0   1     1     1        0     1     1 ...       0  -22.0       1
-6    1   1   1   0     1     0        0     0     1 ...       0  -22.0       1
-14   1   1   0   0     1     1        0     0     1 ...       0  -22.0       1
-15   0   0   1   1     0     0        0     0     1 ...       0  -22.0       1
-16   1   1   0   0     0     1        0     1     0 ...       0  -22.0       1
-17   0   0   1   1     0     0        0     1     1 ...       0  -22.0       1
-18   1   1   0   0     0     1        0     1     0 ...       0  -22.0       1
-20   0   0   1   1     1     0        0     1     1 ...       0  -22.0       1
-24   0   0   1   1     0     0        0     1     1 ...       0  -22.0       1
-25   0   0   1   1     1     0        1     1     1 ...       0  -22.0       1
-29   0   0   1   1     1     0        1     0     1 ...       0  -22.0       1
-32   0   0   1   1     1     0        0     1     1 ...       0  -22.0       1
-33   1   1   0   0     1     1        0     1     0 ...       0  -22.0       1
-37   0   0   1   1     1     0        1     1     1 ...       0  -22.0       1
-38   1   1   0   0     1     1        0     1     1 ...       0  -22.0       1
-26   1   1   1   0     1     0        0     1     0 ...       0  -21.0       1
-39   1   1   1   0     1     0        0     1     0 ...       0  -21.0       1
-13   1   1   0   0     1     1        0     0     1 ...       0  -20.0       1
-27   0   0   1   1     0     0        1     1     1 ...       0  -20.0       1
-28   1   1   1   1     1     1        1     1     1 ...       1  -20.0       1
-9    1   1   1   0     0     1        0     1     0 ...       0  -19.0       1
-1    1   0   0   0     0     1        0     1     0 ...       0  -18.0       1
-21   0   0   1   0     1     1        1     1     1 ...       0  -18.0       1
-22   0   0   1   0     0     1        0     0     1 ...       0  -18.0       1
-35   1   1   0   1     0     1        0     0     1 ...       1  -18.0       1
-['BINARY', 40 rows, 40 samples, 40 variables]
-
---- Verification ---
-
-V =
- [[3 2]
- [3 1]]
-W =
- [[3. 2.]
- [3. 1.]]
-H =
- [[1. 0.]
- [0. 1.]]
-WH =
-  [[3. 2.]
- [3. 1.]]
-
-First energy:  -25.0
-Norm:  0.0
-Verifying best energy via Frobenius Norm:  22.999999999999996
-
-'''
 
 '''
 
