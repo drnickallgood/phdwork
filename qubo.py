@@ -448,15 +448,20 @@ Q_total = {}
 
 # 2 x 3 tests , -4 to +3
 
-v = np.array([ [3,2,1], [1,3,2] ])
+#v = np.array([ [3,2,2], [1,3,3] ])
+
+#v = np.array([ [3,2,1], [1,3,2] ])
 #v = np.array([ [-4,0,1], [-1,-2,3]])
 
 
 # 3 x 3 tests, -4 to +3
-#v = np.array([ [1,0,3], [2,1,2], [3,3,2] ])
+#v = np.array([ [1,-1,-2], [-4,3,2], [1,0,3] ])
 
 
+# 2 x 3
 
+
+# 3 x 3
 
 #for make qubo, V = B as our input
 # Prec List won't always be like this, prob need to dynamically figure it out based
@@ -476,13 +481,106 @@ prec_list_str = ['null', '1', '0']
 # K must be adjusted accordingly with size of matrix
 k = 2
 
+# 2 x 2
+
+# p = 2
+# n = 2
+# k = 2
+
+w_test = np.array([ [1,3], [-4,2] ])
+h_test = np.array([ [0,1], [1,0] ])
+wh_test = np.matmul(w_test,h_test)
+v_test = wh_test
+v = v_test
+
+#print("p:", p, "n:", n)
+
+# 2 x 3
+
+w_test = np.array([ [1,3,], [-4,2] ])   # p x k - 2 x 2
+h_test = np.array([ [0,1,1], [1,0,0] ])      # k x n - 2 x 3 
+wh_test = np.matmul(w_test,h_test)       # p x n - 2 x 3
+v_test = wh_test
+v = v_test
+
+
+# 3 x 3
+
+'''
+p = 3
+k = 2
+n = 3
+
+V = p x n
+W = p x k
+H = k x n
+
+V = 3 x 3
+W = 3 x 2
+H = 2 x 3
+'''
+
+
+w_test = np.array([ [1,3], [-4,2], [-3,-2] ])   # p x k - 3 x 2
+h_test = np.array([ [0,1,1], [1,0,0] ])      # k x n - 2 x 3 
+wh_test = np.matmul(w_test,h_test)       # p x n - 3 x 3
+v_test = wh_test
+v = v_test
+
+
+
+
+# 4 x 2
+
+'''
+p = 4
+k = 2
+n = 2
+
+V = p x n
+W = p x k
+H = k x n
+
+V = 4 x 2
+W = 4 x 2
+H = 2 x 4
+'''
+
+# transpose V first, 4x2 will be come 2 x 4
+# W will be 2 x 4, h will be 4 x 2
+#w_test = np.array([ [1,3,-4,2], [3,2,-3,0] ])    # 2 x 4
+#h_test = np.array([ [1,0], [0,1], [1,1],[0,1] ]) # 4 x 2
+#wh_test = np.matmul(w_test, h_test)
+#v_test = wh_test
+#v = v_test
+
+
+# Old non transposed stuff
+w_test = np.array([ [1,3], [-4,2], [3,2], [-3,0] ])   # p x k - 4 x 2
+h_test = np.array([ [0,1,0,1], [1,0,1,0] ])      # k x n - 2 x 4
+wh_test = np.matmul(w_test,h_test)       # p x n - 2 x 4
+v_test = wh_test
+v = v_test
+
 
 v_rows = v.shape[0]
 v_cols = v.shape[1]
 
 v_dict, x_dict, x_dict_rev, p, n = find_vars(v,k)
 
-print("p:", p, "n:", n)
+### Test Cases where WH is known, V is made automatically
+'''
+For testing, make up a WH and get a result of V, then test
+Make sure to put this in dissertation as test
+V = p x n
+W = p x k
+H = k x n
+V = 2 x 2
+W = 2 x 2
+H = 2 x 2
+'''
+
+
 
 
 # v_11 - x1 - x2
@@ -524,7 +622,7 @@ for key, val in v_dict.items():
     A = np.zeros([1,k])
     A += 1
     b = float(v_dict[key]['v_val'])
-    Q, Q_alt, index = qubo_prep(A,b,n,prec_list,varnames=varnames)
+    Q, Q_alt, index = qubo_prep(A,b,k,prec_list,varnames=varnames)
     # Put everything from each Q_alt dict into master Q_total
     for key, val in Q_alt.items():
         # Check if key is already here, if so add to it
@@ -603,20 +701,20 @@ NEW STUFF for H penalty
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 varnames2 = list()
-delta2 = 1  # lagarange multiplier
+delta2 = 2 # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
 # Make as many q_alt2s as there are columns in H
-for h_i in range(0, k):        # row
+for h_i in range(0, n):        # row
     varnames2 = []
-    for h_j in range(0, n):    # col
+    for h_j in range(0, k):    # col
         varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
         #pprint.pprint(varnames2)
 
     A = np.zeros([1,k])
     A += 1
     #pprint.pprint(varnames2)    
-    Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, n, prec_list2, varnames=varnames2)
+    Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, k, prec_list2, varnames=varnames2)
     #varnames2 = []
     #pprint.pprint(Q2_alt)
     # Multiply everything by delta 
@@ -638,13 +736,14 @@ for key, val in Q_alt2.items():
 #print ("\n---\n")
 #pprint.pprint(Q_total)
 
+#exit(1)
 #sampler2 = dimod.ExactSolver()
 #sampleset2 = sampler2.sample_qubo(Q_alt2)
 #sampleset2 = sampler2.sample_qubo(Q_total)
 
-
+# This is where the quantum piece happens
 sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=40)
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=100)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
@@ -677,14 +776,24 @@ for i in range(0,p):
 #print("\n--- Sampleset ---\n")
 #print(sampleset)
 print("\n--- Verification ---\n")
+print("delta1: ", delta, "delta2: ", delta2)
+print("Num Clusters: ", k, "\n")
+print("known W: \n", w_test)
+print("Known H: \n", h_test)
+print("Known WH: \n", v_test)
+
+print("\n------\n")
+
+
 print("V = \n", v)
-print("W = \n", W)
-print("H = \n", H)
-print("WH = \n ", np.matmul(W,H))
+print("Computed W = \n", W)
+print("Computed H = \n", H)
+print("Computed WH = \n ", np.matmul(W,H))
 print("\nFirst energy: ", sampleset.first.energy)
 
 print("Norm: ", LA.norm(v - np.matmul(W,H)))
 print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2)
+
 
 
 '''
@@ -720,3 +829,32 @@ WH with a V, and if we get close, we can verify this.
 
 '''
 
+''' 
+Interpretation of results:
+
+each 1 in column of H 
+
+row shows which cluster it belongs to
+column denotes the datapoint
+
+In most cases V != WH but will be as close as possible
+
+When you multiply by a column vec say (0 1)T
+1 -4 X 0
+3.  2    1
+
+Column in W must be same length as columns in V
+
+We must transpose input from make_blobs for our matrix fatorfization stuff
+
+The length of the vector of the input data determines the length of the data in the centers (coz they r cut from the same cloth so to speak).
+Remember this. Note if you have to
+
+
+Make_blobs given data, we give it known center points that are integers, so we can see how close we get to them with our algorithm for comparison
+
+Input samples MUST be transposed from make_blobs to work properly, this makes our samples into columns instad of rows
+
+
+
+'''
