@@ -255,8 +255,13 @@ def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):
     
     for i in range(0,n):
         for j in range(i,n):
-            Qinit[i,j] = 2*sum(A[:,i]*A[:,j])    
-    bnew = 2*b   
+            Qinit[i,j] = 2*sum(A[:,i]*A[:,j])
+            #print("qinit_i_j: ", Qinit[i,j])
+            #print("A_:,i",i,":", A[:,i])
+           # print("A_:,j",j,":", A[:,j])
+    bnew = 2*b
+   # print("b: ", b)
+   # print("2*b:", bnew)
     
     for i in range(0,n*len(powersoftwo)):
         if i%len(powersoftwo)==0 and i>0:
@@ -267,6 +272,8 @@ def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):
         for j in range(i,n*len(powersoftwo)):
             if i==j: #Linear coefficient
                 Qdict[i,i] = (powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
+
+               # print("qdict_i_i: ", Qdict[i,i])
                 if varnames != None:
                     tempvar1 = varnames[n_i_ctr] + '_' + str_bitspower[i_powerctr]
                     index_dict[tempvar1] = i
@@ -276,6 +283,7 @@ def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):
                     n_j_ctr = n_j_ctr + 1
                     j_powerctr = 0
                 Qdict[i,j] = powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
+                print("qdict_i_j:", Qdict[i,j])
                 if varnames != None:
                     tempvar2 = varnames[n_j_ctr] + '_' + str_bitspower[j_powerctr]
                     Qdict_alt[tempvar1,tempvar2] = Qdict[i,j]
@@ -468,8 +476,8 @@ Q_total = {}
 # on inputs..
 
 
-prec_list = [1,0]     # -4 to +3
-prec_list_str = ['null', '1', '0']
+prec_list = [2,1,0]     # -8 to +7
+prec_list_str = ['null','2', '1', '0']
 
 
 # v = our V matrix which is p x n matrix
@@ -530,42 +538,60 @@ v = v_test
 
 
 
-# 4 x 2
+# 10 x 2 from make blobs
+# we first must transpose this data before input
+
 
 '''
-p = 4
-k = 2
-n = 2
+
+-- Non transposed, we can use np.transpose to fix this --
 
 V = p x n
 W = p x k
 H = k x n
 
-V = 4 x 2
-W = 4 x 2
-H = 2 x 4
-'''
+p = 10
+k = 2
+n = 2
 
-# transpose V first, 4x2 will be come 2 x 4
-# W will be 2 x 4, h will be 4 x 2
-#w_test = np.array([ [1,3,-4,2], [3,2,-3,0] ])    # 2 x 4
-#h_test = np.array([ [1,0], [0,1], [1,1],[0,1] ]) # 4 x 2
-#wh_test = np.matmul(w_test, h_test)
-#v_test = wh_test
-#v = v_test
+
+V = 10 x 2
+W = 10 x 2
+H = 2 x 2
+'''
 
 
 # Old non transposed stuff
-w_test = np.array([ [1,3], [-4,2], [3,2], [-3,0] ])   # p x k - 4 x 2
-h_test = np.array([ [0,1,0,1], [1,0,1,0] ])      # k x n - 2 x 4
-wh_test = np.matmul(w_test,h_test)       # p x n - 2 x 4
-v_test = wh_test
-v = v_test
+#w_test = np.array([ [1,3], [-4,2], [3,2], [-3,0] ])   # p x k - 4 x 2
+#h_test = np.array([ [0,1,0,1], [1,0,1,0] ])      # k x n - 2 x 4
+#wh_test = np.matmul(w_test,h_test)       # p x n - 2 x 4
+#v_test = wh_test
+#v = v_test
 
+# Test centers : (2,2) and (5,5)
+
+
+v_input = np.array([
+        [5.74703954, 4.89742087],
+        [2.48936899,  3.1204466],
+        [5.07202179 , 5.72713675],
+        [5.38051886 , 5.06083751],
+        [2.47504421 , 1.9243214],
+        [1.94839057 , 2.20529925],
+        [2.933779   , 1.51136106],
+        [5.22193162 , 5.16683716],
+        [2.88202617 , 2.2000786],
+        [5.15653385 , 4.57295213] ])
+
+v_transpose = np.transpose(v_input)
+
+v = v_transpose
 
 v_rows = v.shape[0]
 v_cols = v.shape[1]
 
+
+print("\nGetting vars...\n")
 v_dict, x_dict, x_dict_rev, p, n = find_vars(v,k)
 
 ### Test Cases where WH is known, V is made automatically
@@ -603,6 +629,7 @@ H = 2 x 2
 #print(v_dict[(1,1)]['wh'][1])
 
 
+print("Parsing V dictionary...\n")
 # Go through main dictionary to get data
 for key, val in v_dict.items():
    #print(v_dict[key]['wh'])
@@ -635,6 +662,7 @@ for key, val in v_dict.items():
 #print(Q_total)
 #pprint.pprint(Q_total)
 
+print("Applying linearization penalties...\n")
 # linearization
 # Delta == lagaragne param
 delta = 1
@@ -696,6 +724,12 @@ for x_key, x_val in x_dict.items():
 
 NEW STUFF for H penalty
 
+we have only 0 in our prec list to ensure it's a 1 or 0
+our new b is a vector of length 1 with only a 1 in it, this ensures
+only one of our variables will be a 1
+we multiply a row of A by b of size 1
+a is a 1 x k 
+
 '''
 #p = v.shape[0]
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
@@ -704,6 +738,7 @@ varnames2 = list()
 delta2 = 2 # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
+print("Applying H penalties...\n")
 # Make as many q_alt2s as there are columns in H
 for h_i in range(0, n):        # row
     varnames2 = []
@@ -723,7 +758,7 @@ for h_i in range(0, n):        # row
         temp_key = (key[0].split('_')[0],key[1].split('_')[0])
         Q_alt2[temp_key] = value*delta2
 
-
+print("Adding all data to Q_total...\n")
 # Add all to Q_total for H
 for key, val in Q_alt2.items():
     if key in Q_total:
@@ -741,9 +776,10 @@ for key, val in Q_alt2.items():
 #sampleset2 = sampler2.sample_qubo(Q_alt2)
 #sampleset2 = sampler2.sample_qubo(Q_total)
 
+print("Sampling QUBO...\n")
 # This is where the quantum piece happens
 sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=100)
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=1000)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
@@ -754,6 +790,8 @@ solution_dict = sampleset.first.sample
 W = np.zeros([p,k])
 H = np.zeros([k,n])
 
+
+print("Creating verification W and H...\n")
 for i in range(0,k):
     for j in range(0,n):
         temp_h = "h" + str(i+1) + str(j+1)
@@ -778,21 +816,23 @@ for i in range(0,p):
 print("\n--- Verification ---\n")
 print("delta1: ", delta, "delta2: ", delta2)
 print("Num Clusters: ", k, "\n")
-print("known W: \n", w_test)
-print("Known H: \n", h_test)
-print("Known WH: \n", v_test)
+#print("known W: \n", w_test)
+#print("Known H: \n", h_test)
+#print("Known WH: \n", v_test)
 
 print("\n------\n")
 
 
-print("V = \n", v)
-print("Computed W = \n", W)
-print("Computed H = \n", H)
-print("Computed WH = \n ", np.matmul(W,H))
+print("V (transposed) = \n", v, "\n")
+print("Computed W = \n", W, "\n")
+print("Computed H = \n", H, "\n")
+print("Computed WH = \n ", np.matmul(W,H), "\n")
 print("\nFirst energy: ", sampleset.first.energy)
 
 print("Norm: ", LA.norm(v - np.matmul(W,H)))
-print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2)
+print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
+
+
 
 
 

@@ -17,27 +17,48 @@ X, y, centers = make_blobs(
 
 X, y, centers = make_blobs(
     n_samples=10, n_features=2,
-    centers=[ [2,2], [5,5] ], cluster_std=0.5,
+    centers=[ [5,5], [3,2] ], cluster_std=0.5,
     shuffle=True, random_state=0, return_centers=True
 )
 
-start_centers=np.array([(2,2),(5,5)])
 
-Xnew, ynew = make_blobs(
-    n_samples=10, n_features=2,
-    centers=start_centers, cluster_std=0.5,
-    shuffle=True, random_state=0
+plt.scatter(
+    X[y == 0, 0], X[y == 0, 1],
+    s=50, c='lightgreen',
+    marker='s', edgecolor='black',
+    label='cluster 1'
 )
 
-print(centers)
-#plt.scatter(X[:,0],X[:,1], c=y);
+plt.scatter(
+    X[y == 1, 0], X[y == 1, 1],
+    s=50, c='orange',
+    marker='o', edgecolor='black',
+    label='cluster 2'
+)
+
+
+# plot the centroids
+plt.scatter(
+    centers[:, 0], centers[:, 1],
+    s=250, marker='*',
+    c='red', edgecolor='black',
+    label='centroids'
+)
+
+plt.legend(scatterpoints=1)
+#plt.grid()
 #plt.show()
-print(X)
-print("\n----\n")
-print(Xnew)
-print("\n---\n")
-print(y)
-print("\n----\n")
-print(ynew)
+
+#print(centers)
+#plt.scatter(X[:,0],X[:,1], c=y);
+plt.grid()
+plt.show()
+#print(X)
+#print("\n----\n")
+#print(Xnew)
+#print("\n---\n")
+#print(y)
+#print("\n----\n")
+#print(ynew)
 
 
