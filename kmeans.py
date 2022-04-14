@@ -19,7 +19,7 @@ from sklearn.cluster import KMeans
 
 
 X, y = make_blobs(
-    n_samples=20, n_features=2,
+    n_samples=50, n_features=2,
     centers=3, cluster_std=0.5,
     shuffle=True, random_state=0
 )
@@ -63,15 +63,18 @@ plt.scatter(
     label='centroids'
 )
 
+print(km.cluster_centers_)
 plt.legend(scatterpoints=1)
 plt.grid()
 plt.show()
 cluster_center_coords = km.cluster_centers_
 
-#print(km.cluster_centers_)
+
 '''
-[[ 2.15718898  0.76456572]
- [-1.75768932  3.01364136]
- [ 1.26219585  4.38304519]]
+3 Centers for this file
+
+[[-1.53142893  3.15495352]
+ [ 1.75789654  0.81392937]
+ [ 1.15053223  4.31268924]]
 '''
 

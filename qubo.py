@@ -8,6 +8,12 @@ import dimod
 import pprint
 import neal
 import numpy.linalg as LA
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans
+from datetime import datetime
+
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is p x k
@@ -283,7 +289,7 @@ def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):
                     n_j_ctr = n_j_ctr + 1
                     j_powerctr = 0
                 Qdict[i,j] = powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
-                print("qdict_i_j:", Qdict[i,j])
+                #print("qdict_i_j:", Qdict[i,j])
                 if varnames != None:
                     tempvar2 = varnames[n_j_ctr] + '_' + str_bitspower[j_powerctr]
                     Qdict_alt[tempvar1,tempvar2] = Qdict[i,j]
@@ -436,6 +442,7 @@ x8 : ('w22', 'h22')
 
 '''
 
+start_time = datetime.now()
 # In a 2x2 situation, we basicallay have to send one quadratic expression at a time
 Q = {}
 Q_alt = {}
@@ -476,71 +483,8 @@ Q_total = {}
 # on inputs..
 
 
-prec_list = [2,1,0]     # -8 to +7
-prec_list_str = ['null','2', '1', '0']
-
-
-# v = our V matrix which is p x n matrix
-# w = our W matrix which is p x k
-# h = our H matrix which is k x n (binary)
-# k = # of clusters
-
-
-# K must be adjusted accordingly with size of matrix
-k = 2
-
-# 2 x 2
-
-# p = 2
-# n = 2
-# k = 2
-
-w_test = np.array([ [1,3], [-4,2] ])
-h_test = np.array([ [0,1], [1,0] ])
-wh_test = np.matmul(w_test,h_test)
-v_test = wh_test
-v = v_test
-
-#print("p:", p, "n:", n)
-
-# 2 x 3
-
-w_test = np.array([ [1,3,], [-4,2] ])   # p x k - 2 x 2
-h_test = np.array([ [0,1,1], [1,0,0] ])      # k x n - 2 x 3 
-wh_test = np.matmul(w_test,h_test)       # p x n - 2 x 3
-v_test = wh_test
-v = v_test
-
-
-# 3 x 3
-
-'''
-p = 3
-k = 2
-n = 3
-
-V = p x n
-W = p x k
-H = k x n
-
-V = 3 x 3
-W = 3 x 2
-H = 2 x 3
-'''
-
-
-w_test = np.array([ [1,3], [-4,2], [-3,-2] ])   # p x k - 3 x 2
-h_test = np.array([ [0,1,1], [1,0,0] ])      # k x n - 2 x 3 
-wh_test = np.matmul(w_test,h_test)       # p x n - 3 x 3
-v_test = wh_test
-v = v_test
-
-
-
-
-# 10 x 2 from make blobs
-# we first must transpose this data before input
-
+prec_list = [8,4,2,1,0]     # -32 to +31
+prec_list_str = ['null', '8', '4', '2', '1', '0']
 
 '''
 
@@ -570,6 +514,19 @@ H = 2 x 2
 
 # Test centers : (2,2) and (5,5)
 
+V, y = make_blobs(
+    n_samples=10, n_features=2,
+    centers=3, cluster_std=0.5,
+    shuffle=True, random_state=0
+)
+
+k = 3
+
+#print(type(V))
+#print(V.shape)
+
+#print(V)
+
 
 v_input = np.array([
         [5.74703954, 4.89742087],
@@ -583,12 +540,19 @@ v_input = np.array([
         [2.88202617 , 2.2000786],
         [5.15653385 , 4.57295213] ])
 
-v_transpose = np.transpose(v_input)
+#print(type(v_input))
+#print(v_input.shape)
+#print(v_input)
 
-v = v_transpose
+#v_transpose = np.transpose(V)
+v = np.transpose(v_input)
 
-v_rows = v.shape[0]
-v_cols = v.shape[1]
+## Only use this for stuff from ML where row vectors are features
+#v = v_transpose
+
+
+#v_rows = v.shape[0]
+#v_cols = v.shape[1]
 
 
 print("\nGetting vars...\n")
@@ -665,7 +629,7 @@ for key, val in v_dict.items():
 print("Applying linearization penalties...\n")
 # linearization
 # Delta == lagaragne param
-delta = 1
+delta = 5
 for x_key, x_val in x_dict.items():
     temp_h = x_val[1]
     #print(temp_h)
@@ -680,7 +644,8 @@ for x_key, x_val in x_dict.items():
         Q_total[temp_x, temp_x] += 6 * delta
 
 #pprint.pprint(Q_total)
-
+print("Linearization Penalties: \n")
+pprint.pprint(Q_total)
 
 
 
@@ -758,6 +723,9 @@ for h_i in range(0, n):        # row
         temp_key = (key[0].split('_')[0],key[1].split('_')[0])
         Q_alt2[temp_key] = value*delta2
 
+print("H Penalties: \n")
+pprint.pprint(Q_alt2)
+
 print("Adding all data to Q_total...\n")
 # Add all to Q_total for H
 for key, val in Q_alt2.items():
@@ -779,7 +747,7 @@ for key, val in Q_alt2.items():
 print("Sampling QUBO...\n")
 # This is where the quantum piece happens
 sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=99999, num_reads=1000)
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=1000, num_reads=1000)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
@@ -788,7 +756,9 @@ solution_dict = sampleset.first.sample
 ## This is the verification part
 
 W = np.zeros([p,k])
+#W = np.transpose(W)
 H = np.zeros([k,n])
+#H = np.transpose(H)
 
 
 print("Creating verification W and H...\n")
@@ -814,7 +784,7 @@ for i in range(0,p):
 #print("\n--- Sampleset ---\n")
 #print(sampleset)
 print("\n--- Verification ---\n")
-print("delta1: ", delta, "delta2: ", delta2)
+print("delta1: ", delta, "\ndelta2: ", delta2)
 print("Num Clusters: ", k, "\n")
 #print("known W: \n", w_test)
 #print("Known H: \n", h_test)
@@ -824,16 +794,64 @@ print("\n------\n")
 
 
 print("V (transposed) = \n", v, "\n")
-print("Computed W = \n", W, "\n")
-print("Computed H = \n", H, "\n")
-print("Computed WH = \n ", np.matmul(W,H), "\n")
+print("V Shape (transposed): " , v.shape)
+print("\nComputed W = \n", W, "\n")
+print("W Shape: ", W.shape)
+print("\nComputed H = \n", H, "\n")
+print("H Shape: ", H.shape)
+print("\nComputed WH = \n ", np.matmul(W,H))
+print("WH Shape: ", np.matmul(W,H).shape, "\n")
 print("\nFirst energy: ", sampleset.first.energy)
 
 print("Norm: ", LA.norm(v - np.matmul(W,H)))
 print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
 
+print("Number of samples: ", v.shape[1])
+print("Running time: ", datetime.now()-start_time, "\n")
 
 
+'''
+
+Plotting Code
+
+
+
+#plot
+# plot the 3 clusters
+plt.scatter(
+    X[y_km == 0, 0], X[y_km == 0, 1],
+    s=50, c='lightgreen',
+    marker='s', edgecolor='black',
+    label='cluster 1'
+)
+
+plt.scatter(
+    X[y_km == 1, 0], X[y_km == 1, 1],
+    s=50, c='orange',
+    marker='o', edgecolor='black',
+    label='cluster 2'
+)
+
+plt.scatter(
+    X[y_km == 2, 0], X[y_km == 2, 1],
+    s=50, c='lightblue',
+    marker='v', edgecolor='black',
+    label='cluster 3'
+)
+
+# plot the centroids
+plt.scatter(
+    km.cluster_centers_[:, 0], km.cluster_centers_[:, 1],
+    s=250, marker='*',
+    c='red', edgecolor='black',
+    label='centroids'
+)
+
+plt.legend(scatterpoints=1)
+plt.grid()
+plt.show()
+
+'''
 
 
 '''
