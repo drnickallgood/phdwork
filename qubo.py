@@ -747,7 +747,7 @@ for key, val in Q_alt2.items():
 print("Sampling QUBO...\n")
 # This is where the quantum piece happens
 sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=1000, num_reads=1000)
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=9999, num_reads=1000)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
