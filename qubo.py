@@ -309,9 +309,18 @@ def convert_result(soln_dict,index):
         new_dict[index[key]] = value
     return new_dict
 
-   
+def count_ones(H):
+    
+    for col_num in range(0, H.shape[1]):
+        col_count = 0
+        for row_num in range(0, H.shape[0]):
+            #print("Row: ", row_num, "Col: ", col_num)
+            if H[row_num][col_num] == 1:
+                col_count += 1
 
+        print("Col: ", col_num, "1count: ", col_count)
 
+    
 '''
 p x n 
 2 x 3
@@ -483,8 +492,8 @@ Q_total = {}
 # on inputs..
 
 
-prec_list = [8,4,2,1,0]     # -32 to +31
-prec_list_str = ['null', '8', '4', '2', '1', '0']
+prec_list = [2,1,0]     # -8 to +7
+prec_list_str = ['null', '2', '1', '0']
 
 '''
 
@@ -514,8 +523,10 @@ H = 2 x 2
 
 # Test centers : (2,2) and (5,5)
 
+num_samples = 30
+
 V, y = make_blobs(
-    n_samples=10, n_features=2,
+    n_samples=num_samples, n_features=2,
     centers=3, cluster_std=0.5,
     shuffle=True, random_state=0
 )
@@ -545,7 +556,7 @@ v_input = np.array([
 #print(v_input)
 
 #v_transpose = np.transpose(V)
-v = np.transpose(v_input)
+v = np.transpose(V)
 
 ## Only use this for stuff from ML where row vectors are features
 #v = v_transpose
@@ -629,7 +640,7 @@ for key, val in v_dict.items():
 print("Applying linearization penalties...\n")
 # linearization
 # Delta == lagaragne param
-delta = 5
+delta = 128
 for x_key, x_val in x_dict.items():
     temp_h = x_val[1]
     #print(temp_h)
@@ -700,7 +711,7 @@ a is a 1 x k
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 varnames2 = list()
-delta2 = 2 # lagarange multiplier
+delta2 = 128 # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
 print("Applying H penalties...\n")
@@ -746,8 +757,11 @@ for key, val in Q_alt2.items():
 
 print("Sampling QUBO...\n")
 # This is where the quantum piece happens
+num_sweeps = 99999
+num_reads  = 99999
+
 sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=9999, num_reads=1000)
+sampleset = sampler.sample_qubo(Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
@@ -808,6 +822,9 @@ print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
 
 print("Number of samples: ", v.shape[1])
 print("Running time: ", datetime.now()-start_time, "\n")
+print("")
+count_ones(H)
+print("")
 
 
 '''
