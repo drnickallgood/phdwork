@@ -310,16 +310,21 @@ def convert_result(soln_dict,index):
     return new_dict
 
 def count_ones(H):
-    
+    bad_cols = 0
     for col_num in range(0, H.shape[1]):
         col_count = 0
         for row_num in range(0, H.shape[0]):
             #print("Row: ", row_num, "Col: ", col_num)
             if H[row_num][col_num] == 1:
                 col_count += 1
-
+            
+        if col_count > 1 or col_count == 0:
+            print("Bad solution, multiple or no 1's in column: ", col_num)
+            bad_cols += 1
+            
+                
         print("Col: ", col_num, "1count: ", col_count)
-
+    print("Total Violated Columns: ", bad_cols)
     
 '''
 p x n 
@@ -523,15 +528,15 @@ H = 2 x 2
 
 # Test centers : (2,2) and (5,5)
 
-num_samples = 30
+num_samples = 50
+k = 3
 
 V, y = make_blobs(
     n_samples=num_samples, n_features=2,
-    centers=3, cluster_std=0.5,
+    centers=k, cluster_std=0.5,
     shuffle=True, random_state=0
 )
 
-k = 3
 
 #print(type(V))
 #print(V.shape)
@@ -640,7 +645,7 @@ for key, val in v_dict.items():
 print("Applying linearization penalties...\n")
 # linearization
 # Delta == lagaragne param
-delta = 128
+delta = 1000
 for x_key, x_val in x_dict.items():
     temp_h = x_val[1]
     #print(temp_h)
@@ -656,7 +661,7 @@ for x_key, x_val in x_dict.items():
 
 #pprint.pprint(Q_total)
 print("Linearization Penalties: \n")
-pprint.pprint(Q_total)
+#pprint.pprint(Q_total)
 
 
 
@@ -711,7 +716,7 @@ a is a 1 x k
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 varnames2 = list()
-delta2 = 128 # lagarange multiplier
+delta2 = 950 # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
 print("Applying H penalties...\n")
@@ -728,14 +733,14 @@ for h_i in range(0, n):        # row
     Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, k, prec_list2, varnames=varnames2)
     #varnames2 = []
     #pprint.pprint(Q2_alt)
-    # Multiply everything by delta 
+    # Multiply everything by delta[A 
     for key,value in Q2_alt.items():
         #Erase all the characters in the key after underscore
         temp_key = (key[0].split('_')[0],key[1].split('_')[0])
         Q_alt2[temp_key] = value*delta2
 
 print("H Penalties: \n")
-pprint.pprint(Q_alt2)
+#pprint.pprint(Q_alt2)
 
 print("Adding all data to Q_total...\n")
 # Add all to Q_total for H
@@ -757,8 +762,8 @@ for key, val in Q_alt2.items():
 
 print("Sampling QUBO...\n")
 # This is where the quantum piece happens
-num_sweeps = 99999
-num_reads  = 99999
+num_sweeps = 10000
+num_reads  = 5000
 
 sampler = neal.SimulatedAnnealingSampler()
 sampleset = sampler.sample_qubo(Q_total, num_sweeps=num_sweeps, num_reads=num_reads)

@@ -1,0 +1,14175 @@
+cscope 15 /media/data2/home/nick/phdwork               0000061041
+	@4-5-2022.py
+
+1 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+2 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+3 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+4 
+‰om
+ 
+	gskÀ¨n
+.
+˛u°î
+ 
+imp‹t
+ 
+	gKMóns
+
+
+11 
+	gX
+, 
+	gy
+, 
+	g˚¡îs
+ = 
+make_blobs
+(
+
+12 
+n_ßm∂es
+=20, 
+n_„©uªs
+=2,
+
+13 
+˚¡îs
+=[[3,2,2,0],[1,-4,3,3] ], 
+˛u°î_°d
+=0.05,
+
+14 
+shufÊe
+=
+True
+, 
+øndom_°©e
+=0, 
+ªtu∫_˚¡îs
+=True
+
+18 
+X
+, 
+	gy
+, 
+	g˚¡îs
+ = 
+	$make_blobs
+(
+
+19 
+n_ßm∂es
+=10, 
+n_„©uªs
+=2,
+
+20 
+˚¡îs
+=[ [5,5], [3,2] ], 
+˛u°î_°d
+=0.5,
+
+21 
+shufÊe
+=
+True
+, 
+øndom_°©e
+=0, 
+ªtu∫_˚¡îs
+=True
+
+25 
+∂t
+.
+	`sˇâî
+(
+
+26 
+X
+[
+y
+ == 0, 0], X[y == 0, 1],
+
+27 
+s
+=50, 
+c
+='lightgreen',
+
+28 
+m¨kî
+='s', 
+edgecﬁ‹
+='black',
+
+29 
+œbñ
+='cluster 1'
+
+32 
+∂t
+.
+	`sˇâî
+(
+
+33 
+X
+[
+y
+ == 1, 0], X[y == 1, 1],
+
+34 
+s
+=50, 
+c
+='orange',
+
+35 
+m¨kî
+='o', 
+edgecﬁ‹
+='black',
+
+36 
+œbñ
+='cluster 2'
+
+40 #∂Ÿ 
+the
+ 
+˚¡roids
+
+
+41 
+∂t
+.
+	`sˇâî
+(
+
+42 
+˚¡îs
+[:, 0], centers[:, 1],
+
+43 
+s
+=250, 
+m¨kî
+='*',
+
+44 
+c
+='ªd', 
+edgecﬁ‹
+='black',
+
+45 
+œbñ
+='centroids'
+
+48 
+∂t
+.
+	$Àgíd
+(
+sˇâîpoöts
+=1)
+
+49 #∂t.
+	`grid
+()
+
+50 #∂t.
+	`show
+()
+
+52 #¥öt(
+˚¡îs
+)
+
+53 #∂t.
+	`sˇâî
+(
+X
+[:,0],X[:,1], 
+c
+=
+y
+);
+
+54 
+∂t
+.
+	$grid
+()
+
+55 
+∂t
+.
+	$show
+()
+
+56 #¥öt(
+X
+)
+
+58 #¥öt(
+X√w
+)
+
+60 #¥öt(
+y
+)
+
+62 #¥öt(
+y√w
+)
+
+	@centers.py
+
+1 
+imp‹t
+ 
+dimod
+
+
+2 
+‰om
+ 
+	gdwave
+.
+	gsy°em
+.
+composôes
+ 
+imp‹t
+ 
+EmbeddögComposôe
+
+
+3 
+‰om
+ 
+	gdwave
+.
+	gsy°em
+.
+ßm∂îs
+ 
+imp‹t
+ 
+DWaveSam∂î
+
+
+4 
+imp‹t
+ 
+	g√Æ
+
+
+6 #wê
+⁄ly
+ 
+w™t
+ 
+to
+ 
+¥e„r
+ 
+°©es
+ 
+th©
+ 
+¨e
+ 
+ßme
+ 
+vÆue
+ 
+ö
+ 
+óch
+ 
+qubô
+
+
+7 #sÿ0,0 
+‹
+ 1,1
+
+10 
+	gh
+ = {}
+
+12 
+exa˘_ßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+13 #ßm∂î = 
+	`EmbeddögComposôe
+(
+	`DWaveSam∂î
+())
+
+15 #bqm = 
+dimod
+.
+Bö¨yQuadøticModñ
+.
+	`‰om_qubo
+(
+Q
+)
+
+16 
+bqm
+ = 
+dimod
+.
+Bö¨yQuadøticModñ
+.
+	$‰om_isög
+(
+h
+,
+J
+)
+
+18 #ª•⁄£ = 
+exa˘_ßm∂î
+.
+	`ßm∂e
+(
+bqm
+, 
+swìp_size
+=1000)
+
+19 
+ª•⁄£
+ = 
+exa˘_ßm∂î
+.
+	$ßm∂e
+(
+bqm
+)
+
+20 #ª•⁄£ = 
+ßm∂î
+.
+	`ßm∂e
+(
+bqm
+, 
+num_ªads
+=10000)
+
+22 #¥öt(
+ª•⁄£
+.
+ªc‹d
+)
+
+23 
+	$¥öt
+(
+ª•⁄£
+.
+fú°
+)
+
+24 #¥öt(
+ª•⁄£
+.
+fú°
+.
+ßm∂e
+)
+
+25 #¥öt(
+ª•⁄£
+.
+fú°
+.
+íîgy
+)
+
+27 #ßm∂e£à
+ßm∂î
+.
+	`ßm∂e_isög
+(
+h
+, 
+J
+, 
+num_ªads
+=1000)
+
+29 #¥öt(
+ßm∂e£t
+)
+
+	@dwave-test.py
+
+1 
+imp‹t
+ 
+dimod
+
+
+2 
+‰om
+ 
+	gdwave
+.
+	gsy°em
+.
+composôes
+ 
+imp‹t
+ 
+EmbeddögComposôe
+
+
+3 
+‰om
+ 
+	gdwave
+.
+	gsy°em
+.
+ßm∂îs
+ 
+imp‹t
+ 
+	gDWaveSam∂î
+
+
+5 #wê
+⁄ly
+ 
+w™t
+ 
+to
+ 
+¥e„r
+ 
+°©es
+ 
+th©
+ 
+¨e
+ 
+ßme
+ 
+vÆue
+ 
+ö
+ 
+óch
+ 
+qubô
+
+
+6 #sÿ0,0 
+‹
+ 1,1
+
+9 #Usög 64-
+bô
+ 
+hash
+ 
+vÆues
+
+
+12 
+	gh
+ = {}
+
+13 
+J
+ = {(3891962469035829225, 261024130118881976): 0.0, (1278075525769194288, 1461127261386963019): 0.0 }
+
+18 
+ßm∂î
+ = 
+EmbeddögComposôe
+(
+	$DWaveSam∂î
+())
+
+20 #bqm = 
+dimod
+.
+Bö¨yQuadøticModñ
+.
+	`‰om_qubo
+(
+Q
+)
+
+22 #ª•⁄£ = 
+ßm∂î
+.
+	`ßm∂e
+(
+bqm
+, 
+num_ªads
+=10000)
+
+24 #¥öt(
+ª•⁄£
+)
+
+26 
+ßm∂e£t
+ = 
+ßm∂î
+.
+	$ßm∂e_isög
+(
+h
+, 
+J
+, 
+num_ªads
+=1000)
+
+28 
+	`¥öt
+(
+ßm∂e£t
+)
+
+	@kmeans.py
+
+1 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+2 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+3 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+4 
+‰om
+ 
+	gskÀ¨n
+.
+˛u°î
+ 
+imp‹t
+ 
+	gKMóns
+
+
+7 ## 
+˚¡î
+ 
+poöts
+
+
+8 ## 
+mu°
+ 
+be
+ 
+of
+ 
+size
+ 
+n_˛u°îs
+, 
+n_„©uªs
+
+
+9 ## 
+n_„©uªs
+ = 2
+
+10 ## 
+the
+ 
+¥obÀm
+ 
+is
+, 
+we
+ 
+c‹ª•⁄d
+ 
+˚¡roids
+ 
+to
+ 
+n_˛u°îs
+
+
+11 ## 
+so
+ 
+we
+ 
+√ed
+ 
+to
+ 
+figuª
+ 
+out
+ 
+the
+ 
+›timÆ
+ 
+numbî
+ 
+of
+ 
+˛u°îs
+
+
+12 ## 
+Resu…s
+ 
+wûl
+ 
+be
+ 
+basiˇŒy
+ +1, -1, 
+ëc
+ (1, 0)
+
+13 ## 
+maybe
+ 
+we
+ 
+ˇn
+ 
+m≠
+ 
+the
+ 
+weights
+ 
+as
+Åhê
+c€fficõ¡s
+
+
+14 ## 
+cou¡
+ 
+how
+ 
+m™y
+ 
+have
+ +1 
+£t
+, 
+THIS
+ 
+is
+ 
+n_˛u°îs
+
+
+15 ## 
+The£
+ 
+wûl
+ 
+Æso
+ 
+be
+ 
+the
+ 
+idól
+ 
+˚¡î
+ 
+poöts
+, 
+cﬁÀ˘
+ 
+them
+
+
+16 ## 
+run
+ 
+kmóns
+/
+kmedoids
+ 
+wôh
+ 
+the£
+ 
+poöts
+
+
+18 #¥edföed 
+˚¡îs
+, 3 
+x
+ 2 
+≈¨øy
+
+
+21 
+	gX
+, 
+	gy
+ = 
+	$make_blobs
+(
+
+22 
+n_ßm∂es
+=50, 
+n_„©uªs
+=2,
+
+23 
+˚¡îs
+=3, 
+˛u°î_°d
+=0.5,
+
+24 
+shufÊe
+=
+True
+, 
+øndom_°©e
+=0
+
+27 
+km
+ = 
+	`KMóns
+(
+
+28 
+n_˛u°îs
+=3, 
+öô
+='random',
+
+29 
+n_öô
+=10, 
+max_ôî
+=20,
+
+30 
+tﬁ
+=1e-04, 
+øndom_°©e
+=0
+
+33 
+y_km
+ = 
+km
+.
+	$fô_¥edi˘
+(
+X
+)
+
+36 #∂Ÿ 
+the
+ 3 
+˛u°îs
+
+
+37 
+∂t
+.
+	`sˇâî
+(
+
+38 
+X
+[
+y_km
+ == 0, 0], X[y_km == 0, 1],
+
+39 
+s
+=50, 
+c
+='lightgreen',
+
+40 
+m¨kî
+='s', 
+edgecﬁ‹
+='black',
+
+41 
+œbñ
+='cluster 1'
+
+44 
+∂t
+.
+	`sˇâî
+(
+
+45 
+X
+[
+y_km
+ == 1, 0], X[y_km == 1, 1],
+
+46 
+s
+=50, 
+c
+='orange',
+
+47 
+m¨kî
+='o', 
+edgecﬁ‹
+='black',
+
+48 
+œbñ
+='cluster 2'
+
+51 
+∂t
+.
+	`sˇâî
+(
+
+52 
+X
+[
+y_km
+ == 2, 0], X[y_km == 2, 1],
+
+53 
+s
+=50, 
+c
+='lightblue',
+
+54 
+m¨kî
+='v', 
+edgecﬁ‹
+='black',
+
+55 
+œbñ
+='cluster 3'
+
+58 #∂Ÿ 
+the
+ 
+˚¡roids
+
+
+59 
+∂t
+.
+	`sˇâî
+(
+
+60 
+km
+.
+˛u°î_˚¡îs_
+[:, 0], km.cluster_centers_[:, 1],
+
+61 
+s
+=250, 
+m¨kî
+='*',
+
+62 
+c
+='ªd', 
+edgecﬁ‹
+='black',
+
+63 
+œbñ
+='centroids'
+
+66 
+	$¥öt
+(
+km
+.
+˛u°î_˚¡îs_
+)
+
+67 
+∂t
+.
+	$Àgíd
+(
+sˇâîpoöts
+=1)
+
+68 
+∂t
+.
+	$grid
+()
+
+69 
+∂t
+.
+	$show
+()
+
+70 
+˛u°î_˚¡î_co‹ds
+ = 
+km
+.
+˛u°î_˚¡îs_
+
+
+74 3 
+Cíãrs
+ 
+this
+ 
+fûe
+
+
+	@kmedoids.py
+
+1 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+2 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+4 
+‰om
+ 
+	gskÀ¨n_exåa
+.
+˛u°î
+ 
+imp‹t
+ 
+KMedoids
+
+
+5 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+6 
+‰om
+ 
+	gskÀ¨n
+.
+mërics
+ 
+imp‹t
+ 
+sûhouëã_sc‹e
+
+
+7 
+‰om
+ 
+	gskÀ¨n
+.
+mërics
+ 
+imp‹t
+ 
+homogíeôy_sc‹e
+
+
+10 
+	$¥öt
+(
+__doc__
+)
+
+13 #Gíî©ê
+ßm∂e
+ 
+d©a
+
+
+14 
+˚¡îs
+ = [[1, 1], [-1, -1], [1, -1]]
+
+15 
+X
+, 
+œbñs_åue
+ = 
+	`make_blobs
+(
+
+16 #n_ßm∂es=50, 
+˚¡îs
+=˚¡îs, 
+˛u°î_°d
+=0.5, 
+øndom_°©e
+=0
+
+17 
+n_ßm∂es
+=10, 
+˛u°î_°d
+=0.5, 
+øndom_°©e
+=0, 
+max_ôî
+=2
+
+22 #Compuã 
+Kmedoids
+ 
+˛u°îög
+
+
+24 #Tøö 
+D©a
+
+
+25 
+cobj
+ = 
+	`KMedoids
+(
+n_˛u°îs
+=3).
+	$fô
+(
+X
+)
+
+27 #Gë 
+œbñs
+ 
+‰om
+ 
+kmedioids
+
+
+28 
+œbñs
+ = 
+cobj
+.
+œbñs_
+
+
+31 
+unique_œbñs
+ = 
+	$£t
+(
+œbñs
+)
+
+32 
+cﬁ‹s
+ = [
+
+33 
+∂t
+.
+cm
+.
+	$S≥˘øl
+(
+óch
+Ëóch 
+ö
+ 
+≈
+.
+	`lö•a˚
+(0, 1, 
+	`Àn
+(
+unique_œbñs
+))
+
+36 #I¡rösi¯
+mëhods
+, 
+sûohouëã
+ 
+sc‹es
+
+
+37 
+s_sc‹e
+ = 
+	$sûhouëã_sc‹e
+(
+X
+, 
+œbñs
+)
+
+39 
+k
+, 
+cﬁ
+ 
+ö
+ 
+	$zù
+(
+unique_œbñs
+, 
+cﬁ‹s
+):
+
+41 
+˛ass_membî_mask
+ = 
+œbñs
+ =
+k
+
+
+43 
+xy
+ = 
+X
+[
+˛ass_membî_mask
+]
+
+44 
+∂t
+.
+	`∂Ÿ
+(
+
+45 
+xy
+[:, 0],
+
+46 
+xy
+[:, 1],
+
+48 
+m¨kîÁ˚cﬁ‹
+=
+	`tu∂e
+(
+cﬁ
+),
+
+49 
+m¨kîedgecﬁ‹
+="k",
+
+50 
+m¨kîsize
+=6,
+
+53 
+∂t
+.
+	`∂Ÿ
+(
+
+54 
+cobj
+.
+˛u°î_˚¡îs_
+[:, 0],
+
+55 
+cobj
+.
+˛u°î_˚¡îs_
+[:, 1],
+
+57 
+m¨kîÁ˚cﬁ‹
+="cyan",
+
+58 
+m¨kîedgecﬁ‹
+="k",
+
+59 
+m¨kîsize
+=6,
+
+65 #∂Ÿ 
+the
+ 3 
+˛u°îs
+
+
+66 
+∂t
+.
+	`sˇâî
+(
+
+67 
+X
+[
+cobj
+ == 0, 0], X[cobj == 0, 1],
+
+68 
+s
+=50, 
+c
+='lightgreen',
+
+69 
+m¨kî
+='s', 
+edgecﬁ‹
+='black',
+
+70 
+œbñ
+='cluster 1'
+
+73 
+∂t
+.
+	`sˇâî
+(
+
+74 
+X
+[
+cobj
+ == 1, 0], X[cobj == 1, 1],
+
+75 
+s
+=50, 
+c
+='orange',
+
+76 
+m¨kî
+='o', 
+edgecﬁ‹
+='black',
+
+77 
+œbñ
+='cluster 2'
+
+80 
+∂t
+.
+	`sˇâî
+(
+
+81 
+X
+[
+cobj
+ == 2, 0], X[cobj == 2, 1],
+
+82 
+s
+=50, 
+c
+='lightblue',
+
+83 
+m¨kî
+='v', 
+edgecﬁ‹
+='black',
+
+84 
+œbñ
+='cluster 3'
+
+87 #∂Ÿ 
+the
+ 
+˚¡roids
+
+
+88 
+∂t
+.
+	`sˇâî
+(
+
+89 
+cobj
+.
+˛u°î_˚¡îs_
+[:, 0], cobj.cluster_centers_[:, 1],
+
+90 
+s
+=250, 
+m¨kî
+='*',
+
+91 
+c
+='ªd', 
+edgecﬁ‹
+='black',
+
+92 
+œbñ
+='centroids'
+
+96 
+∂t
+.
+	$Àgíd
+(
+sˇâîpoöts
+=1)
+
+98 
+∂t
+.
+	`tôÀ
+("KMedoids clustering. MedoidsáreÑepresented in cyan.")
+
+99 
+∂t
+.
+	$grid
+()
+
+100 #∂t.
+	`show
+()
+
+102 #¥öt("Sûhouëã Sc‹e: ", 
+s_sc‹e
+)
+
+104 #I√πü 
+is
+ 
+our
+ 
+obje˘ive
+ 
+fun˘i⁄
+, 
+lowî
+ i†
+bëãr
+,
+
+105 
+	`¥öt
+("Obje˘ivêfun˘i⁄: ", 
+cobj
+.
+öîtü_
+)
+
+106 
+	`¥öt
+("Clu°î Cíã∏Co‹dö©es: ", 
+cobj
+.
+˛u°î_˚¡îs_
+)
+
+110 "id": [ 
+ID
+ ],
+
+113 
+	}
+}
+
+116 "id": [ 
+ID
+ ],
+
+122 "id": [ 
+ID
+ ],
+
+128 "id": [ 
+ID
+ ],
+
+134 "id": [ 
+ID
+ ],
+
+141 "id": [ 
+ID
+ ],
+
+147 "id": [ 
+ID
+ ],
+
+153 "id": [ 
+ID
+ ],
+
+159 "id": [ 
+ID
+ ],
+
+	@least-squares-qubo-example.py
+
+1 ###ORIGINAL 
+CODE
+ 
+BY
+ 
+AJINKYA
+ 
+BORLE
+ 
+ab‹À1
+@
+umbc
+.
+edu
+ ###
+Çumpyá†≈
+
+3 
+imp‹t
+ 
+c›y
+
+
+4 
+imp‹t
+ 
+dimod
+
+
+5 
+imp‹t
+ 
+øndom
+
+
+6 
+imp‹t
+ 
+m©h
+
+
+7 
+‰om
+ 
+m©h
+ 
+imp‹t
+ 
+log
+
+
+8 
+imp‹t
+ 
+	gdimod
+
+
+10 #C⁄vît†
+a
+ ||
+Ax
+-
+b
+|| 
+¥obÀm
+ 
+öto
+á 
+QUBO
+
+
+11 
+def
+ 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+bô•owî
+):
+
+13 #'
+A
+' isÅhe matrix which isáÇp.array(),á matrix which is m xÇ
+
+14 #b 
+is
+ 
+the
+ 
+ve˘‹
+ 
+ö
+Åhê
+ex¥essi⁄
+ : 
+Ax
+-
+b
+, 
+™
+ 
+≈
+.
+	`¨øy
+(Ë
+of
+ 
+Àngth
+ 
+m
+
+
+15 #¿
+is
+ 
+™
+ 
+öãgî
+ 
+vÆue
+ 
+th©
+ i†
+the
+ 
+Àngth
+ 
+of
+Åhê
+cﬁumn
+ 
+ve˘‹
+ 
+x
+
+
+16 #bô•owî 
+is
+ 
+a
+ 
+li°
+ 
+of
+ 
+powîs
+ 
+th©
+ 
+would
+ 
+be
+ 
+≠∂õd
+ 
+ö
+á 2
+s
+ 
+com∂emít
+ 
+way
+,
+
+17 #eg : [2,1,0] 
+would
+ 
+be
+ 
+≠∂õd
+ 
+wôh
+ 
+™Ÿhî
+ 
+bô
+ 
+ècked
+ 
+⁄
+ 
+‰⁄t
+ 
+as
+ : -2^(
+	`Àn
+(
+bô•owî
+) + 2^(2) + 2^(1) + 2^(0)
+
+18 #NŸê: 
+the
+ 
+im∂emíèti⁄
+ 
+ªquúes
+Åhê
+li°
+ 
+to
+ 
+be
+ 
+a
+ 
+£t
+ 
+of
+ 
+de¸ósög
+ 
+™d
+ 
+c⁄£cutive
+ 
+numbîs
+, 
+s‹ry
+!
+
+20 #A 
+di˘i⁄¨y
+ 
+Qdi˘
+ 
+which
+ 
+is
+ 
+the
+ 
+QUBO
+ 
+this
+ 
+¥obÀm
+
+
+23 
+n_i_˘r
+ = 0
+
+24 
+i_powî˘r
+ = 0
+
+25 
+i_twosymb
+ = 0
+
+27 
+powîso·wo
+ = 
+≈
+.
+	`zîos
+(
+	`Àn
+(
+bô•owî
+)+1)
+
+28 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	`Àn
+(
+bô•owî
+)+1):
+
+29 
+i
+==0:
+
+30 
+powîso·wo
+[
+i
+] = (2**(
+bô•owî
+[i]+1))*(-1)
+
+32 
+powîso·wo
+[
+i
+] = 2**(
+bô•owî
+[i-1])
+
+34 
+	`¥öt
+("\¿powîso·wo: ", 
+powîso·wo
+)
+
+35 
+Qöô
+ = 
+≈
+.
+	$zîos
+([
+n
+,n])
+
+36 
+Qdi˘
+ = {
+	}
+} #Samê
+qubo
+ 
+but
+ 
+ö
+ 
+di˘i⁄¨y
+ 
+f‹m©
+
+
+37 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+38 
+j
+ 
+ö
+ 
+	$ønge
+(
+i
+,
+n
+):
+
+39 
+Qöô
+[
+i
+,
+j
+] = 2*
+	$sum
+(
+A
+[:,
+i
+]*A[:,
+j
+])
+
+40 
+b√w
+ = 2*
+b
+
+
+42 
+	`¥öt
+("\¿Qöô: ", 
+Qöô
+)
+
+44 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+45 
+i
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ i>0:
+
+46 
+n_i_˘r
+ =Ç_i_ctr + 1
+
+47 
+i_powî˘r
+=0
+
+48 
+n_j_˘r
+ = 
+n_i_˘r
+
+
+49 
+j_powî˘r
+ = 
+i_powî˘r
+
+
+50 
+j
+ 
+ö
+ 
+	`ønge
+(
+i
+,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+51 
+i
+==
+j
+:
+
+52 
+Qdi˘
+[
+i
+,i] = (
+powîso·wo
+[
+i_powî˘r
+]**2)*(
+	`sum
+(
+A
+[:,
+n_i_˘r
+]**2)Ë-Öowîso·wo[i_powî˘r]*
+	$sum
+(
+A
+[:,
+n_i_˘r
+]*
+b√w
+)
+
+53 
+	`¥öt
+("\¿Qdi˘ insidêfú° if: \n", 
+Qdi˘
+)
+
+56 
+j
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ j>0:
+
+57 
+n_j_˘r
+ =Ç_j_ctr + 1
+
+58 
+j_powî˘r
+ = 0
+
+59 
+Qdi˘
+[
+i
+,
+j
+] = 
+powîso·wo
+[
+i_powî˘r
+]*powîso·wo[
+j_powî˘r
+]*
+Qöô
+[
+n_i_˘r
+,
+n_j_˘r
+]
+
+60 
+	`¥öt
+("\¿Qdi˘ insidêñ£á·î fú° if: \n", 
+Qdi˘
+)
+
+62 
+j_powî˘r
+ = j_powerctr + 1
+
+63 
+i_powî˘r
+ = i_powerctr + 1
+
+65  
+Qdi˘
+
+
+67 #Thi†
+is
+ 
+ju°
+ 
+to
+ 
+c⁄vît
+ 
+a
+ 
+di˘i⁄¨y
+ 
+ba£d
+ 
+ªsu…
+ 
+öto
+á 
+bö¨y
+ 
+°rög
+ basedÑesult
+
+68 
+def
+ 
+	$gë_bö_°r
+(
+c⁄fig
+,
+isisög
+=
+True
+):
+
+70 #c⁄fig 
+is
+ 
+a
+ 
+di˘i⁄¨y
+
+
+71 #isisög 
+is
+ 
+True
+ 
+c⁄fig
+ 
+has
+ -1 
+‹
+ +1 
+™d
+ 
+FÆ£
+ config has 0 or 1
+
+73 #®
+bö¨y
+ 
+°rög
+ 
+of
+ 0
+s
+ 
+™d
+ 1s
+
+74 
+bö°r
+ = ""
+
+75 
+isisög
+ =
+True
+:
+
+76 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+c⁄fig
+)):
+
+77 
+c⁄fig
+[
+i
+] == 1:
+
+78 
+bö°r
+ +
+	$°r
+(1)
+
+79 
+ñif
+ 
+c⁄fig
+[
+i
+] == -1:
+
+80 
+bö°r
+ +
+	$°r
+(0)
+
+82 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+c⁄fig
+)):
+
+83 
+c⁄fig
+[
+i
+] == 1:
+
+84 
+bö°r
+ +
+	$°r
+(1)
+
+85 
+ñif
+ 
+c⁄fig
+[
+i
+] == 0:
+
+86 
+bö°r
+ +
+	$°r
+(0)
+
+87  
+bö°r
+
+
+89 #¥o˚s£†
+the
+ 
+bö¨y
+ 
+°rög
+ 
+öto
+ 
+a
+ 
+≈
+.
+¨øy
+ 
+ve˘‹
+.
+
+90 
+def
+ 
+	$qubo_to_ªÆ
+(
+bö°r
+,
+n
+,
+¥ec_li°
+):
+
+91 #¥ï¨ê
+the
+ 
+powîs_of_two
+ 
+li°
+
+
+92 
+powîs_of_two
+ = []
+
+93 
+powîs_of_two
+.
+	`≠≥nd
+(-2**(
+¥ec_li°
+[0]+1))
+
+94 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+¥ec_li°
+)):
+
+95 
+powîs_of_two
+.
+	`≠≥nd
+(2**(
+¥ec_li°
+[
+i
+]))
+
+96 #Now 
+the
+ 
+a˘uÆ
+ 
+numbî
+
+
+97 
+bö_˘r
+=0
+
+98 
+cur_ªÆ
+ = 
+≈
+.
+	$zîos
+(
+n
+)
+
+99 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+100 
+j
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+powîs_of_two
+)):
+
+101 
+cur_ªÆ
+[
+i
+] +
+powîs_of_two
+[
+j
+]*(
+bö°r
+[
+bö_˘r
+])
+
+102 
+bö_˘r
+ += 1
+
+104  
+cur_ªÆ
+
+
+106 #Toy 
+¥obÀm
+ 
+löór
+ 
+sy°em
+ 
+of
+ 
+equ©i⁄s
+, 
+hîe
+ 
+m
+ =
+n
+
+
+107 #x 
+wûl
+ 
+be
+ 
+≈
+.
+	`¨øy
+([3,1])
+
+109 #De˛¨ê
+A
+ 
+™d
+ 
+b
+
+
+110 #Löó∏
+sy°em
+ 
+to
+ 
+sﬁve
+
+
+111 #2
+x
+ + 
+y
+ = 7
+
+112 #x + 3
+y
+ = 6
+
+114 
+A
+ = 
+≈
+.
+	$¨øy
+([[2,1],[1,3]])
+
+115 
+b
+ = 
+≈
+.
+	$¨øy
+([7,6])
+
+116 
+n
+ = 2
+
+118 
+¥ec_li°
+ = [1,0] #bô•owî 
+wûl
+ 
+go
+ 
+‰om
+ -4 
+to
+ 3
+
+119 
+Q
+ = 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+¥ec_li°
+Ë#¥ï¨ê
+qubo
+
+
+121 #f‹ 
+k
+,
+v
+ 
+ö
+ 
+Q
+.
+	`ôems
+():
+
+122 #öt(
+k
+)
+
+123 
+	`¥öt
+("\ndi˘Ñëu∫ed by qubo_¥ï: \n", 
+Q
+, "\n")
+
+125 #U£ 
+Exa˘sﬁvî
+ 
+to
+ 
+sﬁve
+ 
+the
+ 
+qubo
+
+
+126 
+ßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+127 
+ßm∂e£t
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q
+)
+
+129 #Gë 
+the
+ 
+sﬁuti⁄
+
+
+130 
+sﬁn_di˘
+ = 
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+
+
+131 
+	`¥öt
+("sﬁn_di˘: ", 
+sﬁn_di˘
+)
+
+132 #c⁄vîà
+di˘
+ 
+to
+ 
+°rög
+
+
+133 
+sﬁn_bö
+
+	$gë_bö_°r
+(
+sﬁn_di˘
+,
+isisög
+=
+FÆ£
+)
+
+134 
+	`¥öt
+("sﬁn_bö: ", 
+sﬁn_bö
+)
+
+135 #c⁄vîà
+°rög
+ 
+to
+ 
+≈
+.
+¨øy
+ 
+x
+
+
+136 
+x
+ = 
+	$qubo_to_ªÆ
+(
+sﬁn_bö
+,
+n
+,
+¥ec_li°
+)
+
+138 
+	`¥öt
+("Sﬁuti⁄ x i†: ",
+x
+)
+
+140 #I¿
+the
+ 
+ˇ£s
+ 
+whîe
+ 
+Ax
+ = 
+b
+, ||Ax - b|| = 0 
+™d
+ 
+Æso
+ ||b||^2 = 
+ground
+ 
+°©e
+ 
+íîgy
+ 
+of
+Åhê
+qubo
+
+
+141 
+	`¥öt
+("||b||^2: ",
+≈
+.
+löÆg
+.
+	`n‹m
+(
+b
+)**2)
+
+142 
+	`¥öt
+("E√rgy o‡sﬁn: ",
+ßm∂e£t
+.
+fú°
+.
+íîgy
+)
+
+	@quadratic.py
+
+1 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+2 
+imp‹t
+ 
+c›y
+
+
+3 
+imp‹t
+ 
+dimod
+
+
+4 
+imp‹t
+ 
+øndom
+
+
+5 
+imp‹t
+ 
+m©h
+
+
+6 
+‰om
+ 
+m©h
+ 
+imp‹t
+ 
+log
+
+
+7 
+imp‹t
+ 
+dimod
+
+
+8 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+9 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+10 
+‰om
+ 
+	gskÀ¨n
+.
+˛u°î
+ 
+imp‹t
+ 
+KMóns
+
+
+12 
+	gßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+13 #5 
+unknowns
+, 
+x0
+ - 
+x5
+
+
+14 #
+#(2 - 
+x0
+ 
+x1
+ 
+x2
+)^2
+
+19 
+Ex∑nded
+
+
+22 -4 
+x0
+ 
+x1
+ 
+x2
+
+
+23 +
+x0
+^2 
+x1
+^2 
+x2
+^2
+
+25 
+Sﬁuti⁄
+ 
+should
+ 
+be
+: 
+x0
+: 1, 
+x1
+: 1, 
+x2
+: 1
+
+30 #löó∏
+c€fficõ¡s
+
+
+32 
+q1
+ = {
+	}
+}
+
+33 
+q1
+['x0','x0'] = 1
+
+34 
+q1
+['x1','x1'] = 1
+
+35 
+q1
+['x2','x2'] = 1
+
+37 
+q1
+['x0','x1'] = -4+1
+
+38 
+q1
+['x1','x2'] = -4+1
+
+40 #q1['x0','x1x2'] = -4+1 #ªsu… 
+is
+ {'x0': 1, 'x1': 0, 'x1x2': 1, 'x2': 0}
+
+41 #q1['x0x1','x2'] = -4+1 #Resu… 
+is
+: {'x0': 0, 'x0x1': 1, 'x1': 0, 'x2': 1}
+
+44 
+	gßm∂e£t1
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+q1
+)
+
+46 
+	$¥öt
+(
+ßm∂e£t1
+)
+
+48 
+	`¥öt
+("Resu… is: ", 
+ßm∂e£t1
+.
+fú°
+.
+ßm∂e
+)
+
+	@quadratic_automated.py
+
+1 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+2 
+imp‹t
+ 
+c›y
+
+
+3 
+imp‹t
+ 
+dimod
+
+
+4 
+imp‹t
+ 
+øndom
+
+
+5 
+imp‹t
+ 
+m©h
+
+
+6 
+‰om
+ 
+m©h
+ 
+imp‹t
+ 
+log
+
+
+7 
+imp‹t
+ 
+	gdimod
+
+
+9 #C⁄vît†
+a
+ ||
+Ax
+-
+b
+|| 
+¥obÀm
+ 
+öto
+á 
+QUBO
+
+
+10 
+def
+ 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+bô•owî
+,
+v¨«mes
+=
+N⁄e
+):
+
+12 #'
+A
+' isÅhe matrix which isáÇp.array(),á matrix which is m xÇ
+
+13 #b 
+is
+ 
+the
+ 
+ve˘‹
+ 
+ö
+Åhê
+ex¥essi⁄
+ : 
+Ax
+-
+b
+, 
+™
+ 
+≈
+.
+	`¨øy
+(Ë
+of
+ 
+Àngth
+ 
+m
+
+
+14 #¿
+is
+ 
+™
+ 
+öãgî
+ 
+vÆue
+ 
+th©
+ i†
+the
+ 
+Àngth
+ 
+of
+Åhê
+cﬁumn
+ 
+ve˘‹
+ 
+x
+
+
+15 #bô•owî 
+is
+ 
+a
+ 
+li°
+ 
+of
+ 
+powîs
+ 
+th©
+ 
+would
+ 
+be
+ 
+≠∂õd
+ 
+ö
+á 2
+s
+ 
+com∂emít
+ 
+way
+,
+
+16 #eg : [2,1,0] 
+would
+ 
+be
+ 
+≠∂õd
+ 
+wôh
+ 
+™Ÿhî
+ 
+bô
+ 
+ècked
+ 
+⁄
+ 
+‰⁄t
+ 
+as
+ : -2^(
+	`Àn
+(
+bô•owî
+) + 2^(2) + 2^(1) + 2^(0)
+
+17 #v¨«me†
+¥ovided
+ 
+is
+ 
+a
+ 
+li°
+ 
+of
+ 
+v¨übÀ
+ 
+«me
+. 
+eg
+ : 
+v¨«mes
+ = [
+x1
+,
+x2
+,
+x3
+]
+
+18 #NŸê: 
+the
+ 
+im∂emíèti⁄
+ 
+ªquúes
+Åhê
+li°
+ 
+to
+ 
+be
+ 
+a
+ 
+£t
+ 
+of
+ 
+de¸ósög
+ 
+™d
+ 
+c⁄£cutive
+ 
+numbîs
+, 
+s‹ry
+!
+
+20 #A 
+di˘i⁄¨y
+ 
+Qdi˘
+ 
+which
+ 
+is
+ 
+the
+ 
+QUBO
+ 
+this
+ 
+¥obÀm
+
+
+21 #A 
+di˘i⁄¨y
+ 
+Qdi˘_Æt
+ 
+which
+ 
+the
+ 
+ßme
+ 
+QUBO
+ 
+but
+ 
+wôh
+ 
+Æph™umîic
+ 
+	`v¨übÀ
+ (
+keys
+Ë
+«mes
+
+
+22 
+n_i_˘r
+ = 0
+
+23 
+i_powî˘r
+ = 0
+
+24 
+i_twosymb
+ = 0
+
+26 
+°r_bô•owî
+ = ['nuŒ'] + [
+	$°r
+(
+ôem
+Ëôem 
+ö
+ 
+bô•owî
+]
+
+27 
+powîso·wo
+ = 
+≈
+.
+	`zîos
+(
+	`Àn
+(
+bô•owî
+)+1)
+
+29 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	`Àn
+(
+bô•owî
+)+1):
+
+30 
+i
+==0:
+
+31 
+powîso·wo
+[
+i
+] = (2**(
+bô•owî
+[i]+1))*(-1)
+
+33 
+powîso·wo
+[
+i
+] = 2**(
+bô•owî
+[i-1])
+
+34 
+Qöô
+ = 
+≈
+.
+	$zîos
+([
+n
+,n]Ë#A 
+¥Ÿo
+-
+QUBO
+ 
+th©
+ 
+¥ïro˚s£s
+ 
+some
+ 
+vÆues
+ 
+the
+ 
+a˘uÆ
+ QUBO. 
+Inôül
+ QUBO 
+you
+ 
+wûl
+
+
+35 
+Qdi˘
+ = {
+	}
+} #A 
+di˘i⁄¨y
+ 
+th©
+ 
+°‹es
+ 
+the
+ 
+föÆ
+ 
+QUBO
+
+
+37 
+Qdi˘_Æt
+ = {} #Thi†
+di˘i⁄¨y
+ 
+ßves
+ 
+the
+ 
+Æã∫©e
+ 
+QUBO
+ 
+wôh
+ 
+Æph™umîic
+ 
+	$v¨übÀ
+ (
+keys
+Ë
+«mes
+
+
+38 
+ödex_di˘
+ = {
+	}
+} #Di˘i⁄¨y 
+th©
+ 
+m≠s
+ 
+Æph™umîic
+ 
+v¨übÀs
+ 
+to
+ 
+the
+ 
+öãgî
+ 
+⁄es
+
+
+40 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+41 
+j
+ 
+ö
+ 
+	$ønge
+(
+i
+,
+n
+):
+
+42 
+Qöô
+[
+i
+,
+j
+] = 2*
+	$sum
+(
+A
+[:,
+i
+]*A[:,
+j
+])
+
+43 
+b√w
+ = 2*
+b
+
+
+46 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+47 
+i
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ i>0:
+
+48 
+n_i_˘r
+ =Ç_i_ctr + 1
+
+49 
+i_powî˘r
+=0
+
+50 
+n_j_˘r
+ = 
+n_i_˘r
+
+
+51 
+j_powî˘r
+ = 
+i_powî˘r
+
+
+52 
+j
+ 
+ö
+ 
+	`ønge
+(
+i
+,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+53 
+i
+==
+j
+:#Löó∏
+c€fficõ¡
+
+
+54 
+Qdi˘
+[
+i
+,i] = (
+powîso·wo
+[
+i_powî˘r
+]**2)*(
+	`sum
+(
+A
+[:,
+n_i_˘r
+]**2)Ë-Öowîso·wo[i_powî˘r]*
+	$sum
+(
+A
+[:,
+n_i_˘r
+]*
+b√w
+)
+
+55 
+v¨«mes
+ !
+N⁄e
+:
+
+56 
+ãmpv¨1
+ = 
+v¨«mes
+[
+n_i_˘r
+] + '_' + 
+°r_bô•owî
+[
+i_powî˘r
+]
+
+57 
+ödex_di˘
+[
+ãmpv¨1
+] = 
+i
+
+
+58 
+Qdi˘_Æt
+[
+ãmpv¨1
+,ãmpv¨1] = 
+Qdi˘
+[
+i
+,i]
+
+59 :#Quadøti¯
+c€fficõ¡
+
+
+60 
+j
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ j>0:
+
+61 
+n_j_˘r
+ =Ç_j_ctr + 1
+
+62 
+j_powî˘r
+ = 0
+
+63 
+Qdi˘
+[
+i
+,
+j
+] = 
+powîso·wo
+[
+i_powî˘r
+]*powîso·wo[
+j_powî˘r
+]*
+Qöô
+[
+n_i_˘r
+,
+n_j_˘r
+]
+
+64 
+v¨«mes
+ !
+N⁄e
+:
+
+65 
+ãmpv¨2
+ = 
+v¨«mes
+[
+n_j_˘r
+] + '_' + 
+°r_bô•owî
+[
+j_powî˘r
+]
+
+66 
+Qdi˘_Æt
+[
+ãmpv¨1
+,
+ãmpv¨2
+] = 
+Qdi˘
+[
+i
+,
+j
+]
+
+68 
+j_powî˘r
+ = j_powerctr + 1
+
+69 
+i_powî˘r
+ = i_powerctr + 1
+
+71 
+v¨«mes
+ !
+N⁄e
+:
+
+72  
+Qdi˘
+, 
+Qdi˘_Æt
+, 
+ödex_di˘
+
+
+74  
+Qdi˘
+ #ju°  
+the
+ 
+b¨e
+ 
+b⁄es
+ 
+v¨«mes
+ 
+nŸ
+ 
+ªque°ed
+
+
+76 #Thi†
+is
+ 
+ju°
+ 
+to
+ 
+c⁄vît
+ 
+a
+ 
+di˘i⁄¨y
+ 
+ba£d
+ 
+ªsu…
+ 
+öto
+á 
+bö¨y
+ 
+°rög
+ basedÑesult
+
+77 
+def
+ 
+	$gë_bö_°r
+(
+c⁄fig
+,
+isisög
+=
+True
+):
+
+79 #c⁄fig 
+is
+ 
+a
+ 
+di˘i⁄¨y
+
+
+80 #isisög 
+is
+ 
+True
+ 
+c⁄fig
+ 
+has
+ -1 
+‹
+ +1 
+™d
+ 
+FÆ£
+ config has 0 or 1
+
+82 #®
+bö¨y
+ 
+°rög
+ 
+of
+ 0
+s
+ 
+™d
+ 1s
+
+83 
+bö°r
+ = ""
+
+84 
+isisög
+ =
+True
+:
+
+85 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+c⁄fig
+)):
+
+86 
+c⁄fig
+[
+i
+] == 1:
+
+87 
+bö°r
+ +
+	$°r
+(1)
+
+88 
+ñif
+ 
+c⁄fig
+[
+i
+] == -1:
+
+89 
+bö°r
+ +
+	$°r
+(0)
+
+91 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+c⁄fig
+)):
+
+92 
+c⁄fig
+[
+i
+] == 1:
+
+93 
+bö°r
+ +
+	$°r
+(1)
+
+94 
+ñif
+ 
+c⁄fig
+[
+i
+] == 0:
+
+95 
+bö°r
+ +
+	$°r
+(0)
+
+96  
+bö°r
+
+
+98 #¥o˚s£†
+the
+ 
+bö¨y
+ 
+°rög
+ 
+öto
+ 
+a
+ 
+≈
+.
+¨øy
+ 
+ve˘‹
+.
+
+99 
+def
+ 
+	$qubo_to_ªÆ
+(
+bö°r
+,
+n
+,
+¥ec_li°
+):
+
+100 #¥ï¨ê
+the
+ 
+powîs_of_two
+ 
+li°
+
+
+102 
+powîs_of_two
+ = []
+
+103 
+powîs_of_two
+.
+	`≠≥nd
+(-2**(
+¥ec_li°
+[0]+1))
+
+106 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+¥ec_li°
+)):
+
+107 
+powîs_of_two
+.
+	`≠≥nd
+(2**(
+¥ec_li°
+[
+i
+]))
+
+108 #Now 
+the
+ 
+a˘uÆ
+ 
+numbî
+
+
+109 
+bö_˘r
+=0
+
+110 
+cur_ªÆ
+ = 
+≈
+.
+	$zîos
+(
+n
+)
+
+111 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+112 
+j
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+powîs_of_two
+)):
+
+113 
+cur_ªÆ
+[
+i
+] +
+powîs_of_two
+[
+j
+]*(
+bö°r
+[
+bö_˘r
+])
+
+114 
+bö_˘r
+ += 1
+
+116  
+cur_ªÆ
+
+
+118 
+def
+ 
+	$qubo_¥ï_n⁄√g
+(
+A
+,
+b
+,
+n
+,
+bô•owî
+, 
+v¨«mes
+=
+N⁄e
+):
+
+119 #Samê
+as
+ 
+qubo_¥ï
+ 
+but
+ 
+⁄ly
+ 
+n⁄
+-
+√g©ive
+ 
+vÆues
+
+
+120 #bô•owî = [0] 
+bö¨y
+ 
+vÆues
+
+
+123 
+n_i_˘r
+ = 0
+
+124 
+i_powî˘r
+ = 0
+
+125 
+i_twosymb
+ = 0
+
+127 
+°r_bô•owî
+ =[
+	$°r
+(
+ôem
+Ëôem 
+ö
+ 
+bô•owî
+]
+
+128 
+powîso·wo
+ = 
+≈
+.
+	`zîos
+(
+	$Àn
+(
+bô•owî
+))
+
+130 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+bô•owî
+)):
+
+131 
+powîso·wo
+[
+i
+] = 2**(
+bô•owî
+[i])
+
+133 
+Qöô
+ = 
+≈
+.
+	$zîos
+([
+n
+,n])
+
+134 
+Qdi˘
+ = {
+	}
+} #Thê
+di˘i⁄¨y
+ 
+our
+ 
+qubo
+
+
+136 
+Qdi˘_Æt
+ = {} #Thi†
+di˘i⁄¨y
+ 
+ßves
+ 
+the
+ 
+Æã∫©e
+ 
+QUBO
+ 
+wôh
+ 
+Æph™umîic
+ 
+	$v¨übÀ
+ (
+keys
+Ë
+«mes
+
+
+137 
+ödex_di˘
+ = {
+	}
+} #Di˘i⁄¨y 
+th©
+ 
+m≠s
+ 
+Æph™umîic
+ 
+v¨übÀs
+ 
+to
+ 
+the
+ 
+öãgî
+ 
+⁄es
+
+
+139 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+140 
+j
+ 
+ö
+ 
+	$ønge
+(
+i
+,
+n
+):
+
+141 
+Qöô
+[
+i
+,
+j
+] = 2*
+	$sum
+(
+A
+[:,
+i
+]*A[:,
+j
+])
+
+142 
+b√w
+ = 2*
+b
+
+
+144 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+145 
+i
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ i>0:
+
+146 
+n_i_˘r
+ =Ç_i_ctr + 1
+
+147 
+i_powî˘r
+=0
+
+148 
+n_j_˘r
+ = 
+n_i_˘r
+
+
+149 
+j_powî˘r
+ = 
+i_powî˘r
+
+
+150 
+j
+ 
+ö
+ 
+	`ønge
+(
+i
+,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+151 
+i
+==
+j
+: #Löó∏
+c€fficõ¡
+
+
+152 
+Qdi˘
+[
+i
+,i] = (
+powîso·wo
+[
+i_powî˘r
+]**2)*(
+	`sum
+(
+A
+[:,
+n_i_˘r
+]**2)Ë-Öowîso·wo[i_powî˘r]*
+	$sum
+(
+A
+[:,
+n_i_˘r
+]*
+b√w
+)
+
+153 
+v¨«mes
+ !
+N⁄e
+:
+
+154 
+ãmpv¨1
+ = 
+v¨«mes
+[
+n_i_˘r
+] + '_' + 
+°r_bô•owî
+[
+i_powî˘r
+]
+
+155 
+ödex_di˘
+[
+ãmpv¨1
+] = 
+i
+
+
+156 
+Qdi˘_Æt
+[
+ãmpv¨1
+,ãmpv¨1] = 
+Qdi˘
+[
+i
+,i]
+
+157 : #Quadøti¯
+c€fficõ¡
+
+
+158 
+j
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ j>0:
+
+159 
+n_j_˘r
+ =Ç_j_ctr + 1
+
+160 
+j_powî˘r
+ = 0
+
+161 
+Qdi˘
+[
+i
+,
+j
+] = 
+powîso·wo
+[
+i_powî˘r
+]*powîso·wo[
+j_powî˘r
+]*
+Qöô
+[
+n_i_˘r
+,
+n_j_˘r
+]
+
+162 
+v¨«mes
+ !
+N⁄e
+:
+
+163 
+ãmpv¨2
+ = 
+v¨«mes
+[
+n_j_˘r
+] + '_' + 
+°r_bô•owî
+[
+j_powî˘r
+]
+
+164 
+Qdi˘_Æt
+[
+ãmpv¨1
+,
+ãmpv¨2
+] = 
+Qdi˘
+[
+i
+,
+j
+]
+
+166 
+j_powî˘r
+ = j_powerctr + 1
+
+167 
+i_powî˘r
+ = i_powerctr + 1
+
+169 
+v¨«mes
+ !
+N⁄e
+:
+
+170  
+Qdi˘
+, 
+Qdi˘_Æt
+, 
+ödex_di˘
+
+
+172  
+Qdi˘
+ #ju°  
+the
+ 
+b¨e
+ 
+b⁄es
+ 
+v¨«mes
+ 
+nŸ
+ 
+ªque°ed
+
+
+174 #Fun˘i⁄ 
+to
+ 
+c⁄vît
+ 
+the
+ 
+sﬁuti⁄
+ 
+di˘i⁄¨y
+ 
+‰om
+ 
+Æph™umîic
+ 
+v¨übÀs
+Åÿ
+öãgî
+
+
+175 
+def
+ 
+	$c⁄vît_ªsu…
+(
+sﬁn_di˘
+,
+ödex
+):
+
+176 
+√w_di˘
+ = {
+	}
+}
+
+177 
+key
+,
+vÆue
+ 
+ö
+ 
+	gsﬁn_di˘
+.
+	$ôems
+():
+
+178 
+√w_di˘
+[
+ödex
+[
+key
+]] = 
+vÆue
+
+
+179  
+√w_di˘
+
+
+182 #(6 - 
+x1
+ - 
+x2
+)^2
+
+183 #In‹dî 
+to
+ 
+ªpuΩo£
+ 
+a
+ 
+code
+ ||
+Ax
+ - 
+b
+|| 
+ödividuÆ
+ 
+quadøtic
+ 
+equ©i⁄s
+ 
+n
+ 
+v¨übÀs
+,
+THe
+ 
+Dimísi⁄s
+ 
+A
+ 
+is
+ 1 
+x
+Ç, x :Ç x 1 
+™d
+ b : 1 x 1
+
+184 
+A
+ = 
+≈
+.
+	$¨øy
+([[1,1]])
+
+185 
+¥ec_li°
+ = [1,0]
+
+186 
+b
+ = 
+≈
+.
+	$¨øy
+([6])
+
+187 
+n
+=2
+
+188 
+v¨«mes
+ = ['x1','x2']
+
+189 
+Q
+,
+Q_Æt
+,
+ödex
+ = 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+¥ec_li°
+,
+v¨«mes
+=varnames)
+
+192 
+ßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+193 
+ßm∂e£t
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q_Æt
+)
+
+194 
+	$¥öt
+(
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+)
+
+197 #Gë 
+the
+ 
+sﬁuti⁄
+
+
+198 
+sﬁn_di˘
+ = 
+	$c⁄vît_ªsu…
+(
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+,
+ödex
+)
+
+199 #c⁄vîà
+di˘
+ 
+to
+ 
+°rög
+
+
+200 
+sﬁn_bö
+
+	$gë_bö_°r
+(
+sﬁn_di˘
+,
+isisög
+=
+FÆ£
+)
+
+201 #c⁄vîà
+°rög
+ 
+to
+ 
+≈
+.
+¨øy
+ 
+x
+
+
+202 
+x
+ = 
+	$qubo_to_ªÆ
+(
+sﬁn_bö
+,
+n
+,
+¥ec_li°
+)
+
+203 
+	$¥öt
+(
+x
+)
+
+205 
+Q
+ = 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+¥ec_li°
+)
+
+206 
+ßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+207 
+ßm∂e£t
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q
+)
+
+208 
+	$¥öt
+(
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+)
+
+211 #Gë 
+the
+ 
+sﬁuti⁄
+
+
+212 
+sﬁn_di˘
+ = 
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+
+
+213 #c⁄vîà
+di˘
+ 
+to
+ 
+°rög
+
+
+214 
+sﬁn_bö
+
+	$gë_bö_°r
+(
+sﬁn_di˘
+,
+isisög
+=
+FÆ£
+)
+
+215 #c⁄vîà
+°rög
+ 
+to
+ 
+≈
+.
+¨øy
+ 
+x
+
+
+216 
+x
+ = 
+	$qubo_to_ªÆ
+(
+sﬁn_bö
+,
+n
+,
+¥ec_li°
+)
+
+217 
+	$¥öt
+(
+x
+)
+
+219 #(2 - 
+x1
+ - 
+x2
+ - 
+x3
+)^2 = (x1 + x2 + x3-2)^2 :
+
+220 #whîê
+x
+ 
+is
+ 
+bö¨y
+
+
+221 
+A
+ = 
+≈
+.
+	$¨øy
+([[1,1,1]])
+
+222 
+¥ec_li°
+ = [0]
+
+223 
+b
+ = 
+≈
+.
+	$¨øy
+([2])
+
+224 
+v¨«mes
+ = ['x1','x2','x3']
+
+225 
+n
+=3
+
+227 
+Q
+,
+Q_Æt
+,
+ödex
+ = 
+	$qubo_¥ï_n⁄√g
+(
+A
+,
+b
+,
+n
+,
+¥ec_li°
+,
+v¨«mes
+=varnames)
+
+229 
+	`¥öt
+(
+Q_Æt
+)
+
+	@quantum-centers.py
+
+1 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+2 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+3 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+4 
+imp‹t
+ 
+dimod
+
+
+5 
+‰om
+ 
+	gdwave
+.
+	gsy°em
+.
+composôes
+ 
+imp‹t
+ 
+EmbeddögComposôe
+
+
+6 
+‰om
+ 
+	gdwave
+.
+	gsy°em
+.
+ßm∂îs
+ 
+imp‹t
+ 
+DWaveSam∂î
+
+
+7 
+imp‹t
+ 
+√Æ
+
+
+10 
+	$¥öt
+(
+__doc__
+)
+
+13 #Gíî©ê
+ßm∂e
+ 
+d©a
+
+
+14 
+X
+, 
+œbñs_åue
+ = 
+	$make_blobs
+(
+
+15 
+n_ßm∂es
+=10, 
+˛u°î_°d
+=0.5, 
+øndom_°©e
+=0
+
+19 
+a
+ = 10
+
+20 
+b
+ = 20
+
+21 
+c
+ = 30
+
+23 
+h
+ = {
+	}
+}
+
+24 
+J
+ = {(
+a
+,
+b
+): 0.5, (a,
+c
+): 0.01, (b,c): 0.25}
+
+26 
+exa˘_ßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+27 
+bqm
+ = 
+dimod
+.
+Bö¨yQuadøticModñ
+.
+	$‰om_isög
+(
+h
+,
+J
+)
+
+29 
+ª•⁄£
+ = 
+exa˘_ßm∂î
+.
+	$ßm∂e
+(
+bqm
+)
+
+30 
+	`¥öt
+(
+ª•⁄£
+)
+
+	@qubo.py
+
+1 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+2 
+imp‹t
+ 
+c›y
+
+
+3 
+imp‹t
+ 
+dimod
+
+
+4 
+imp‹t
+ 
+øndom
+
+
+5 
+imp‹t
+ 
+m©h
+
+
+6 
+‰om
+ 
+m©h
+ 
+imp‹t
+ 
+log
+
+
+7 
+imp‹t
+ 
+dimod
+
+
+8 
+imp‹t
+ 
+µröt
+
+
+9 
+imp‹t
+ 
+√Æ
+
+
+10 
+imp‹t
+ 
+	gnumpy
+.
+löÆg
+ 
+as
+ 
+LA
+
+
+11 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+12 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+13 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+14 
+‰om
+ 
+	gskÀ¨n
+.
+˛u°î
+ 
+imp‹t
+ 
+KMóns
+
+
+15 
+‰om
+ 
+d©ëime
+ 
+imp‹t
+ 
+	gd©ëime
+
+
+18 #v = 
+our
+ 
+V
+ 
+m©rix
+ 
+which
+ 
+is
+ 
+p
+ 
+x
+ 
+n
+ matrix
+
+19 #w = 
+our
+ 
+W
+ 
+m©rix
+ 
+which
+ 
+is
+ 
+p
+ 
+x
+ 
+k
+
+
+20 #h = 
+our
+ 
+H
+ 
+m©rix
+ 
+which
+ 
+is
+ 
+k
+ 
+x
+ 
+n
+
+
+21 #k = #o‡
+˛u°îs
+
+
+24 
+V
+ 
+W
+ 
+	gH
+
+
+25 [
+v11
+, 
+v12
+] [
+w11
+, 
+w12
+] [
+h11
+, 
+h12
+]
+
+26 [
+v21
+, 
+v22
+] [
+w21
+, 
+w22
+] [
+h21
+, 
+h22
+]
+
+28 (
+	gv11
+ - (
+w11
+ * 
+	gh11
+Ë+ (
+w12
+ * 
+	gh21
+) )^2 +
+
+29 (
+	gv12
+ - (
+w11
+ * 
+	gh12
+Ë+ (
+w12
+ * 
+	gh22
+) )^2 +
+
+30 (
+	gv21
+ - (
+w21
+ * 
+	gh11
+Ë+ (
+w22
+ * 
+	gh21
+) )^2 +
+
+31 (
+	gv22
+ - (
+w21
+ * 
+	gh12
+Ë+ (
+w22
+ * 
+	gh22
+) )^2
+
+34 #A¬óÀ∏
+wûl
+  
+bö¨y
+ 
+vÆue
+, 
+√ed
+ 
+to
+ 
+c⁄vît
+ 
+back
+Åÿ
+ªÆs
+
+
+35 #usög 
+≠¥oxim©i⁄
+
+
+36 #C⁄vîà
+ªÆ
+ 
+vÆue
+ 
+by
+ 
+èkög
+ 
+Êo‹
+ 
+of
+ vÆuê
+thí
+ 
+make
+ 
+bö¨y
+
+
+37 
+def
+ 
+	$≠¥ox_ªÆ
+(
+r
+):
+
+38  
+	`bö
+(
+m©h
+.
+	`Êo‹
+(
+r
+).
+	`•lô
+('0b')[1])
+
+40 
+def
+ 
+	$bö_to_ªÆ
+(
+bö°r
+):
+
+41  (
+bö°r
+,2)
+
+43 #Figuª 
+out
+ 
+Æl
+ 
+v_ij
+ - 
+sum_h
+ 
+w_ih
+ * 
+h_hj
+
+
+44 #∑s†
+ö
+ 
+k
+ , #o‡
+˛u°îs
+
+
+46 
+def
+ 
+	$föd_v¨s
+(
+v
+,
+k
+):
+
+48 
+v_li°
+ = 
+	$li°
+()
+
+50 #St‹ê
+our
+ 
+wh
+ 
+vÆues
+ 
+™d
+ 
+ö
+ 
+ªvî£
+
+
+51 
+x_di˘
+ = {
+	}
+}
+
+52 
+x_di˘_ªv
+ = {}
+
+54 #°‹ê
+our
+ 
+v
+ 
+vÆues
+
+
+55 #Thi†
+wûl
+ 
+es£¡üŒy
+ 
+be
+ 
+a
+ 
+£t
+ 
+of
+ 
+√°ed
+ 
+di˘i⁄¨õs
+
+
+57 (
+x
+, 
+	gy
+) : {
+
+58 
+v_vÆ
+: { 
+v
+} ,
+
+59 
+	gwh
+: { (
+wh_ik
+, 
+	gwh_kj
+) }
+
+63 #Di˘ 
+our
+ 
+V
+ 
+posôi⁄
+ 
+™d
+ 
+vÆues
+ 
+ö
+ V
+
+64 
+	gv_di˘
+ = {}
+
+66 #
+_di˘ = {}
+
+69 #Gë 
+c‹ª˘
+ 
+dimísi⁄s
+
+
+70 #V 
+is
+ 
+p
+ 
+x
+ 
+n
+
+
+71 
+p
+ = 
+v
+.
+sh≠e
+[0]
+
+72 
+n
+ = 
+v
+.
+sh≠e
+[1]
+
+74 #W 
+is
+ 
+p
+ 
+x
+ 
+k
+
+
+75 
+w_rows
+ = 
+p
+
+
+76 
+w_cﬁs
+ = 
+k
+
+
+78 #H 
+is
+ 
+k
+ 
+x
+ 
+n
+
+
+79 
+h_rows
+ = 
+k
+
+
+80 
+h_cﬁs
+ = 
+n
+
+
+83 #Gë 
+the
+ 
+V
+'s
+
+84 #V 
+is
+ 
+p
+ 
+x
+ 
+n
+
+
+85 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+p
+):
+
+86 
+j
+ 
+ö
+ 
+	$ønge
+(0, 
+n
+):
+
+87 #°rögify 
+wh©
+ 
+is
+ 
+ö
+ 
+V
+ 
+©
+ 
+this
+ 
+loˇti⁄
+
+
+88 
+i_idx
+ = 
+i
++1
+
+89 
+j_idx
+ = 
+j
++1
+
+90 
+v_di˘
+[
+i_idx
+,
+j_idx
+] = {
+	}
+}
+
+91 
+v_di˘
+[
+i_idx
+,
+j_idx
+]['v_vÆ'] = 
+	$°r
+(
+v
+[
+i
+][
+j
+])
+
+92 
+v_di˘
+[
+i_idx
+,
+j_idx
+]['wh'] = []
+
+93 #v_°∏
+	`°r
+(
+v
+[
+i
+][
+j
+]) + "-"
+
+94 #v_li°.
+	`≠≥nd
+(
+v_°r
+)
+
+96 #Buûd 
+WH
+
+
+97 #WH 
+wûl
+ 
+be
+ 
+ßme
+ 
+as
+ 
+V
+ , 
+so
+ 
+p
+ 
+x
+ 
+n
+
+
+98 
+wh_˙t
+ = 1
+
+99 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+w_rows
+):
+
+100 
+j
+ 
+ö
+ 
+	$ønge
+(0,
+h_cﬁs
+):
+
+101 #Thi†
+is
+ 
+ju°
+ 
+ödexög
+ 
+to
+ 
+make
+ 
+ô
+ 
+m©ch
+ 
+™d
+ 
+nŸ
+ 
+ödex
+ 
+‰om
+ 0
+
+102 
+i_idx
+ = 
+i
++1
+
+103 
+j_idx
+ = 
+j
++1
+
+104 
+l
+ 
+ö
+ 
+	$ønge
+(0,
+w_cﬁs
+): #Thi†
+is
+ 
+the
+ 
+cﬁumn
+ 
+ve˘‹
+ 
+£À˘i⁄
+
+
+105 #¥öt("w" + 
+	`°r
+(
+i
++1Ë+ så(
+l
++1Ë+ "h" + så÷+1Ë+ så(
+j
++1))
+
+106 #x_di˘['x'+
+	`°r
+(
+wh_˙t
+)] = ("w" + så(
+i
++1Ë+ så(
+l
++1Ë+ "h" + så÷+1Ë+ så(
+j
++1))
+
+107 
+x_di˘
+['x'+
+	`°r
+(
+wh_˙t
+)] = ("w" + så(
+i
++1Ë+ så(
+l
++1), "h" + så÷+1Ë+ så(
+j
++1))
+
+108 
+x_di˘_ªv
+[("w" + 
+	`°r
+(
+i
++1Ë+ så(
+l
++1), "h" + så÷+1Ë+ så(
+j
++1))] = 'x'+
+	$°r
+(
+wh_˙t
+)
+
+109 
+v_di˘
+[
+i_idx
+,
+j_idx
+]['wh'].
+	`≠≥nd
+–("w"+
+	`°r
+(
+i
++1Ë+ så(
+l
++1), "h"+°r÷+1)+°r(
+j
++1)) )
+
+110 
+wh_˙t
+ += 1
+
+111 #x_di˘['x'+
+	`°r
+(
+i
+)] = "w" + så(i+1Ë+ så(
+l
++1Ë+ "h" + så÷+1Ë+ så(
+j
++1)
+
+114 
+k
+,
+v
+ 
+ö
+ 
+x_di˘
+.
+	$ôems
+():
+
+115 
+	`¥öt
+(
+k
+,":", 
+v
+)
+
+117 
+k
+,
+v
+ 
+ö
+ 
+x_di˘_ªv
+.
+	$ôems
+():
+
+118 
+	`¥öt
+(
+k
+,":", 
+v
+)
+
+120 
+k
+,
+v
+ 
+ö
+ 
+v_di˘
+.
+	$ôems
+():
+
+121 
+	`¥öt
+(
+k
+,":",
+v
+)
+
+123  
+v_di˘
+, 
+x_di˘
+, 
+x_di˘_ªv
+, 
+p
+, 
+n
+
+
+126 #Ax-
+b
+ 
+is
+ 
+simû¨
+ 
+to
+ 
+V
+-
+WH
+
+
+127 #V = 
+b
+ 
+hîe
+
+
+128 #W = 
+A
+
+
+129 #H = 
+x
+ ??
+
+130 ## 
+Code
+ 
+‰om
+ 
+Ajökya
+ 
+B‹À
+ 
+ö
+ 
+nick_quadøtic_autom©ed
+
+
+132 #C⁄vît†
+a
+ ||
+Ax
+-
+b
+|| 
+¥obÀm
+ 
+öto
+á 
+QUBO
+
+
+133 
+def
+ 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+bô•owî
+,
+v¨«mes
+=
+N⁄e
+):
+
+135 #'
+A
+' isÅhe matrix which isáÇp.array(),á matrix which is m xÇ
+
+136 #b 
+is
+ 
+the
+ 
+ve˘‹
+ 
+ö
+Åhê
+ex¥essi⁄
+ : 
+Ax
+-
+b
+, 
+™
+ 
+≈
+.
+	`¨øy
+(Ë
+of
+ 
+Àngth
+ 
+m
+
+
+137 #¿
+is
+ 
+™
+ 
+öãgî
+ 
+vÆue
+ 
+th©
+ i†
+the
+ 
+Àngth
+ 
+of
+Åhê
+cﬁumn
+ 
+ve˘‹
+ 
+x
+
+
+138 #bô•owî 
+is
+ 
+a
+ 
+li°
+ 
+of
+ 
+powîs
+ 
+th©
+ 
+would
+ 
+be
+ 
+≠∂õd
+ 
+ö
+á 2
+s
+ 
+com∂emít
+ 
+way
+,
+
+139 #eg : [2,1,0] 
+would
+ 
+be
+ 
+≠∂õd
+ 
+wôh
+ 
+™Ÿhî
+ 
+bô
+ 
+ècked
+ 
+⁄
+ 
+‰⁄t
+ 
+as
+ : -2^(
+	`Àn
+(
+bô•owî
+) + 2^(2) + 2^(1) + 2^(0)
+
+140 #v¨«me†
+¥ovided
+ 
+is
+ 
+a
+ 
+li°
+ 
+of
+ 
+v¨übÀ
+ 
+«me
+. 
+eg
+ : 
+v¨«mes
+ = [
+x1
+,
+x2
+,
+x3
+]
+
+141 #NŸê: 
+the
+ 
+im∂emíèti⁄
+ 
+ªquúes
+Åhê
+li°
+ 
+to
+ 
+be
+ 
+a
+ 
+£t
+ 
+of
+ 
+de¸ósög
+ 
+™d
+ 
+c⁄£cutive
+ 
+numbîs
+, 
+s‹ry
+!
+
+143 #A 
+di˘i⁄¨y
+ 
+Qdi˘
+ 
+which
+ 
+is
+ 
+the
+ 
+QUBO
+ 
+this
+ 
+¥obÀm
+
+
+144 #A 
+di˘i⁄¨y
+ 
+Qdi˘_Æt
+ 
+which
+ 
+the
+ 
+ßme
+ 
+QUBO
+ 
+but
+ 
+wôh
+ 
+Æph™umîic
+ 
+	`v¨übÀ
+ (
+keys
+Ë
+«mes
+
+
+145 
+n_i_˘r
+ = 0
+
+146 
+i_powî˘r
+ = 0
+
+147 
+i_twosymb
+ = 0
+
+149 
+°r_bô•owî
+ = ['nuŒ'] + [
+	$°r
+(
+ôem
+Ëôem 
+ö
+ 
+bô•owî
+]
+
+150 
+powîso·wo
+ = 
+≈
+.
+	`zîos
+(
+	`Àn
+(
+bô•owî
+)+1)
+
+152 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	`Àn
+(
+bô•owî
+)+1):
+
+153 
+i
+==0:
+
+154 
+powîso·wo
+[
+i
+] = (2**(
+bô•owî
+[i]+1))*(-1)
+
+156 
+powîso·wo
+[
+i
+] = 2**(
+bô•owî
+[i-1])
+
+157 
+Qöô
+ = 
+≈
+.
+	$zîos
+([
+n
+,n]Ë#A 
+¥Ÿo
+-
+QUBO
+ 
+th©
+ 
+¥ïro˚s£s
+ 
+some
+ 
+vÆues
+ 
+the
+ 
+a˘uÆ
+ QUBO. 
+Inôül
+ QUBO 
+you
+ 
+wûl
+
+
+158 
+Qdi˘
+ = {
+	}
+} #A 
+di˘i⁄¨y
+ 
+th©
+ 
+°‹es
+ 
+the
+ 
+föÆ
+ 
+QUBO
+
+
+160 
+Qdi˘_Æt
+ = {} #Thi†
+di˘i⁄¨y
+ 
+ßves
+ 
+the
+ 
+Æã∫©e
+ 
+QUBO
+ 
+wôh
+ 
+Æph™umîic
+ 
+	$v¨übÀ
+ (
+keys
+Ë
+«mes
+
+
+161 
+ödex_di˘
+ = {
+	}
+} #Di˘i⁄¨y 
+th©
+ 
+m≠s
+ 
+Æph™umîic
+ 
+v¨übÀs
+ 
+to
+ 
+the
+ 
+öãgî
+ 
+⁄es
+
+
+163 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+164 
+j
+ 
+ö
+ 
+	$ønge
+(
+i
+,
+n
+):
+
+165 
+Qöô
+[
+i
+,
+j
+] = 2*
+	$sum
+(
+A
+[:,
+i
+]*A[:,
+j
+])
+
+166 
+b√w
+ = 2*
+b
+
+
+169 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+170 
+i
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ i>0:
+
+171 
+n_i_˘r
+ =Ç_i_ctr + 1
+
+172 
+i_powî˘r
+=0
+
+173 
+n_j_˘r
+ = 
+n_i_˘r
+
+
+174 
+j_powî˘r
+ = 
+i_powî˘r
+
+
+175 
+j
+ 
+ö
+ 
+	`ønge
+(
+i
+,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+176 
+i
+==
+j
+:#Löó∏
+c€fficõ¡
+
+
+177 
+Qdi˘
+[
+i
+,i] = (
+powîso·wo
+[
+i_powî˘r
+]**2)*(
+	`sum
+(
+A
+[:,
+n_i_˘r
+]**2)Ë-Öowîso·wo[i_powî˘r]*
+	$sum
+(
+A
+[:,
+n_i_˘r
+]*
+b√w
+)
+
+178 
+v¨«mes
+ !
+N⁄e
+:
+
+179 
+ãmpv¨1
+ = 
+v¨«mes
+[
+n_i_˘r
+] + '_' + 
+°r_bô•owî
+[
+i_powî˘r
+]
+
+180 
+ödex_di˘
+[
+ãmpv¨1
+] = 
+i
+
+
+181 
+Qdi˘_Æt
+[
+ãmpv¨1
+,ãmpv¨1] = 
+Qdi˘
+[
+i
+,i]
+
+182 :#Quadøti¯
+c€fficõ¡
+
+
+183 
+j
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ j>0:
+
+184 
+n_j_˘r
+ =Ç_j_ctr + 1
+
+185 
+j_powî˘r
+ = 0
+
+186 
+Qdi˘
+[
+i
+,
+j
+] = 
+powîso·wo
+[
+i_powî˘r
+]*powîso·wo[
+j_powî˘r
+]*
+Qöô
+[
+n_i_˘r
+,
+n_j_˘r
+]
+
+187 
+v¨«mes
+ !
+N⁄e
+:
+
+188 
+ãmpv¨2
+ = 
+v¨«mes
+[
+n_j_˘r
+] + '_' + 
+°r_bô•owî
+[
+j_powî˘r
+]
+
+189 
+Qdi˘_Æt
+[
+ãmpv¨1
+,
+ãmpv¨2
+] = 
+Qdi˘
+[
+i
+,
+j
+]
+
+191 
+j_powî˘r
+ = j_powerctr + 1
+
+192 
+i_powî˘r
+ = i_powerctr + 1
+
+194 
+v¨«mes
+ !
+N⁄e
+:
+
+195  
+Qdi˘
+, 
+Qdi˘_Æt
+, 
+ödex_di˘
+
+
+197  
+Qdi˘
+ #ju°  
+the
+ 
+b¨e
+ 
+b⁄es
+ 
+v¨«mes
+ 
+nŸ
+ 
+ªque°ed
+
+
+199 #Thi†
+is
+ 
+ju°
+ 
+to
+ 
+c⁄vît
+ 
+a
+ 
+di˘i⁄¨y
+ 
+ba£d
+ 
+ªsu…
+ 
+öto
+á 
+bö¨y
+ 
+°rög
+ basedÑesult
+
+200 
+def
+ 
+	$gë_bö_°r
+(
+c⁄fig
+,
+isisög
+=
+True
+):
+
+202 #c⁄fig 
+is
+ 
+a
+ 
+di˘i⁄¨y
+
+
+203 #isisög 
+is
+ 
+True
+ 
+c⁄fig
+ 
+has
+ -1 
+‹
+ +1 
+™d
+ 
+FÆ£
+ config has 0 or 1
+
+205 #®
+bö¨y
+ 
+°rög
+ 
+of
+ 0
+s
+ 
+™d
+ 1s
+
+206 
+bö°r
+ = ""
+
+207 
+isisög
+ =
+True
+:
+
+208 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+c⁄fig
+)):
+
+209 
+c⁄fig
+[
+i
+] == 1:
+
+210 
+bö°r
+ +
+	$°r
+(1)
+
+211 
+ñif
+ 
+c⁄fig
+[
+i
+] == -1:
+
+212 
+bö°r
+ +
+	$°r
+(0)
+
+214 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+c⁄fig
+)):
+
+215 
+c⁄fig
+[
+i
+] == 1:
+
+216 
+bö°r
+ +
+	$°r
+(1)
+
+217 
+ñif
+ 
+c⁄fig
+[
+i
+] == 0:
+
+218 
+bö°r
+ +
+	$°r
+(0)
+
+219  
+bö°r
+
+
+221 #¥o˚s£†
+the
+ 
+bö¨y
+ 
+°rög
+ 
+öto
+ 
+a
+ 
+≈
+.
+¨øy
+ 
+ve˘‹
+.
+
+222 
+def
+ 
+	$qubo_to_ªÆ
+(
+bö°r
+,
+n
+,
+¥ec_li°
+):
+
+223 #¥ï¨ê
+the
+ 
+powîs_of_two
+ 
+li°
+
+
+225 
+powîs_of_two
+ = []
+
+226 
+powîs_of_two
+.
+	`≠≥nd
+(-2**(
+¥ec_li°
+[0]+1))
+
+229 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+¥ec_li°
+)):
+
+230 
+powîs_of_two
+.
+	`≠≥nd
+(2**(
+¥ec_li°
+[
+i
+]))
+
+231 #Now 
+the
+ 
+a˘uÆ
+ 
+numbî
+
+
+232 
+bö_˘r
+=0
+
+233 
+cur_ªÆ
+ = 
+≈
+.
+	$zîos
+(
+n
+)
+
+234 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+235 
+j
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+powîs_of_two
+)):
+
+236 
+cur_ªÆ
+[
+i
+] +
+powîs_of_two
+[
+j
+]*(
+bö°r
+[
+bö_˘r
+])
+
+237 
+bö_˘r
+ += 1
+
+239  
+cur_ªÆ
+
+
+241 
+def
+ 
+	$qubo_¥ï_n⁄√g
+(
+A
+,
+b
+,
+n
+,
+bô•owî
+, 
+v¨«mes
+=
+N⁄e
+):
+
+242 #Samê
+as
+ 
+qubo_¥ï
+ 
+but
+ 
+⁄ly
+ 
+n⁄
+-
+√g©ive
+ 
+vÆues
+
+
+243 #bô•owî = [0] 
+bö¨y
+ 
+vÆues
+
+
+246 
+n_i_˘r
+ = 0
+
+247 
+i_powî˘r
+ = 0
+
+248 
+i_twosymb
+ = 0
+
+250 
+°r_bô•owî
+ =[
+	$°r
+(
+ôem
+Ëôem 
+ö
+ 
+bô•owî
+]
+
+251 
+powîso·wo
+ = 
+≈
+.
+	`zîos
+(
+	$Àn
+(
+bô•owî
+))
+
+253 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+	$Àn
+(
+bô•owî
+)):
+
+254 
+powîso·wo
+[
+i
+] = 2**(
+bô•owî
+[i])
+
+256 
+Qöô
+ = 
+≈
+.
+	$zîos
+([
+n
+,n])
+
+257 
+Qdi˘
+ = {
+	}
+} #Thê
+di˘i⁄¨y
+ 
+our
+ 
+qubo
+
+
+259 
+Qdi˘_Æt
+ = {} #Thi†
+di˘i⁄¨y
+ 
+ßves
+ 
+the
+ 
+Æã∫©e
+ 
+QUBO
+ 
+wôh
+ 
+Æph™umîic
+ 
+	$v¨übÀ
+ (
+keys
+Ë
+«mes
+
+
+260 
+ödex_di˘
+ = {
+	}
+} #Di˘i⁄¨y 
+th©
+ 
+m≠s
+ 
+Æph™umîic
+ 
+v¨übÀs
+ 
+to
+ 
+the
+ 
+öãgî
+ 
+⁄es
+
+
+262 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+263 
+j
+ 
+ö
+ 
+	$ønge
+(
+i
+,
+n
+):
+
+264 
+Qöô
+[
+i
+,
+j
+] = 2*
+	$sum
+(
+A
+[:,
+i
+]*A[:,
+j
+])
+
+265 #¥öt("qöô_i_j: ", 
+Qöô
+[
+i
+,
+j
+])
+
+266 #¥öt("A_:,i",
+i
+,":", 
+A
+[:,i])
+
+267 #¥öt("A_:,j",
+j
+,":", 
+A
+[:,j])
+
+268 
+b√w
+ = 2*
+b
+
+
+269 #¥öt("b: ", 
+b
+)
+
+270 #¥öt("2*b:", 
+b√w
+)
+
+272 
+i
+ 
+ö
+ 
+	`ønge
+(0,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+273 
+i
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ i>0:
+
+274 
+n_i_˘r
+ =Ç_i_ctr + 1
+
+275 
+i_powî˘r
+=0
+
+276 
+n_j_˘r
+ = 
+n_i_˘r
+
+
+277 
+j_powî˘r
+ = 
+i_powî˘r
+
+
+278 
+j
+ 
+ö
+ 
+	`ønge
+(
+i
+,
+n
+*
+	$Àn
+(
+powîso·wo
+)):
+
+279 
+i
+==
+j
+: #Löó∏
+c€fficõ¡
+
+
+280 
+Qdi˘
+[
+i
+,i] = (
+powîso·wo
+[
+i_powî˘r
+]**2)*(
+	`sum
+(
+A
+[:,
+n_i_˘r
+]**2)Ë-Öowîso·wo[i_powî˘r]*
+	$sum
+(
+A
+[:,
+n_i_˘r
+]*
+b√w
+)
+
+282 #¥öt("qdi˘_i_i: ", 
+Qdi˘
+[
+i
+,i])
+
+283 
+v¨«mes
+ !
+N⁄e
+:
+
+284 
+ãmpv¨1
+ = 
+v¨«mes
+[
+n_i_˘r
+] + '_' + 
+°r_bô•owî
+[
+i_powî˘r
+]
+
+285 
+ödex_di˘
+[
+ãmpv¨1
+] = 
+i
+
+
+286 
+Qdi˘_Æt
+[
+ãmpv¨1
+,ãmpv¨1] = 
+Qdi˘
+[
+i
+,i]
+
+287 : #Quadøti¯
+c€fficõ¡
+
+
+288 
+j
+%
+	`Àn
+(
+powîso·wo
+)==0 
+™d
+ j>0:
+
+289 
+n_j_˘r
+ =Ç_j_ctr + 1
+
+290 
+j_powî˘r
+ = 0
+
+291 
+Qdi˘
+[
+i
+,
+j
+] = 
+powîso·wo
+[
+i_powî˘r
+]*powîso·wo[
+j_powî˘r
+]*
+Qöô
+[
+n_i_˘r
+,
+n_j_˘r
+]
+
+292 #¥öt("qdi˘_i_j:", 
+Qdi˘
+[
+i
+,
+j
+])
+
+293 
+v¨«mes
+ !
+N⁄e
+:
+
+294 
+ãmpv¨2
+ = 
+v¨«mes
+[
+n_j_˘r
+] + '_' + 
+°r_bô•owî
+[
+j_powî˘r
+]
+
+295 
+Qdi˘_Æt
+[
+ãmpv¨1
+,
+ãmpv¨2
+] = 
+Qdi˘
+[
+i
+,
+j
+]
+
+297 
+j_powî˘r
+ = j_powerctr + 1
+
+298 
+i_powî˘r
+ = i_powerctr + 1
+
+300 
+v¨«mes
+ !
+N⁄e
+:
+
+301  
+Qdi˘
+, 
+Qdi˘_Æt
+, 
+ödex_di˘
+
+
+303  
+Qdi˘
+ #ju°  
+the
+ 
+b¨e
+ 
+b⁄es
+ 
+v¨«mes
+ 
+nŸ
+ 
+ªque°ed
+
+
+305 #Fun˘i⁄ 
+to
+ 
+c⁄vît
+ 
+the
+ 
+sﬁuti⁄
+ 
+di˘i⁄¨y
+ 
+‰om
+ 
+Æph™umîic
+ 
+v¨übÀs
+Åÿ
+öãgî
+
+
+306 
+def
+ 
+	$c⁄vît_ªsu…
+(
+sﬁn_di˘
+,
+ödex
+):
+
+307 
+√w_di˘
+ = {
+	}
+}
+
+308 
+key
+,
+vÆue
+ 
+ö
+ 
+	gsﬁn_di˘
+.
+	$ôems
+():
+
+309 
+√w_di˘
+[
+ödex
+[
+key
+]] = 
+vÆue
+
+
+310  
+√w_di˘
+
+
+312 
+def
+ 
+	$cou¡_⁄es
+(
+H
+):
+
+314 
+cﬁ_num
+ 
+ö
+ 
+	$ønge
+(0, 
+H
+.
+sh≠e
+[1]):
+
+315 
+cﬁ_cou¡
+ = 0
+
+316 
+row_num
+ 
+ö
+ 
+	$ønge
+(0, 
+H
+.
+sh≠e
+[0]):
+
+317 #¥öt("Row: ", 
+row_num
+, "Cﬁ: ", 
+cﬁ_num
+)
+
+318 
+H
+[
+row_num
+][
+cﬁ_num
+] == 1:
+
+319 
+cﬁ_cou¡
+ += 1
+
+321 
+	`¥öt
+("Cﬁ: ", 
+cﬁ_num
+, "1cou¡: ", 
+cﬁ_cou¡
+)
+
+325 
+p
+ 
+x
+ 
+n
+
+
+326 2 
+x
+ 3
+
+328 
+p
+ 
+x
+ 
+k
+
+
+329 2 
+x
+ 2
+
+331 
+k
+ 
+x
+ 
+n
+
+
+332 2 
+x
+ 3
+
+334 [
+v11
+, 
+v12
+] [
+w11
+, 
+w12
+] [
+h11
+, 
+h12
+]
+
+335 [
+v21
+, 
+v22
+] [
+w21
+, 
+w22
+] [
+h21
+, 
+h22
+]
+
+337 (
+v11
+ - (
+w11
+ * 
+h11
+Ë+ (
+w12
+ * 
+h21
+) )^2 +
+
+338 (
+v12
+ - (
+w11
+ * 
+h12
+Ë+ (
+w12
+ * 
+h22
+) )^2 +
+
+339 (
+v21
+ - (
+w21
+ * 
+h11
+Ë+ (
+w22
+ * 
+h21
+) )^2 +
+
+340 (
+v22
+ - (
+w21
+ * 
+h12
+Ë+ (
+w22
+ * 
+h22
+) )^2
+
+343 2 
+x
+ 3
+
+345 
+V
+ 
+W
+ 
+H
+
+
+346 [1,2,3] [
+w11
+, 
+w12
+] [
+h11
+, 
+h12
+, 
+h13
+]
+
+347 [4,5,6] [
+w21
+, 
+w22
+] [
+h21
+, 
+h22
+, 
+h23
+]
+
+349 
+w11h11
+ + 
+w12h21
+, 
+w11h12
+ + 
+w12h22
+, 
+w11h13
+ + 
+w12h23
+
+
+350 
+w21h11
+ + 
+w22h21
+, 
+w21h12
+ + 
+w22h22
+, 
+w21h13
+ + 
+w22h23
+
+
+352 
+V
+ - 
+WH
+
+
+354 (1 - (
+w11h11
+ + 
+w12h21
+))^2 +
+
+355 (2 - (
+w11h12
+ + 
+w12h22
+))^2 +
+
+356 (3 - (
+w11h13
+ + 
+w12h23
+))^2 +
+
+357 (4 - (
+w21h11
+ + 
+w22h21
+))^2 +
+
+358 (5 - (
+w21h12
+ + 
+w22h22
+))^2 +
+
+359 (6 - (
+w21h13
+ + 
+w22h23
+))^2
+
+362 3 
+x
+ 3
+
+364 
+	$V
+ (3x3Ë
+	$W
+ (3 
+x
+ 2Ë
+	`H
+(2 x 3)
+
+366 [1,2,3] [
+w11
+, 
+w12
+] [
+h11
+, 
+h12
+, 
+h13
+]
+
+367 [4,5,6] [
+w21
+, 
+w22
+] [
+h21
+, 
+h22
+, 
+h23
+]
+
+368 [7,8,9] [
+w31
+, 
+w32
+]
+
+370 
+w11h11
+ + 
+w12h21
+, 
+w11h12
+ + 
+w12h22
+, 
+w11h13
+ + 
+w12h23
+
+
+371 
+w21h11
+ + 
+w22h21
+, 
+w21h12
+ + 
+w22h22
+, 
+w21h13
+ + 
+w22h23
+
+
+372 
+w31h11
+ + 
+w32h21
+, 
+w31h12
+ + 
+w32h22
+, 
+w31h13
+ + 
+w32h23
+
+
+374 (1- (
+w11h11
+ + 
+w12h21
+))^2 +
+
+375 (2- (
+w11h12
+ + 
+w12h22
+))^2 +
+
+382 (9- (
+w31h13
+ + 
+w32h23
+))^2
+
+387 #(6 - 
+x1
+ - 
+x2
+)^2
+
+388 #In‹dî 
+to
+ 
+ªpuΩo£
+ 
+a
+ 
+code
+ ||
+Ax
+ - 
+b
+|| 
+ödividuÆ
+ 
+quadøtic
+ 
+equ©i⁄s
+ 
+n
+ 
+v¨übÀs
+,
+THe
+ 
+Dimísi⁄s
+ 
+A
+ 
+is
+ 1 
+x
+Ç, x :Ç x 1 
+™d
+ b : 1 x 1
+
+389 #A = 
+≈
+.
+	`¨øy
+([[1,1]])
+
+391 #b = 
+≈
+.
+	`¨øy
+([6])
+
+394 ###Q,
+Q_Æt
+,
+ödex
+ = 
+	`qubo_¥ï
+(
+A
+,
+b
+,
+n
+,
+¥ec_li°
+,
+v¨«mes
+=varnames)
+
+395 #ßm∂î = 
+dimod
+.
+	`Exa˘Sﬁvî
+()
+
+396 #ßm∂e£à
+ßm∂î
+.
+	`ßm∂e_qubo
+(
+Q_Æt
+)
+
+397 #¥öt(
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+)
+
+400 #mu…ùly 
+Ax
+
+
+401 #Ax 
+is
+ 
+the
+ 
+sum
+ 
+of
+ 
+w
+ 
+times
+ 
+h
+ 
+v¨s
+
+
+402 #wh 
+ñemíts
+ 
+¨e
+ 
+sub°ôuded
+ 
+by
+ 
+x
+ 
+v¨übÀs
+
+
+403 #dÿ
+b
+ - 
+Ax
+ 
+the
+ 
+vÆues
+)
+
+404 #A 
+is
+ 
+a
+ 
+m©rix
+
+
+405 #row†
+¨e
+ 
+Æl
+ 1's
+
+406 #cﬁumn†
+¨e
+ #o‡
+v¨übÀs
+
+
+410 
+V
+ 
+W
+ 
+H
+
+
+411 [
+v11
+, 
+v12
+] [
+w11
+, 
+w12
+] [
+h11
+, 
+h12
+]
+
+412 [
+v21
+, 
+v22
+] [
+w21
+, 
+w22
+] [
+h21
+, 
+h22
+]
+
+414 (
+v11
+ - (
+w11
+ * 
+h11
+Ë+ (
+w12
+ * 
+h21
+Ë)^2 + #v11 - (
+w11h11
+Ë+ (
+w12h21
+)
+
+415 (
+v12
+ - (
+w11
+ * 
+h12
+Ë+ (
+w12
+ * 
+h22
+Ë)^2 + #v12 - (
+w11h12
+Ë+ (
+w12h22
+)
+
+416 (
+v21
+ - (
+w21
+ * 
+h11
+Ë+ (
+w22
+ * 
+h21
+Ë)^2 + #v21 - (
+w21h11
+Ë+ (
+w22h21
+)
+
+417 (
+v22
+ - (
+w21
+ * 
+h12
+Ë+ (
+w22
+ * 
+h22
+Ë)^2 #v22 - (
+w21h12
+Ë+ (
+w22h22
+)
+
+419 
+	`w11h11
+(
+w11h11
+ + 
+w12h21
+Ë+ 
+	`w12h21
+(w11h11 + w12h21)
+
+421 
+w11h11
+^2 + 
+w11h11w12h21
+ + 
+w12h21w11h11
+ + 
+w12h21
+^2 = w11h11^2 + 2(
+w11h11w12h12
+) + w12h21^2
+
+423 
+	`w11h12
+(
+w11h12
+ + 
+w12h22
+Ë+ 
+	`w12h22
+(w11h12 + w12h22Ëw11h12^2 + 2(
+w11h12w12h22
+) + w12h22^2
+
+425 
+	`w21h11
+(
+w21h11
++
+w22h21
+Ë+ 
+	`w22h21
+(w21h11+w22h21Ëw21h11^2 + 2(
+w21h11w22h21
+) + w22h21^2
+
+427 
+	`w21h12
+(
+w21h12
+ + 
+w22h22
+Ë+ 
+	`w22h22
+(w21h12+w22h22Ëw21h12^2 + 2(
+w21h12w22h22
+) + w22h22^2
+
+431 (
+v11
+ - 
+w11h11
+^2 + 2(
+w11h11w12h12
+Ë+ 
+w12h21
+^2Ë+ (
+v12
+ - 
+w11h12
+^2 + 2(
+w11h12w12h22
+Ë+ 
+w12h22
+^2 ) +
+
+432 (
+v21
+ - 
+w21h11
+^2 + 2(
+w21h11w22h21
+Ë+ 
+w22h21
+^2Ë+ (
+v22
+ - 
+w21h12
+^2 + 2(
+w21h12w22h22
+Ë+ 
+w22h22
+^2 )
+
+435 (
+v11
+ - 
+x1
+^2 + 2(x1 * 
+x2
+Ë+ x2^2Ë+ (
+v12
+ - 
+x3
+^2 + 2(x3 * 
+x4
+Ë+ x4^2 ) + (
+v21
+ - 
+x5
+^2 + 2(x5 * 
+x6
+Ë+ x6^2 ) + (
+v22
+ - 
+x7
+^2 + 2(x7 * 
+x8
+) + x8^2)
+
+438 (
+a
++
+b
+)^2 = (a+b)(a+b) =á^2 + b^2 + 2ab
+
+440 
+x1
+ : ('w11', 'h11')
+
+441 
+x2
+ : ('w12', 'h21')
+
+442 
+x3
+ : ('w11', 'h12')
+
+443 
+x4
+ : ('w12', 'h22')
+
+444 
+x5
+ : ('w21', 'h11')
+
+445 
+x6
+ : ('w22', 'h21')
+
+446 
+x7
+ : ('w21', 'h12')
+
+447 
+x8
+ : ('w22', 'h22')
+
+454 
+°¨t_time
+ = 
+d©ëime
+.
+	$now
+()
+
+455 #I¿
+a
+ 2x2 
+sôu©i⁄
+, 
+we
+ 
+basiˇŒay
+ 
+have
+ 
+to
+ 
+£nd
+ 
+⁄e
+ 
+quadøtic
+ 
+ex¥essi⁄
+ 
+©
+á 
+time
+
+
+456 
+Q
+ = {
+	}
+}
+
+457 
+Q_Æt
+ = {}
+
+458 
+ödex
+ = {}
+
+459 
+Q_tŸÆ
+ = {}
+
+464 #V = 
+≈
+.
+¨øy
+([[2.5,7.3],[3.5,2]]
+
+466 #2 
+x
+ 2 
+ã°s
+, -4 
+to
+ +3
+
+467 #v = 
+≈
+.
+¨øy
+([[1,2], [3,4]]Ë#2
+x2
+
+
+468 #v = 
+≈
+.
+¨øy
+([[-1,-3], [2,3]])
+
+469 #v = 
+≈
+.
+¨øy
+([[-4,-4], [-4,-4]])
+
+470 #v = 
+≈
+.
+¨øy
+([[-4,3], [-2,1]])
+
+471 #v = 
+≈
+.
+¨øy
+([[-1,-4], [2,-3]])
+
+473 #2 
+x
+ 3 
+ã°s
+ , -4 
+to
+ +3
+
+475 #v = 
+≈
+.
+¨øy
+([ [3,2,2], [1,3,3] ])
+
+477 #v = 
+≈
+.
+¨øy
+([ [3,2,1], [1,3,2] ])
+
+478 #v = 
+≈
+.
+¨øy
+([ [-4,0,1], [-1,-2,3]])
+
+481 #3 
+x
+ 3 
+ã°s
+, -4 
+to
+ +3
+
+482 #v = 
+≈
+.
+¨øy
+([ [1,-1,-2], [-4,3,2], [1,0,3] ])
+
+485 #2 
+x
+ 3
+
+488 #3 
+x
+ 3
+
+490 #f‹ 
+make
+ 
+qubo
+, 
+V
+ = 
+B
+ 
+as
+ 
+our
+ 
+öput
+
+
+491 #Pª¯
+Li°
+ 
+w⁄
+'tálways beÜikeÅhis,ÖrobÇeedÅo dynamically figure it out based
+
+492 #⁄ 
+öputs
+..
+
+495 
+¥ec_li°
+ = [2,1,0] #-8 
+to
+ +7
+
+496 
+¥ec_li°_°r
+ = ['null', '2', '1', '0']
+
+500 -- 
+N⁄
+ 
+å™•o£d
+, 
+we
+ 
+ˇn
+ 
+u£
+ 
+≈
+.
+å™•o£
+ 
+to
+ 
+fix
+ 
+this
+ --
+
+502 
+V
+ = 
+p
+ 
+x
+ 
+n
+
+
+503 
+W
+ = 
+p
+ 
+x
+ 
+k
+
+
+504 
+H
+ = 
+k
+ 
+x
+ 
+n
+
+
+506 
+p
+ = 10
+
+507 
+k
+ = 2
+
+508 
+n
+ = 2
+
+511 
+V
+ = 10 
+x
+ 2
+
+512 
+W
+ = 10 
+x
+ 2
+
+513 
+H
+ = 2 
+x
+ 2
+
+517 #Old 
+n⁄
+ 
+å™•o£d
+ 
+°uff
+
+
+518 #w_ã° = 
+≈
+.
+¨øy
+([ [1,3], [-4,2], [3,2], [-3,0] ]Ë#∞
+x
+ 
+k
+ - 4 x 2
+
+519 #h_ã° = 
+≈
+.
+¨øy
+([ [0,1,0,1], [1,0,1,0] ]Ë#k 
+x
+ 
+n
+ - 2 x 4
+
+520 #wh_ã° = 
+≈
+.
+m©mul
+(
+w_ã°
+,
+h_ã°
+Ë#∞
+x
+ 
+n
+ - 2 x 4
+
+521 #v_ã° = 
+wh_ã°
+
+
+522 #v = 
+v_ã°
+
+
+524 #Te° 
+˚¡îs
+ : (2,2Ë
+™d
+ (5,5)
+
+526 
+num_ßm∂es
+ = 40
+
+527 
+k
+ = 3
+
+529 
+V
+, 
+y
+ = 
+	$make_blobs
+(
+
+530 
+n_ßm∂es
+=
+num_ßm∂es
+, 
+n_„©uªs
+=2,
+
+531 
+˚¡îs
+=
+k
+, 
+˛u°î_°d
+=0.5,
+
+532 
+shufÊe
+=
+True
+, 
+øndom_°©e
+=0
+
+536 #¥öt(
+	`ty≥
+(
+V
+))
+
+537 #¥öt(
+V
+.
+sh≠e
+)
+
+539 #¥öt(
+V
+)
+
+542 
+v_öput
+ = 
+≈
+.
+	$¨øy
+([
+
+554 #¥öt(
+	`ty≥
+(
+v_öput
+))
+
+555 #¥öt(
+v_öput
+.
+sh≠e
+)
+
+556 #¥öt(
+v_öput
+)
+
+558 #v_å™•o£ = 
+≈
+.
+	`å™•o£
+(
+V
+)
+
+559 
+v
+ = 
+≈
+.
+	$å™•o£
+(
+V
+)
+
+561 ## 
+O∆y
+ 
+u£
+ 
+this
+ 
+°uff
+ 
+‰om
+ 
+ML
+ 
+whîe
+ 
+row
+ 
+ve˘‹s
+ 
+¨e
+ 
+„©uªs
+
+
+562 #v = 
+v_å™•o£
+
+
+565 #v_row†
+v
+.
+sh≠e
+[0]
+
+566 #v_cﬁ†
+v
+.
+sh≠e
+[1]
+
+569 
+	`¥öt
+("\nGetting vars...\n")
+
+570 
+v_di˘
+, 
+x_di˘
+, 
+x_di˘_ªv
+, 
+p
+, 
+n
+ = 
+	$föd_v¨s
+(
+v
+,
+k
+)
+
+572 ###Te° 
+Ca£s
+ 
+whîe
+ 
+WH
+ 
+is
+ 
+known
+, 
+V
+ i†
+made
+ 
+autom©iˇŒy
+
+
+574 
+F‹
+ 
+ã°ög
+, 
+make
+ 
+up
+ 
+a
+ 
+WH
+ 
+™d
+ 
+gë
+á 
+ªsu…
+ 
+of
+ 
+V
+, 
+thí
+ 
+ã°
+
+
+575 
+Make
+ 
+suª
+ 
+to
+ 
+put
+ 
+this
+ 
+ö
+ 
+dis£π©i⁄
+ 
+as
+ 
+ã°
+
+
+576 
+V
+ = 
+p
+ 
+x
+ 
+n
+
+
+577 
+W
+ = 
+p
+ 
+x
+ 
+k
+
+
+578 
+H
+ = 
+k
+ 
+x
+ 
+n
+
+
+579 
+V
+ = 2 
+x
+ 2
+
+580 
+W
+ = 2 
+x
+ 2
+
+581 
+H
+ = 2 
+x
+ 2
+
+587 #v_11 - 
+x1
+ - 
+x2
+
+
+588 #v_12 - 
+x3
+ - 
+x4
+
+
+589 #v_21 - 
+x5
+ - 
+x6
+
+
+590 #v_22 - 
+x7
+ - 
+x8
+
+
+592 #¥öt(
+v_di˘
+[(1,1)['v_val'])
+
+593 #¥öt(
+v_di˘
+[(1,1)]['wh'])
+
+594 #¥öt(
+v_di˘
+[(1,1)]['wh'][0][0])
+
+595 #¥öt(
+x_di˘_ªv
+)
+
+597 #Sÿ
+we
+ 
+√ed
+ 
+to
+ 
+go
+ 
+through
+ 
+™d
+ dÿ
+⁄e
+ 
+quadøtic
+ 
+©
+ 
+a
+ 
+time
+
+
+598 #Wê
+£nd
+ 
+⁄ly
+ 
+the
+ 
+v¨«mes
+ 
+assocüãd
+ 
+wôh
+Åhê
+v
+ - 
+wh
+
+
+599 #wê
+lo›
+ 
+through
+ 
+evîythög
+ 
+ö
+ 
+v_di˘
+
+
+600 #Wê
+gë
+ 
+Æl
+ 
+WH
+'sás indexesÅo x_dict_rev
+
+601 #Wê
+u£
+ 
+this
+ 
+to
+ 
+gë
+ 
+our
+ 
+x
+ 
+vÆues
+Åÿ
+∑ss
+Åÿ
+v¨«mes
+
+
+602 #⁄˚ 
+we
+ 
+gë
+ 
+evîythög
+ wê
+thí
+ 
+ˇŒ
+ 
+make_qubo
+
+
+603 #Wê
+gë
+ 
+the
+ 
+q_Æt
+  
+™d
+ 
+add
+ 
+ô
+ 
+to
+ 
+q_tŸÆ
+
+
+604 #¥öt(
+v_di˘
+[(1,1)]['wh'][1])
+
+607 
+	`¥öt
+("Parsing V dictionary...\n")
+
+608 #Gÿ
+through
+ 
+maö
+ 
+di˘i⁄¨y
+ 
+to
+ 
+gë
+ 
+d©a
+
+
+609 
+key
+, 
+vÆ
+ 
+ö
+ 
+v_di˘
+.
+	$ôems
+():
+
+610 #¥öt(
+v_di˘
+[
+key
+]['wh'])
+
+611 #Gÿ
+through
+ 
+ödividuÆ
+ 
+li°
+ 
+of
+ 
+tu∂es
+
+
+612 
+v¨«mes
+ = []
+
+613 
+ôem
+ 
+ö
+ 
+v_di˘
+[
+key
+]['wh']:
+
+614 #Gë 
+our
+ 
+c‹ª•⁄dög
+ 
+x
+ 
+vÆues
+ 
+to
+ 
+WH
+ values
+
+615 
+v¨«mes
+.
+	$≠≥nd
+(
+x_di˘_ªv
+[
+ôem
+])
+
+616 #Buûd 
+a
+ 
+row
+ 
+ve˘‹
+ 
+of
+ 1's for A
+
+617 #A = 
+≈
+.
+	`zîos
+([1,
+k
+])
+
+619 #Gë 
+óch
+ 
+ñemít
+ 
+of
+ 
+V
+ 
+qubo_¥ï
+
+
+620 #¥öt(
+v¨«mes
+)
+
+621 #Alsÿ
+°‹e
+ 
+them
+ 
+as
+ 
+a
+ 
+Êﬂtög
+ 
+poöt
+ 
+numbî
+ 
+vs
+á 
+°rög
+
+
+622 #f‹ 
+v_key
+, 
+v_vÆ
+ 
+ö
+ 
+v_di˘
+.
+	`ôems
+():
+
+623 #Buûd 
+a
+ 
+row
+ 
+ve˘‹
+ 
+of
+ 1's for A
+
+624 
+A
+ = 
+≈
+.
+	$zîos
+([1,
+k
+])
+
+625 
+A
+ += 1
+
+626 
+b
+ = (
+v_di˘
+[
+key
+]['v_val'])
+
+627 
+Q
+, 
+Q_Æt
+, 
+ödex
+ = 
+	$qubo_¥ï
+(
+A
+,
+b
+,
+k
+,
+¥ec_li°
+,
+v¨«mes
+=varnames)
+
+628 #Puà
+evîythög
+ 
+‰om
+ 
+óch
+ 
+Q_Æt
+ 
+di˘
+ 
+öto
+ 
+ma°î
+ 
+Q_tŸÆ
+
+
+629 
+key
+, 
+vÆ
+ 
+ö
+ 
+Q_Æt
+.
+	$ôems
+():
+
+630 #Check 
+key
+ 
+is
+ 
+Æªady
+ 
+hîe
+, 
+so
+ 
+add
+ 
+to
+ 
+ô
+
+
+631 
+key
+ 
+ö
+ 
+Q_tŸÆ
+:
+
+632 
+Q_tŸÆ
+[
+key
+] +
+vÆ
+
+
+634 
+Q_tŸÆ
+[
+key
+] = 
+vÆ
+
+
+637 #¥öt(
+Q_tŸÆ
+)
+
+638 #µröt.
+	`µröt
+(
+Q_tŸÆ
+)
+
+640 
+	`¥öt
+("ApplyingÜinearizationÖenalties...\n")
+
+642 #Dñè =
+œg¨ag√
+ 
+∑øm
+
+
+643 
+dñè
+ = 15
+
+644 
+x_key
+, 
+x_vÆ
+ 
+ö
+ 
+x_di˘
+.
+	$ôems
+():
+
+645 
+ãmp_h
+ = 
+x_vÆ
+[1]
+
+646 #¥öt(
+ãmp_h
+)
+
+647 
+¥ec
+ 
+ö
+ 
+¥ec_li°_°r
+:
+
+648 
+ãmp_x
+ = 
+x_key
+ + "_" + 
+¥ec
+
+
+649 #¥öt(
+ã°
+)
+
+650 
+ãmp_w
+ = 
+x_vÆ
+[0] + "_" + 
+¥ec
+
+
+651 #¥öt(
+ãmp_w
+)
+
+652 
+Q_tŸÆ
+[
+ãmp_w
+, 
+ãmp_h
+] = 2 * 
+dñè
+
+
+653 
+Q_tŸÆ
+[
+ãmp_x
+, 
+ãmp_w
+] = -4 * 
+dñè
+
+
+654 
+Q_tŸÆ
+[
+ãmp_x
+, 
+ãmp_h
+] = -4 * 
+dñè
+
+
+655 
+Q_tŸÆ
+[
+ãmp_x
+,Åemp_x] +6 * 
+dñè
+
+
+657 #µröt.
+	`µröt
+(
+Q_tŸÆ
+)
+
+658 
+	`¥öt
+("Linearization Penalties: \n")
+
+659 
+µröt
+.
+	$µröt
+(
+Q_tŸÆ
+)
+
+664 ## 
+Nìd
+ 
+to
+ dÿ
+like
+ 
+we
+ 
+did
+ 
+above
+ 
+wôh
+ 
+the
+ 
+h
+ 
+v¨übÀs
+ 
+™d
+ 
+nŸ
+ 
+£nd
+ 
+them
+ 
+ö
+ 
+Æl
+ 
+©
+ 
+⁄˚
+
+
+665 ## 
+Make
+ 
+as
+ 
+«y
+ 
+Q_Æt2
+á†
+thîe
+ 
+¨e
+ 
+cﬁumns
+ 
+ö
+ 
+H
+
+
+666 ## 
+Each
+ 
+cﬁumn
+ 
+ˇŒ
+ 
+qubo_¥ï_n⁄√g
+ 
+wôh
+ 
+the
+ 
+c‹ª˘
+ 
+v¨«mes
+ 
+to
+ 
+th©
+ column
+
+669 #Q,
+Q_Æt
+,
+ödex
+ = 
+	`qubo_¥ï_n⁄√g
+(
+A
+,
+b
+,
+n
+,
+¥ec_li°
+,
+v¨«mes
+=varnames)
+
+671 #f‹ 
+q
+ 
+ö
+ 
+	`ønge
+(0,
+v_rows
+):
+
+672 #f‹ 
+r
+ 
+ö
+ 
+	`ønge
+(0,
+v_cﬁs
+):
+
+673 #¥öt(
+v
+[
+q
+][
+r
+])
+
+674 #A = 
+≈
+.
+	`zîos
+([1,
+k
+])
+
+675 #A +1 #makê
+m©rix
+ 
+Æl
+ 1's
+
+676 #Q,
+Q_Æt
+,
+ödex
+ = 
+	`qubo_¥ï_n⁄√g
+(
+A
+,
+b
+[
+q
+][
+r
+],
+n
+,
+¥ec_li°
+,
+v¨«mes
+=varnames)
+
+679 ## 
+So
+ 
+hîe
+ 
+we
+ 
+¨e
+ 
+goög
+ 
+to
+ 
+åy
+ 
+the
+ 
+H
+ 
+≥«…y
+ 
+whîe
+ wê
+ísuª
+ H 
+⁄ly
+ 
+has
+ 1 
+£À˘i⁄
+
+
+680 #Wê
+go
+ 
+through
+ 
+this
+ 
+¥o˚ss
+ 
+H
+ 
+⁄ly
+ , 
+thí
+ 
+we
+ 
+add
+ 
+the
+ 
+ªsu…s
+ 
+to
+ 
+Q_TŸÆ
+ 
+di˘
+
+
+681 #¿
+wûl
+ 
+be
+ 
+Àngth
+ 
+of
+ 
+h
+ 
+cﬁum
+, 
+so
+ 
+this
+ 
+is
+ 
+k
+
+
+682 #A 
+m©rix
+ 
+wûl
+ 
+be
+ 
+Æl
+ 
+A
+ 1'sÜength of k
+
+683 #CÆ»
+qubo_n⁄eg
+ 
+n
+ 
+times
+
+
+684 #Thi†
+is
+ 
+ªÆly
+ 
+bad
+ 
+™Æysis
+ 
+•a˚
+ 
+wi£
+, 
+but
+ 
+we
+ 
+ˇn
+ 
+≠¥oxim©e
+, c™ 
+›tmize
+ 
+somewh©
+
+
+685 #x: 
+p
+ * 
+k
+ * 
+n
+
+
+686 #w: 
+c
+ * 
+p
+ * 
+k
+ 
+whîe
+ c = 
+¥ecisi⁄
+
+
+687 #h: 
+k
+ * 
+n
+
+
+688 #(
+≤
+ + 
+˝
+ + 
+n
+Ë, 
+k
+ 
+is
+ 
+out
+ 
+beˇu£
+ 
+ô
+'†¥e£¡ i¿Æ»o‡them , c d€¢'
+t
+ 
+grow
+ 
+wôh
+ 
+öputsize
+
+
+689 #Accuøcy / 
+Time
+ -- 
+R©io
+.. 
+m‹e
+ 
+accuøã
+ 
+wôh
+ 
+Àss
+ 
+time
+, 
+th™
+ 
+˛asiˇl
+
+
+691 #I 
+„ñ
+ 
+like
+ 
+we
+ 
+could
+ 
+basiˇŒy
+ 
+ju°
+ 
+¸óã
+ 
+tho£
+ 
+v¨«mes
+ 
+dy«miˇŒy
+ 
+ba£d
+ 
+⁄
+ 
+numbî
+ 
+of
+ 
+cﬁumns
+
+
+692 #And 
+Àngth
+ 
+of
+ 
+cﬁumns
+ o‡
+cour£
+
+
+694 #ª‰esh 
+⁄
+ 
+qu™tum
+ 
+com∂exôy
+ 
+˛as£s
+...
+commôtõ
+ 
+wûl
+ 
+ask
+
+
+701 
+NEW
+ 
+STUFF
+ 
+H
+ 
+≥«…y
+
+
+703 
+we
+ 
+have
+ 
+⁄ly
+ 0 
+ö
+ 
+our
+ 
+¥ec
+ 
+li°
+ 
+to
+ 
+ísuª
+ 
+ô
+'sá 1 or 0
+
+704 
+our
+ 
+√w
+ 
+b
+ 
+is
+ 
+a
+ 
+ve˘‹
+ 
+of
+ 
+Àngth
+ 1 
+wôh
+ 
+⁄ly
+á 1 
+ö
+ 
+ô
+, 
+this
+ 
+ísuªs
+
+
+705 
+⁄ly
+ 
+⁄e
+ 
+of
+ 
+our
+ 
+v¨übÀs
+ 
+wûl
+ 
+be
+ 
+a
+ 1
+
+706 
+we
+ 
+mu…ùly
+ 
+a
+ 
+row
+ 
+of
+ 
+A
+ 
+by
+ 
+b
+ o‡
+size
+ 1
+
+707 
+a
+ 
+is
+á 1 
+x
+ 
+k
+
+
+710 #∞
+v
+.
+sh≠e
+[0]
+
+711 
+¥ec_li°2
+ = [0] #Æ»
+v¨übÀs
+ 
+¨e
+ 
+bö¨y
+, 
+DO
+ 
+NOT
+ 
+CHANGE
+ 
+VALUE
+
+
+712 
+b2
+ = 
+≈
+.
+	$¨øy
+([1]Ë#Thi†1 
+íf‹˚s
+ 
+⁄ly
+ 
+⁄e
+ 
+v¨übÀ
+ 
+to
+ 
+be
+ 
+a
+ 1 :
+D
+
+
+713 
+v¨«mes2
+ = 
+	$li°
+()
+
+714 
+dñè2
+ = 15 #œg¨™gê
+mu…ùlõr
+
+
+715 
+Q_Æt2
+ = {
+	}
+} #√w 
+di˘
+ 
+Q_Æt
+ 
+but
+ 
+diff
+ 
+key
+ 
+«mes
+
+
+717 
+¥öt
+("Applying HÖenalties...\n")
+
+718 #Makê
+as
+ 
+m™y
+ 
+q_Æt2s
+á†
+thîe
+ 
+¨e
+ 
+cﬁumns
+ 
+ö
+ 
+H
+
+
+719 
+h_i
+ 
+ö
+ 
+	$ønge
+(0, 
+n
+): #row
+
+720 
+v¨«mes2
+ = []
+
+721 
+h_j
+ 
+ö
+ 
+	$ønge
+(0, 
+k
+): #col
+
+722 
+v¨«mes2
+.
+	`≠≥nd
+('h'+
+	`°r
+–(
+h_j
++1ËË+ så–(
+h_i
++1) ))
+
+723 #µröt.
+	`µröt
+(
+v¨«mes2
+)
+
+725 
+A
+ = 
+≈
+.
+	$zîos
+([1,
+k
+])
+
+726 
+A
+ += 1
+
+727 #µröt.
+	`µröt
+(
+v¨«mes2
+)
+
+728 
+Q2
+, 
+Q2_Æt
+, 
+ödex
+ = 
+	$qubo_¥ï_n⁄√g
+(
+A
+, 
+b2
+, 
+k
+, 
+¥ec_li°2
+, 
+v¨«mes
+=
+v¨«mes2
+)
+
+730 #µröt.
+	`µröt
+(
+Q2_Æt
+)
+
+731 #Mu…ùly 
+evîythög
+ 
+by
+ 
+dñè
+
+
+732 
+key
+,
+vÆue
+ 
+ö
+ 
+Q2_Æt
+.
+	$ôems
+():
+
+733 #Eø£ 
+Æl
+ 
+the
+ 
+ch¨a˘îs
+ 
+ö
+Åhê
+key
+ 
+a·î
+ 
+undîsc‹e
+
+
+734 
+ãmp_key
+ = (
+key
+[0].
+	`•lô
+('_')[0],key[1].split('_')[0])
+
+735 
+Q_Æt2
+[
+ãmp_key
+] = 
+vÆue
+*
+dñè2
+
+
+737 
+	`¥öt
+("H Penalties: \n")
+
+738 
+µröt
+.
+	$µröt
+(
+Q_Æt2
+)
+
+740 
+	`¥öt
+("Addingáll dataÅo Q_total...\n")
+
+741 #Add 
+Æl
+ 
+to
+ 
+Q_tŸÆ
+ 
+H
+
+
+742 
+key
+, 
+vÆ
+ 
+ö
+ 
+Q_Æt2
+.
+	$ôems
+():
+
+743 
+key
+ 
+ö
+ 
+Q_tŸÆ
+:
+
+744 
+Q_tŸÆ
+[
+key
+] +
+vÆ
+
+
+746 
+Q_tŸÆ
+[
+key
+] = 
+vÆ
+
+
+749 #µröt.
+	`µröt
+(
+Q_Æt2
+)
+
+751 #µröt.
+	`µröt
+(
+Q_tŸÆ
+)
+
+754 #ßm∂î2 = 
+dimod
+.
+	`Exa˘Sﬁvî
+()
+
+755 #ßm∂e£t2 = 
+ßm∂î2
+.
+	`ßm∂e_qubo
+(
+Q_Æt2
+)
+
+756 #ßm∂e£t2 = 
+ßm∂î2
+.
+	`ßm∂e_qubo
+(
+Q_tŸÆ
+)
+
+758 
+	`¥öt
+("Sampling QUBO...\n")
+
+759 #Thi†
+is
+ 
+whîe
+ 
+the
+ 
+qu™tum
+ 
+põ˚
+ 
+h≠≥ns
+
+
+760 
+num_swìps
+ = 30000
+
+761 
+num_ªads
+ = 3000
+
+763 
+ßm∂î
+ = 
+√Æ
+.
+	$SimuœãdA¬ólögSam∂î
+()
+
+764 
+ßm∂e£t
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q_tŸÆ
+, 
+num_swìps
+Úum_swìps, 
+num_ªads
+=num_reads)
+
+766 
+sﬁuti⁄_di˘
+ = {
+	}
+}
+
+767 
+sﬁuti⁄_di˘
+ = 
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+
+
+768 #sﬁuti⁄_di˘ = 
+ßm∂e£t2
+.
+fú°
+.
+ßm∂e
+
+
+770 ## 
+This
+ 
+is
+ 
+the
+ 
+vîifiˇti⁄
+ 
+∑π
+
+
+772 
+W
+ = 
+≈
+.
+	$zîos
+([
+p
+,
+k
+])
+
+773 #W = 
+≈
+.
+	`å™•o£
+(
+W
+)
+
+774 
+H
+ = 
+≈
+.
+	$zîos
+([
+k
+,
+n
+])
+
+775 #H = 
+≈
+.
+	`å™•o£
+(
+H
+)
+
+778 
+	`¥öt
+("Creating verification Wánd H...\n")
+
+779 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+k
+):
+
+780 
+j
+ 
+ö
+ 
+	$ønge
+(0,
+n
+):
+
+781 
+ãmp_h
+ = "h" + 
+	`°r
+(
+i
++1Ë+ så(
+j
++1)
+
+782 
+H
+[
+i
+,
+j
+] = 
+sﬁuti⁄_di˘
+[
+ãmp_h
+]
+
+784 
+i
+ 
+ö
+ 
+	$ønge
+(0,
+p
+):
+
+785 
+j
+ 
+ö
+ 
+	$ønge
+(0,
+k
+):
+
+786 
+ãmp_w
+ = "w" + 
+	`°r
+(
+i
++1Ë+ så(
+j
++1)
+
+787 
+sﬁ_key
+, 
+sﬁ_vÆ
+ 
+ö
+ 
+sﬁuti⁄_di˘
+.
+	$ôems
+():
+
+788 
+ãmp_w
+ 
+ö
+ 
+sﬁ_key
+:
+
+789 #¥öt(
+ãmp_w
+, 
+sﬁ_key
+)
+
+790 
+ãmp_°r
+ = 
+sﬁ_key
+.
+	`•lô
+('_')[1]
+
+791 #¥öt(
+ãmp_°r
+)
+
+792 
+ãmp_°r
+ == "null":
+
+793 
+W
+[
+i
+,
+j
+] +-(2**(
+¥ec_li°
+[0]+1))*
+sﬁ_vÆ
+
+
+795 
+W
+[
+i
+,
+j
+] +(2**(
+ãmp_°r
+))*
+sﬁ_vÆ
+
+
+799 #¥öt(
+ßm∂e£t
+)
+
+800 
+	`¥öt
+("\n--- Verification ---\n")
+
+801 
+	`¥öt
+("dñè1: ", 
+dñè
+, "\ndñè2: ", 
+dñè2
+)
+
+802 
+	`¥öt
+("Num Clu°îs: ", 
+k
+, "\n")
+
+803 #¥öt("know¿W: \n", 
+w_ã°
+)
+
+804 #¥öt("Know¿H: \n", 
+h_ã°
+)
+
+805 #¥öt("Know¿WH: \n", 
+v_ã°
+)
+
+807 
+	`¥öt
+("\n------\n")
+
+810 
+	`¥öt
+("V (å™•o£dË\n", 
+v
+, "\n")
+
+811 
+	`¥öt
+("V Sh≠ê—øn•o£d): " , 
+v
+.
+sh≠e
+)
+
+812 
+	`¥öt
+("\nCompuãd W = \n", 
+W
+, "\n")
+
+813 
+	`¥öt
+("W Sh≠e: ", 
+W
+.
+sh≠e
+)
+
+814 
+	`¥öt
+("\nCompuãd H = \n", 
+H
+, "\n")
+
+815 
+	`¥öt
+("H Sh≠e: ", 
+H
+.
+sh≠e
+)
+
+816 
+	`¥öt
+("\nCompuãd WH = \¿", 
+≈
+.
+	$m©mul
+(
+W
+,
+H
+))
+
+817 
+	`¥öt
+("WH Sh≠e: ", 
+≈
+.
+	`m©mul
+(
+W
+,
+H
+).
+sh≠e
+, "\n")
+
+818 
+	`¥öt
+("\nFú°É√rgy: ", 
+ßm∂e£t
+.
+fú°
+.
+íîgy
+)
+
+820 
+	`¥öt
+("N‹m: ", 
+LA
+.
+	`n‹m
+(
+v
+ - 
+≈
+.
+	$m©mul
+(
+W
+,
+H
+)))
+
+821 
+	`¥öt
+("Vîifyög be°É√rgy vü Frobíiu†N‹m: ", 
+LA
+.
+	`n‹m
+(
+v
+, 'fro')**2, "\n")
+
+823 
+	`¥öt
+("Numbî o‡ßm∂es: ", 
+v
+.
+sh≠e
+[1])
+
+824 
+	`¥öt
+("Ru¬ögÅime: ", 
+d©ëime
+.
+	`now
+()-
+°¨t_time
+, "\n")
+
+825 
+	`¥öt
+("")
+
+826 
+	$cou¡_⁄es
+(
+H
+)
+
+827 
+	`¥öt
+("")
+
+832 
+PlŸtög
+ 
+Code
+
+
+837 #∂Ÿ 
+the
+ 3 
+˛u°îs
+
+
+838 
+∂t
+.
+	`sˇâî
+(
+
+839 
+X
+[
+y_km
+ == 0, 0], X[y_km == 0, 1],
+
+840 
+s
+=50, 
+c
+='lightgreen',
+
+841 
+m¨kî
+='s', 
+edgecﬁ‹
+='black',
+
+842 
+œbñ
+='cluster 1'
+
+845 
+∂t
+.
+	`sˇâî
+(
+
+846 
+X
+[
+y_km
+ == 1, 0], X[y_km == 1, 1],
+
+847 
+s
+=50, 
+c
+='orange',
+
+848 
+m¨kî
+='o', 
+edgecﬁ‹
+='black',
+
+849 
+œbñ
+='cluster 2'
+
+852 
+∂t
+.
+	`sˇâî
+(
+
+853 
+X
+[
+y_km
+ == 2, 0], X[y_km == 2, 1],
+
+854 
+s
+=50, 
+c
+='lightblue',
+
+855 
+m¨kî
+='v', 
+edgecﬁ‹
+='black',
+
+856 
+œbñ
+='cluster 3'
+
+859 #∂Ÿ 
+the
+ 
+˚¡roids
+
+
+860 
+∂t
+.
+	`sˇâî
+(
+
+861 
+km
+.
+˛u°î_˚¡îs_
+[:, 0], km.cluster_centers_[:, 1],
+
+862 
+s
+=250, 
+m¨kî
+='*',
+
+863 
+c
+='ªd', 
+edgecﬁ‹
+='black',
+
+864 
+œbñ
+='centroids'
+
+867 
+∂t
+.
+	$Àgíd
+(
+sˇâîpoöts
+=1)
+
+868 
+∂t
+.
+	$grid
+()
+
+869 
+∂t
+.
+	`show
+()
+
+876 
+F‹
+ 
+ã°ög
+, 
+make
+ 
+up
+ 
+a
+ 
+WH
+ 
+™d
+ 
+gë
+á 
+ªsu…
+ 
+of
+ 
+V
+, 
+thí
+ 
+ã°
+
+
+877 
+Make
+ 
+suª
+ 
+to
+ 
+put
+ 
+this
+ 
+ö
+ 
+dis£π©i⁄
+ 
+as
+ 
+ã°
+
+
+880 
+V
+ = 
+p
+ 
+x
+ 
+n
+
+
+881 
+W
+ = 
+p
+ 
+x
+ 
+k
+
+
+882 
+H
+ = 
+k
+ 
+x
+ 
+n
+
+
+884 
+V
+ = 2 
+x
+ 2
+
+885 
+W
+ = 2 
+x
+ 2
+
+886 
+H
+ = 2 
+x
+ 2
+
+889 
+W
+ 
+H
+ = 
+V
+
+
+894 
+löóriz©i⁄
+ 
+≥«…y
+ =
+œg¨™ge
+ 
+mu…ùlõr
+
+
+895 
+w11h11
+ = 
+x1
+ + 2(w11h11 - 2x1(
+w11
+ + 
+h11
+) + 3x1)
+
+896 
+Pí©ly
+ 
+põ˚
+ = 2(
+w11h11
+ - 2x1(
+w11
+ + 
+h11
+) + 3x1)
+
+897 
+NŸ
+ 
+messög
+ 
+wôh
+ 
+powîs
+ 
+of
+ 2
+
+898 
+have
+ 
+to
+ dÿ
+this
+ 
+≥«…y
+ 
+evîy
+ 
+bô
+ 
+th©
+ 
+makes
+ 
+up
+ 
+w
+ 
+vÆue
+..
+
+900 
+On˚
+ 
+the
+ 
+≥«…y
+ 
+is
+ 
+≠∂õd
+, 
+we
+ 
+thí
+ 
+ã°
+ 
+ô
+ 
+by
+ 
+submôtög
+ 
+to
+Åhê
+sﬁvî
+, 
+a
+ 
+known
+
+
+901 
+WH
+ 
+wôh
+ 
+a
+ 
+V
+, 
+™d
+ 
+we
+ 
+gë
+ 
+˛o£
+, wê
+ˇn
+ 
+vîify
+ 
+this
+.
+
+908 
+I¡î¥ë©i⁄
+ 
+of
+ 
+ªsu…s
+:
+
+910 
+óch
+ 1 
+ö
+ 
+cﬁumn
+ 
+of
+ 
+H
+
+
+912 
+row
+ 
+shows
+ 
+which
+ 
+˛u°î
+ 
+ô
+ 
+bñ⁄gs
+ 
+to
+
+
+913 
+cﬁumn
+ 
+díŸes
+ 
+the
+ 
+d©≠oöt
+
+
+915 
+In
+ 
+mo°
+ 
+ˇ£s
+ 
+V
+ !
+WH
+ 
+but
+ 
+wûl
+ 
+be
+ 
+as
+ 
+˛o£
+á†
+possibÀ
+
+
+917 
+Whí
+ 
+you
+ 
+mu…ùly
+ 
+by
+ 
+a
+ 
+cﬁumn
+ 
+vec
+ 
+	$ßy
+ (0 1)
+T
+
+
+918 1 -4 
+X
+ 0
+
+921 
+Cﬁumn
+ 
+ö
+ 
+W
+ 
+mu°
+ 
+be
+ 
+ßme
+ 
+Àngth
+ 
+as
+ 
+cﬁumns
+ i¿
+V
+
+
+923 
+We
+ 
+mu°
+ 
+å™•o£
+ 
+öput
+ 
+‰om
+ 
+make_blobs
+ 
+our
+ 
+m©rix
+ 
+Át‹fiz©i⁄
+ 
+°uff
+
+
+925 
+The
+ 
+Àngth
+ 
+of
+ 
+the
+ 
+ve˘‹
+ o‡thê
+öput
+ 
+d©a
+ 
+dëîmöes
+ÅhêÀngth o‡thêd©®
+ö
+Åhê
+	`˚¡îs
+ (
+coz
+ 
+they
+ 
+r
+ 
+cut
+ 
+‰om
+Åhê
+ßme
+ 
+˛Ÿh
+ 
+so
+ 
+to
+ 
+•ók
+).
+
+926 
+Remembî
+ 
+this
+. 
+NŸe
+ 
+you
+ 
+have
+ 
+to
+
+
+929 
+Make_blobs
+ 
+giví
+ 
+d©a
+, 
+we
+ 
+give
+ 
+ô
+ 
+known
+ 
+˚¡î
+ 
+poöts
+ 
+th©
+ 
+¨e
+ 
+öãgîs
+, 
+so
+ wê
+ˇn
+ 
+£e
+ 
+how
+ 
+˛o£
+ wê
+gë
+ 
+to
+ 
+them
+ 
+wôh
+ 
+our
+ 
+Æg‹ôhm
+ 
+com∑ris⁄
+
+
+931 
+I≈ut
+ 
+ßm∂es
+ 
+MUST
+ 
+be
+ 
+å™•o£d
+ 
+‰om
+ 
+make_blobs
+ 
+to
+ 
+w‹k
+ 
+¥›îly
+, 
+this
+ 
+makes
+ 
+our
+ sam∂e†
+öto
+ 
+cﬁumns
+ 
+ö°ad
+ 
+of
+ 
+rows
+
+
+	@toyproblem.py
+
+1 
+imp‹t
+ 
+numpy
+ 
+as
+ 
+≈
+
+
+2 
+imp‹t
+ 
+c›y
+
+
+3 
+imp‹t
+ 
+dimod
+
+
+4 
+imp‹t
+ 
+øndom
+
+
+5 
+imp‹t
+ 
+m©h
+
+
+6 
+‰om
+ 
+m©h
+ 
+imp‹t
+ 
+log
+
+
+7 
+imp‹t
+ 
+dimod
+
+
+8 
+imp‹t
+ 
+	gm©∂Ÿlib
+.
+py∂Ÿ
+ 
+as
+ 
+∂t
+
+
+9 
+‰om
+ 
+	gskÀ¨n
+.
+d©a£ts
+ 
+imp‹t
+ 
+make_blobs
+
+
+10 
+‰om
+ 
+	gskÀ¨n
+.
+˛u°î
+ 
+imp‹t
+ 
+	gKMóns
+
+
+14 #C⁄vîà||
+V
+-
+WH
+|| 
+¥obÀm
+ 
+to
+ 
+QUBO
+
+
+15 #v = 
+I≈ut
+ 
+M©rix
+ 
+of
+ 
+our
+ 
+ßm∂es
+ 
+as
+ 
+≈
+.
+¨øy
+
+
+16 #w = 
+I≈ut
+ 
+m©rix
+ 
+th©
+ 
+c⁄èös
+ 
+Clu°îed
+ 
+Sam∂es
+, 
+óch
+ 
+cﬁumn
+ 
+ve˘‹
+ 
+is
+ 
+a
+ 
+˛u°î
+
+
+17 #h = 
+Bö¨y
+ 
+ve˘‹
+, 
+such
+ 
+th©
+ 
+evîy
+Évîy "1" 
+vÆue
+ 
+is
+ 
+the
+ 
+˚¡roid
+
+
+18 #¿
+Àngth
+ 
+of
+ 
+cﬁumn
+ 
+ve˘‹
+ 
+x
+
+
+19 #bô•owî - 
+di˘
+ 
+c⁄èög
+ 
+powîs
+ 
+of
+ 2, 
+≠∂õd
+ 
+ö
+ 2's compliment-like
+
+20 #Ouçuà- 
+QDi˘
+ 
+a
+ 
+di˘i⁄¨y
+ 
+c⁄èöög
+ 
+the
+ 
+QUBO
+ 
+f‹muœti⁄
+
+
+21 #di˘ 
+wûl
+ 
+be
+ (
+u
+,
+v
+Ë: 
+b
+ 
+whîe
+ (u,vË
+¨e
+ 
+bö¨y
+ 
+v¨übÀs
+ 
+™d
+ b 
+is
+ 
+büs
+
+
+23 ###W 
+C™did©e
+ 
+˚¡îs
+, ###
+## 
+Each
+ 
+cﬁumn
+ 
+is
+ 
+a
+ 
+˛u°î
+, 
+evîy
+ 
+two
+ 
+rows
+ = 
+x
+ 
+™d
+ 
+y
+ 
+co‹dö©es
+
+
+25 #####
+#### 
+SAMPLES
+ ###
+
+
+29 
+Exam∂e
+ 
+pcode
+ 
+∑≥r
+
+
+31 
+Giví
+ 
+V
+
+
+32 
+Föd
+ 
+	gW
+, 
+H
+
+
+34 
+	gRadix
+-2
+
+38 
+	gQUBOPªp
+
+
+45 
+	gmaö
+
+
+48 
+	gQ
+ :
+	$quboPªp
+(
+W
+,
+H
+,
+bôsPowî
+)
+
+50 
+S
+ :
+	$Qu™tumQUBOSﬁvî
+(
+Q
+)
+
+52 
+S
+ :S.
+fú°_ßm∂e
+
+
+54 
+S
+ :
+	`Po°Pro˚ss
+(S)
+
+63 --- 
+SamµÀ
+ 
+V
+ 
+M©rix
+ ---
+
+65 
+p
+ 
+x
+ 
+n
+ == 10 x 2
+
+80 --- 
+Sam∂e
+ 
+W
+ 
+M©rix
+ ---
+
+82 
+n
+ 
+x
+ 
+k
+ = 2 x 2
+
+87 
+w11
+ 
+w12
+
+
+88 
+w21
+ 
+w22
+
+
+91 --- 
+Sam∂e
+ 
+H
+ 
+M©rix
+ ---
+
+93 
+k
+ 
+x
+ 
+p
+ = 2 x 10
+
+95 ** 
+BINARY
+ 
+MATRIX
+ ***
+
+96 ** 
+O∆y
+ 
+a
+ 
+sögÀ
+ '1' 
+≥r
+ 
+cﬁumn
+
+
+97 ** 
+Each
+ '1' 
+is
+ 
+the
+ 'vŸe' 
+⁄
+Åhê
+be°
+ 
+˚¡î
+
+
+103 
+h00
+ 
+h01
+ 
+h02
+ 
+h03
+ 
+h04
+ 
+h05
+ 
+h06
+ 
+h07
+ 
+h08
+ 
+h09
+
+
+104 
+h10
+ 
+h11
+ 
+h12
+ 
+h13
+ 
+h14
+ 
+h15
+ 
+h16
+ 
+h17
+ 
+h18
+ 
+h19
+
+
+107 
+mu…ùliˇti⁄
+ =
+dŸ
+ 
+¥odu˘
+
+
+112 
+def
+ 
+	$make_qubo
+(
+v
+,
+w
+,
+h
+,
+n
+,
+bô•owî
+):
+
+114 
+powîsTwo
+ = 
+≈
+.
+	`zîos
+(
+	`Àn
+(
+bô•owî
+)+1)
+
+116 #Dó»
+wôh
+ 
+powîs
+ 
+of
+ 
+two
+
+
+117 
+i
+ 
+ö
+ 
+	`ønge
+(0, 
+	`Àn
+(
+bô•owî
+)+1):
+
+118 
+i
+ == 0:
+
+119 
+powîsTwo
+[
+i
+] = (2**(
+bô•owî
+[i]+1)) * (-1)
+
+121 
+powîsTwo
+[
+i
+] = 2**(
+bô•owî
+[i-1])
+
+123 
+Qöô
+ = 
+≈
+.
+	$zîos
+([
+n
+,n])
+
+124 
+Qdi˘
+ = {
+	}
+}
+
+126 #W 
+is
+ 
+our
+ 
+unknowns
+ 
+to
+ 
+be
+ 
+found
+ 
+by
+ 
+™√Æög
+
+
+127 #Each 
+íåy
+ 
+ö
+ 
+W
+ 
+has
+ 
+our
+ 
+ødix
+-2 
+ãchnique
+ 
+≠∂õd
+
+
+128 #Each 
+íåy
+ 
+ö
+ 
+W
+ = [-8
+w
+ 4w 2w 1w ]
+
+129 #thê
+QUBO
+ 
+f‹m
+ 
+is
+ -8
+w
+ + 4w + 2w + 1w
+
+137 #C⁄vîà
+di˘
+ 
+to
+ 
+bö¨y
+ 
+°rög
+
+
+141 #Puà
+bö¨y
+ 
+°rög
+ 
+öto
+ 
+≈
+.
+¨øy
+ 
+ve˘‹
+
+
+147 #scikô 
+À¨n
+ 
+°uff
+.. 
+¥ï
+
+
+149 
+°¨t_˚¡îs
+=
+≈
+.
+¨øy
+([(2,2),(5,5)])
+
+151 
+	gX
+, 
+	gy
+ = 
+make_blobs
+(
+
+152 
+n_ßm∂es
+=10, 
+n_„©uªs
+=2,
+
+153 
+˚¡îs
+=
+°¨t_˚¡îs
+, 
+˛u°î_°d
+=0.5,
+
+154 
+shufÊe
+=
+True
+, 
+øndom_°©e
+=0
+
+160 
+∂t
+.
+sˇâî
+(
+X
+[:,0], X[:,1], 
+s
+=50,
+c
+='blue', 
+m¨kî
+='o', 
+edgecﬁ‹
+='black')
+
+162 #PlŸ 
+˚¡roids
+
+
+163 
+∂t
+.
+sˇâî
+(
+˚¡îs
+[0,:], cíãrs[1,:], 
+s
+=250, 
+m¨kî
+='*', 
+c
+='ªd', 
+edgecﬁ‹
+='bœck', 
+œbñ
+='centroids')
+
+165 
+∂t
+.
+	$Àgíd
+(
+sˇâîpoöts
+=1)
+
+166 
+∂t
+.
+	$grid
+()
+
+167 
+∂t
+.
+	`show
+()
+
+170 #-- 
+Te°ög
+ 
+¨ó
+ -- #
+## 
+Ax
+ - 
+b
+ ##
+
+173 ## 
+In
+ 
+this
+ 
+fú°
+ 
+exam∂e
+ 
+know
+ 
+the
+ 
+sﬁuti⁄
+ 
+w12™d
+ 
+x2
+, 
+which
+ 
+is
+ 
+x1
+=0, x1=1
+
+175 
+A
+ = 
+≈
+.
+	$¨øy
+([ [2,1], [1,3] ])
+
+176 
+b
+ = 
+≈
+.
+	$¨øy
+([1,3])
+
+178 #Qubò
+di˘i⁄¨y
+, 
+qn
+ 
+móns
+ 
+qubibi
+ #
+ = {}
+
+181 #IndividuÆ 
+c€fficõ¡s
+ 
+hîe
+
+
+182 #Ba£d 
+⁄
+ 
+the
+ 
+L2
+ 
+N‹m
+, 
+whîe
+ , 
+we
+ 
+squ¨e
+Åhê
+xam∂e
+ 
+above
+
+
+183 ## ||
+Ax
+ - 
+b
+||^2
+
+187 
+	gQ
+['q0','q0'] = 
+A
+[0,0] * (
+	gA
+[0,0] - 2*
+	gb
+[0]) + A[1,0] * (A[1,0] - 2*b[1])
+
+188 
+	gQ
+['q1','q1'] = 
+A
+[0,1] * (
+	gA
+[0,1] - 2*
+	gb
+[0]) + A[1,1] * (A[1,1] - 2*b[1])
+
+190 #I¡î©i⁄ 
+bëwìn
+ 
+qubôs
+ 0 
+™d
+ 1 
+as
+ 
+QUBO
+
+
+191 
+	gQ
+['q0','q1'] = 2 * (
+A
+[0,0] * 
+	gA
+[0,1] + A[1,0] * A[1,1])
+
+193 
+¥öt
+("-- Our current Qubo setup ---")
+
+194 
+	$¥öt
+(
+Q
+)
+
+196 #Lë 
+us
+ 
+åy
+ 
+the
+ 
+exˇt
+ 
+sﬁvî
+
+
+198 
+ßm∂î
+ = 
+dimod
+.
+	$Exa˘Sﬁvî
+()
+
+200 
+ßm∂e£t
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q
+)
+
+202 #Gë 
+be°
+ 
+íîgy
+
+
+204 
+	`¥öt
+("Resu… is: ", 
+ßm∂e£t
+.
+fú°
+.
+ßm∂e
+)
+
+206 ###Sec⁄d 
+exam∂e
+ ###
+
+
+208 ## 
+Fú°
+ 
+was
+ 
+ósy
+, 
+now
+ 
+we
+ 
+√ed
+ 
+to
+ 
+focus
+ 
+⁄
+ 
+quadøtics
+
+
+210 #Föd 
+x0
+, 
+x1
+, 
+x2
+ 
+such
+ 
+th©
+ 
+we
+ 
+	`möimize
+ (2 - x2 - 
+w12
+-x0)^2
+
+211 #Wê
+know
+ 
+goög
+ 
+ö
+, 
+the
+ 
+be°
+ 
+sﬁuti⁄
+ 
+wûl
+ 
+have
+ 2 
+v¨übÀs
+ = 1
+
+213 #(2 - 
+x2
+ - 
+w12
+- 
+x0
+)^2 =
+
+214 #x0^2 + 
+x1
+^2 + 
+x2
+^2 + 2(-
+x0
+)(-x1) + 2(-x1)(-x2) + 2(-x0)(-x2) + 2(2)(-x0) + 2(2)(-x1) + 2(2)(-x2) + 4
+
+216 #x0^2 = 
+x0
+, 
+x1
+^2 = x1, 
+x2
+^2 = x2 .. 
+so
+ 
+this
+ 
+is
+ 
+the
+ 
+ßme
+ 
+as
+
+
+218 #1(1-2(2)
+x0
+ - 1(1-2(2))
+w12
+- 1(1-2(2))
+x2
+ + 2x0w12+ 2x1x2 + 2x0x2 + 4
+
+220 ## 
+Lës
+ 
+make
+ 
+this
+ 
+öto
+ 
+a
+ 
+QUBO
+
+
+222 
+Q2
+ = {
+	}
+}
+
+224 
+Q2
+['x0','x0'] = 1 * (1-2*(2))
+
+225 
+Q2
+['x1','x1'] = 1 * (1-2*(2))
+
+226 
+Q2
+['x2','x2'] = 1 * (1-2*(2))
+
+228 #Ou∏
+quadøtic
+ 
+c€fficõ¡s
+ / 
+öãø˘i⁄s
+
+
+229 
+Q2
+['x0','x1'] = 2
+
+230 
+Q2
+['x0','x2'] = 2
+
+231 
+Q2
+['x1','x2'] = 2
+
+233 
+	$¥öt
+(
+Q2
+)
+
+235 #Àà
+us
+ 
+sﬁve
+ 
+wôh
+ 
+exa˘sﬁvî
+
+
+237 
+ßm∂e£t2
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q2
+)
+
+239 
+	$¥öt
+(
+ßm∂e£t2
+)
+
+241 
+	`¥öt
+("Resu… is: ", 
+ßm∂e£t2
+.
+fú°
+.
+ßm∂e
+)
+
+243 
+k
+,
+v
+ 
+ö
+ 
+Q
+.
+	$ôems
+():
+
+244 
+	$¥öt
+(
+k
+,
+v
+)
+
+247 
+	`¥öt
+("\n\n ----- Binary vector ----\n")
+
+249 #now 
+we
+ 
+have
+ 
+a
+ 
+bö¨y
+ 
+ve˘‹
+ 
+wôh
+ 3 
+unknowns
+, 
+x0
+, 
+x1
+, 
+™d
+ 
+x2
+
+
+250 #Lë 
+us
+ 
+	`möimize
+ (3 + 4x2 - 2
+w12
+- 
+x0
+)^2
+
+251 #Wê
+ˇn
+ 
+ãŒ
+ 
+our
+ 
+™swî
+ 
+by
+ 
+lookög
+, 
+x0
+ = 1, 
+w12
+1 , 
+x2
+ = 0
+
+252 ## 
+But
+ 
+c⁄vît
+ 
+this
+ 
+to
+ 
+QUBO
+
+
+254 #(3 + 4x2 - 2
+w12
+- 
+x0
+)^2 =
+
+255 #(4x2)^2 + 2x1^2 + 
+x0
+^2 + 2(4x2(-2x1) + 2(-2x1)(-x0) + 2(4x2)(-x0) + 2(3)(4x2) + 2(3)(-2x1) + 2(3)(-x0) + 9
+
+256 #Qubÿ
+we
+ 
+ˇn
+ 
+ign‹e
+ 
+the
+ 
+c⁄ß¡
+, 
+which
+ 
+is
+ 9
+
+257 #
+3 = {}
+
+259 
+	gQ3
+['x0','x0'] = 1*(1-2*(3))
+
+260 
+Q3
+['x1','x1'] = 2*(2-2*(3))
+
+261 
+Q3
+['x2','x2'] = 4*(4+2*(3))
+
+263 
+Q3
+['x0','x1'] = 2 * (2)
+
+264 
+Q3
+['x0','x2'] = -2 * (4)
+
+265 
+Q3
+['x1','x2'] = -2 * (8)
+
+267 
+k
+,
+v
+ 
+ö
+ 
+	gQ3
+.
+	$ôems
+():
+
+268 
+	$¥öt
+(
+k
+,
+v
+)
+
+270 
+ßm∂e£t3
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q3
+)
+
+271 
+	$¥öt
+(
+ßm∂e£t3
+)
+
+272 
+	$¥öt
+(
+ßm∂e£t3
+.
+fú°
+.
+ßm∂e
+)
+
+276 ## 
+Ok
+ 
+Àts
+ dÿ
+™Ÿhî
+ 
+wôh
+ 8 
+unknowns
+ 
+x0
+ - 
+x7
+
+
+278 (2 + 
+x0
+ - 4
+w12
++ 2x4 + 3x3 - 
+x4
+ - 6x7 + 
+x5
+ + 9x6 - 5x2)^2
+
+280 {'x0': 1, 'x1': 1, 'x2': 0, 'x3': 0, 'x4': 0, 'x5': 1, 'x6': 0, 'x7': 0
+	}
+}
+
+284 
+Ex∑nded
+:
+
+287 4 
+x0
+
+
+288 + 
+x0
+^2
+
+289 - 16 
+x1
+
+
+290 - 8 
+x0
+ 
+x1
+
+
+291 + 16 
+x1
+^2
+
+292 - 20 
+x2
+
+
+293 - 10 
+x0
+ 
+x2
+
+
+294 + 40 
+w12x2
+
+
+295 + 25 
+x2
+^2
+
+296 + 12 
+x3
+ +
+
+297 6 
+x0
+ 
+x3
+
+
+298 - 24 
+w12x3
+
+
+299 - 30 
+x2
+ 
+x3
+
+
+300 + 9 
+x3
+^2
+
+301 + 4 
+x4
+
+
+302 + 2 
+x0
+ 
+x4
+
+
+303 - 8 
+w12x4
+
+
+304 - 10 
+x2
+ 
+x4
+
+
+305 + 6 
+x3
+ 
+x4
+
+
+306 + 
+x4
+^2
+
+307 + 4 
+x5
+
+
+308 + 2 
+x0
+ 
+x5
+
+
+309 - 8 
+w12x5
+
+
+310 - 10 
+x2
+ 
+x5
+
+
+311 + 6 
+x3
+ 
+x5
+
+
+312 + 2 
+x4
+ 
+x5
+
+
+313 + 
+x5
+^2
+
+314 + 36 
+x6
+
+
+315 + 18 
+x0
+ 
+x6
+
+
+316 - 72 
+w12x6
+
+
+317 - 90 
+x2
+ 
+x6
+
+
+318 + 54 
+x3
+ 
+x6
+
+
+319 + 18 
+x4
+ 
+x6
+
+
+320 + 18 
+x5
+ 
+x6
+
+
+321 + 81 
+x6
+^2
+
+322 - 24 
+x7
+
+
+323 - 12 
+x0
+ 
+x7
+
+
+324 + 48 
+w12x7
+
+
+325 + 60 
+x2
+ 
+x7
+
+
+326 - 36 
+x3
+ 
+x7
+
+
+327 - 12 
+x4
+ 
+x7
+
+
+328 - 12 
+x5
+ 
+x7
+
+
+329 - 108 
+x6
+ 
+x7
+
+
+330 + 36 
+x7
+^2
+
+332 
+Sim∂ifõd
+:
+
+334 (2 + 
+x0
+ - 4 
+w12
+- 5 
+x2
+ + 3 
+x3
+ + 
+x4
+ + 
+x5
+ + 9 
+x6
+ - 6 
+x7
+)^2
+
+336 
+Sﬁuti⁄
+:
+
+338 
+x0
+ = 0
+
+339 
+w12
+= 1
+
+340 
+x2
+ = 1
+
+341 
+x3
+ = 0
+
+342 
+x4
+ = 0
+
+343 
+x5
+ = 0
+
+344 
+x6
+ = 0
+
+345 
+x7
+ = 1
+
+347 
+Dr›
+ 
+c⁄°™ts
+, 2 
+ö
+ 
+this
+ 
+
+349 
+Bö¨y
+ 
+v¨übÀs
+ 
+	gidempŸít
+, 
+	gõ
+: 
+x0
+^2 = x0
+
+354 
+Q4
+ = {}
+
+356 #löó∏
+c€fficõ¡s
+
+
+357 
+Q4
+['x0', 'x0'] = 5 #4
+x0
+ + x0^2
+
+358 
+Q4
+['x1', 'x1'] = (-16+16)
+
+359 
+Q4
+['x2', 'x2'] = (-20+25)
+
+360 
+Q4
+['x3', 'x3'] = 21 #12x3 + 9x3
+
+361 
+Q4
+['x4', 'x4'] = 5 #4
+x4
+ + 1x4^2
+
+362 
+Q4
+['x5', 'x5'] = 5 #4
+x5
+ + 1x5^2
+
+363 
+Q4
+['x6', 'x6'] = (36+81) #36x6 + 81x6^2
+
+364 
+Q4
+['x7', 'x7'] = (-24+36) #-24x7 + 36x7^2
+
+366 #Quadøti¯
+C€fficõ¡s
+
+
+367 
+Q4
+['x0', 'x1'] = -8
+
+368 
+Q4
+['x0', 'x2'] = -10
+
+369 
+Q4
+['x0', 'x3'] = 6
+
+370 
+Q4
+['x0', 'x4'] = 2
+
+371 
+Q4
+['x0', 'x5'] = 2
+
+372 
+Q4
+['x0', 'x6'] = 18
+
+373 
+Q4
+['x0', 'x7'] = -12
+
+374 
+Q4
+['x1', 'x2'] = 40
+
+375 
+Q4
+['x1', 'x3'] = -24
+
+376 
+Q4
+['x1', 'x4'] = -8
+
+377 
+Q4
+['x1', 'x5'] = -8
+
+378 
+Q4
+['x1', 'x6'] = -72
+
+379 
+Q4
+['x1', 'x7'] = 48
+
+380 
+Q4
+['x2', 'x3'] = -30
+
+381 
+Q4
+['x2', 'x4'] = -10
+
+382 
+Q4
+['x2', 'x5'] = -10
+
+383 
+Q4
+['x2', 'x6'] = -90
+
+384 
+Q4
+['x2', 'x7'] = 60
+
+385 
+Q4
+['x3', 'x4'] = 6
+
+386 
+Q4
+['x3', 'x5'] = 6
+
+387 
+Q4
+['x3', 'x6'] = 54
+
+388 
+Q4
+['x3', 'x7'] = -36
+
+389 
+Q4
+['x4', 'x5'] = 2
+
+390 
+Q4
+['x4', 'x6'] = 18
+
+391 
+Q4
+['x4', 'x7'] = -12
+
+392 
+Q4
+['x5', 'x6'] = 18
+
+393 
+Q4
+['x5', 'x7'] = -12
+
+394 
+Q4
+['x6', 'x7'] = 18
+
+397 #f‹ 
+k
+,
+v
+ 
+ö
+ 
+Q4
+.
+ôems
+():
+
+398 #¥öt(
+k
+,
+v
+)
+
+400 
+	gßm∂e£t4
+ = 
+ßm∂î
+.
+	$ßm∂e_qubo
+(
+Q4
+)
+
+401 #¥öt(
+ßm∂e£t4
+)
+
+402 
+	`¥öt
+("Resu… wôh 8 unknowns: ", 
+ßm∂e£t4
+.
+fú°
+.
+ßm∂e
+)
+
+406 ## 
+Ok
+ 
+now
+ 
+Àt
+ 
+us
+ 
+åy
+ 
+this
+ 
+V
+=
+WH
+
+
+407 ## 
+W
+ 
+™d
+ 
+H
+ 
+¨e
+ 
+unknowns
+ ##
+
+411 
+GíîÆ
+ 
+Info
+ 
+about
+ 
+NMF
+, 
+nŸ
+ 
+u£d
+ 
+this
+ 
+f‹muœti⁄
+, 
+but
+ u£d 
+ª„ªn˚
+
+
+412 
+V
+ = 
+WH
+
+
+414 
+V_i
+ = 
+Wh_i
+
+
+416 
+whîe
+ 
+V_i
+ = 
+i
+ 
+cﬁumn
+ 
+ve˘‹
+ 
+of
+ 
+the
+ 
+¥odu˘
+ 
+m©rix
+ 
+V
+ 
+™d
+ 
+h_i
+ 
+is
+Åhêòcﬁum¿ve˘‹ m©rix 
+H
+
+
+419 -- 
+This
+ 
+is
+ 
+≥r
+ 
+ôî©i⁄
+ 
+of
+ 
+the
+ 
+Æg‹ôhm
+ --
+
+420 -- 
+D⁄e
+ 
+≥r
+ 
+ñemít
+ ---
+
+421 -- 
+W
+ 
+™d
+ 
+H
+ 
+¨e
+ 
+öôülized
+ 
+to
+ 
+some
+ 
+n⁄
+ 
+√g©ive
+ 
+vÆues
+ --
+
+422 -- ^
+T
+ = 
+å™•o£
+, 
+_
+[
+ij
+] = 
+cuºít
+ 
+ñemít
+, 
+n
+ = cuºíà
+ôî©i⁄
+,Ç+1 = 
+√xt
+ 
+ôî©ö
+
+
+424 
+H
+^(
+n
++1)
+_
+[
+ij
+] = H^
+n_
+[ij] * (
+W
+^n)^
+T_
+[ij] * 
+V_
+[ij] / (W^n)_[ij]^
+T
+ * W^n_[ij] * H^n_[ij]
+
+426 
+W
+^(
+n
++1)
+_
+[
+ij
+] = W^
+n_
+[ij] * 
+V_
+[ij] * 
+H
+^“+1)_[ij]^
+T
+ / W^n_[ij] * H^(n+1)_[ij] * H^(n+1)_[ij]^T
+
+430 –(
+w1h1
+ + 
+w2h3
+Ë+ (
+w1h2
+ + 
+w2h4
+Ë+ (
+w3h1
+ + 
+w4h3
+Ë+ (
+w3h2
+ + 
+w4h4
+) )^2 =
+
+432 #th™k†
+M©hem©iˇ
+ 
+Ex∑nd
+!
+
+434 
+w1h1
+^2 + 2*w1h1 
+w1h2
+ + w1h2^2 + 2*w1h1 
+w2h3
+ + 2*w1h2*w2h3 + w2h3^2 +
+
+435 2*
+w1h1
+ 
+w2h4
+ + 2*
+w1h2
+*w2h4 + 2*
+w2h3
+ w2h4 + w2h4^2 + 2*w1h1 
+w3h1
+ +
+
+436 2*
+w1h2
+*
+w3h1
+ + 2*
+w2h3
+ w3h1 + 2*
+w2h4
+ w3h1 + w3h1^2 + 2*
+w1h1
+ 
+w3h2
+ +
+
+437 2*
+w1h2
+*
+w3h2
+ + 2*
+w2h3
+ w3h2 + 2*
+w2h4
+ w3h2 + 2*
+w3h1
+ w3h2 + w3h2^2 +
+
+438 2*
+w1h1
+ 
+w4h3
+ + 2*
+w1h2
+*w4h3 + 2*
+w2h3
+ w4h3 + 2*
+w2h4
+ w4h3 +
+
+439 2*
+w3h1
+ 
+w4h3
+ + 2*
+w3h2
+*w4h3 + w4h3^2 + 2*
+w1h1
+ 
+w4h4
+ + 2*
+w1h2
+*w4h4 +
+
+440 2*
+w2h3
+ 
+w4h4
+ + 2*
+w2h4
+ w4h4 + 2*
+w3h1
+ w4h4 + 2*
+w3h2
+*w4h4 +
+
+441 2*
+w4h3
+ 
+w4h4
+ + w4h4^2
+
+447 -- 
+In
+ 
+the
+ 
+∑≥r
+, 
+we
+ 
+u£
+ 
+w11
+ 
+™d
+ 
+h11
+.. 
+but
+ 
+this
+ wê
+wûl
+ u£ w11 - 
+x7
+ 
+as
+ 
+unknowns
+
+
+449 
+We
+ dÿ
+the
+ 
+n‹m
+ 
+of
+ ||
+V
+-
+WH
+||^2
+
+450 
+w11
+^2 = w11 , 
+idempŸícy
+
+
+452 
+This
+ 
+is
+ 
+wh©
+ 
+böds
+ 
+the
+ 
+vÆues
+ 
+ö
+ 
+V
+ 
+to
+ 
+WH
+
+
+455 
+V
+ 
+W
+ 
+H
+
+
+456 [1,2] [
+w11
+, 
+w12
+] [
+h11
+, 
+h12
+]
+
+457 [3,4] [
+w21
+, 
+w22
+] [
+h21
+, 
+h22
+]
+
+460 
+WH
+
+
+461 [ 
+w11h11
+ + 
+w12h21
+, 
+w11h12
+ + 
+w12h22
+ ]
+
+462 [ 
+w21h11
+ + 
+w22h21
+, 
+w21h12
+ + 
+w22h22
+ ]
+
+465 
+V
+ - 
+WH
+ =
+
+467 [ 1-
+w11
+ 
+h11
+-
+w12h21
+ 2-w11 
+h12
+-
+w12h22
+ ]
+
+468 [ 3-
+w21
+ 
+h11
+-
+w22
+ 
+h21
+ 4-w21 
+h12
+-w22 
+h22
+ ]
+
+470 ||
+V
+-
+WH
+||^2
+_2
+ =
+
+472 –(1-(
+w11
+*
+h11
+)-(
+w12
+*
+h21
+))^2 + (2-(w11*
+h12
+)-(w12*
+h22
+))^2 + (3-(
+w21
+*h11)-(
+w22
+*h21))^2 + (4-(w21*h12)-(w22*h22))^2 )
+
+475 -- 
+Ex∑nded
+ ---
+
+477 
+w
+^2 = w ..
+ëc
+ 
+idempŸít
+
+
+480 -2 
+h11
+ 
+w11
+
+
+481 -4 
+h12
+ 
+w11
+
+
+482 +
+h11
+^2 
+w11
+^2
+
+483 +
+h12
+^2 
+w11
+^2
+
+484 -2 
+h21
+ 
+w12
+
+
+485 -4 
+h22
+ 
+w12
+
+
+486 +2 
+h11
+ 
+h21
+ 
+w11
+ 
+w12
+
+
+487 +2 
+h12
+ 
+h22
+ 
+w11
+ 
+w12
+
+
+488 +
+h21
+^2 
+w12
+^2
+
+489 +
+h22
+^2 
+w12
+^2
+
+490 -6 
+h11
+ 
+w21
+
+
+491 -8 
+h12
+ 
+w21
+
+
+492 +
+h11
+^2 
+w21
+^2
+
+493 +
+h12
+^2 
+w21
+^2
+
+494 -6 
+h21
+ 
+w22
+
+
+495 -8 
+h22
+ 
+w22
+
+
+496 +2 
+h11
+ 
+h21
+ 
+w21
+ 
+w22
+
+
+497 +2 
+h12
+ 
+h22
+ 
+w21
+ 
+w22
+
+
+498 +
+h21
+^2 
+w22
+^2
+
+499 +
+h22
+^2 
+w22
+^2
+
+502 --- 
+Sim∂ifõd
+ ---
+
+504 (-1 + 
+w11
+ 
+h11
+ + 
+w12h21
+)^2 + (-3 + 
+w21
+ h11 + 
+w22
+ 
+h21
+)^2 + (-2 + w11 
+h12
+ + 
+w12h22
+)^2 + (-4 + w21 h12 + w22 
+h22
+)^2
+
+508 #8 
+unknowns
+
+
+509 
+Q5
+ = {
+	}
+}
+
+511 #löó∏
+c€fficõ¡s
+
+
+512 
+Q5
+['w11', 'w11'] =
+
+513 
+Q5
+['w12', 'w12'] =
+
+514 
+Q5
+['w21', 'w21'] =
+
+515 
+Q5
+['w22', 'w22'] =
+
+516 
+Q5
+['h11', 'h11'] =
+
+517 
+Q5
+['h12', 'h12'] =
+
+518 
+Q5
+['h21', 'h21'] =
+
+519 
+Q5
+['h22', 'h22'] =
+
+521 #Quadøti¯
+C€fficõ¡s
+
+
+522 
+Q5
+['w11', 'w12'] =
+
+523 
+Q5
+['w11', 'w21'] =
+
+524 
+Q5
+['w11', 'w22'] =
+
+525 
+Q5
+['w11', 'h11'] =
+
+526 
+Q5
+['w11', 'h12'] =
+
+527 
+Q5
+['w11', 'h21'] =
+
+528 
+Q5
+['w11', 'h22'] =
+
+529 
+Q5
+['w12', 'w21'] =
+
+530 
+Q5
+['w12', 'w22'] =
+
+531 
+Q5
+['w12', 'h11'] =
+
+532 
+Q5
+['w12', 'h12'] =
+
+533 
+Q5
+['w12', 'h21'] =
+
+534 
+Q5
+['w12', 'h22'] =
+
+535 
+Q5
+['w21', 'w22'] =
+
+536 
+Q5
+['w21', 'h11'] =
+
+537 
+Q5
+['w21', 'h12'] =
+
+538 
+Q5
+['w21', 'h21'] =
+
+539 
+Q5
+['w21', 'h22'] =
+
+540 
+Q5
+['w22', 'h11'] =
+
+541 
+Q5
+['w22', 'h12'] =
+
+542 
+Q5
+['w22', 'h21'] =
+
+543 
+Q5
+['w22', 'h22'] =
+
+544 
+Q5
+['h11', 'h12'] =
+
+545 
+Q5
+['h11', 'h21'] =
+
+546 
+Q5
+['h11', 'h22'] =
+
+547 
+Q5
+['h12', 'h21'] =
+
+548 
+Q5
+['h12', 'h22'] =
+
+549 
+Q5
+['h21', 'h22'] =
+
+551 ## 
+Nìd
+ 
+code
+ 
+to
+ dÿ
+the
+ 
+powî
+ 
+of
+ 2 
+≠¥oxim©i⁄
+Åÿ
+öput
+ 
+d©a
+
+
+552 ## 
+öput
+ 
+wûl
+ 
+be
+ 
+a
+ 
+Êﬂtög
+ 
+poöt
+ 
+‹
+ 
+öãgî
+
+
+553 ## 
+Êﬂtög
+ 
+poöt
+, 
+√ed
+ 
+to
+ 
+round
+ 
+down
+Åÿ
+öãgî
+, 
+thí
+ 
+≠¥oxim©e
+ (
+Êo‹
+)
+
+	@
+1
+.
+1
+/usr/include
+11
+166
+4-5-2022.py
+centers.py
+dwave-test.py
+kmeans.py
+kmedoids.py
+least-squares-qubo-example.py
+quadratic.py
+quadratic_automated.py
+quantum-centers.py
+qubo.py
+toyproblem.py

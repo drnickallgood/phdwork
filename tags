@@ -1,0 +1,143 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+A	least-squares-qubo-example.py	/^A = np.array([[2,1],[1,3]])$/;"	v
+A	quadratic_automated.py	/^A = np.array([[1,1,1]])$/;"	v
+A	quadratic_automated.py	/^A = np.array([[1,1]]) $/;"	v
+A	qubo.py	/^    A = np.zeros([1,k])$/;"	v
+A	toyproblem.py	/^A = np.array([ [2,1], [1,3] ])$/;"	v
+H	qubo.py	/^H = np.zeros([k,n])$/;"	v
+J	dwave-test.py	/^J = {(3891962469035829225, 261024130118881976): 0.0, (1278075525769194288, 1461127261386963019): 0.0 }$/;"	v
+J	quantum-centers.py	/^J = {(a,b): 0.5, (a,c): 0.01, (b,c): 0.25}$/;"	v
+Q	least-squares-qubo-example.py	/^Q = qubo_prep(A,b,n,prec_list) #prepare qubo$/;"	v
+Q	quadratic_automated.py	/^Q = qubo_prep(A,b,n,prec_list)$/;"	v
+Q	qubo.py	/^Q = {}$/;"	v
+Q	toyproblem.py	/^Q = {}$/;"	v
+Q2	toyproblem.py	/^Q2 = {}$/;"	v
+Q3	toyproblem.py	/^Q3 = {}$/;"	v
+Q4	toyproblem.py	/^Q4 = {}$/;"	v
+Q5	toyproblem.py	/^Q5 = {}$/;"	v
+Q_alt	qubo.py	/^Q_alt = {}$/;"	v
+Q_alt2	qubo.py	/^Q_alt2 = {} # new dict for Q_alt but diff key names$/;"	v
+Q_total	qubo.py	/^Q_total = {}$/;"	v
+W	qubo.py	/^W = np.zeros([p,k])$/;"	v
+a	quantum-centers.py	/^a = 10$/;"	v
+approx_real	qubo.py	/^def approx_real(r):$/;"	f
+b	least-squares-qubo-example.py	/^b = np.array([7,6])$/;"	v
+b	quadratic_automated.py	/^b = np.array([2])$/;"	v
+b	quadratic_automated.py	/^b = np.array([6])$/;"	v
+b	quantum-centers.py	/^b = 20$/;"	v
+b	qubo.py	/^    b = float(v_dict[key]['v_val'])$/;"	v
+b	toyproblem.py	/^b = np.array([1,3])$/;"	v
+b2	qubo.py	/^b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D$/;"	v
+bin_to_real	qubo.py	/^def bin_to_real(binstr):$/;"	f
+bqm	centers.py	/^bqm = dimod.BinaryQuadraticModel.from_ising(h,J)$/;"	v
+bqm	quantum-centers.py	/^bqm = dimod.BinaryQuadraticModel.from_ising(h,J)$/;"	v
+c	quantum-centers.py	/^c = 30$/;"	v
+centers	kmedoids.py	/^centers = [[1, 1], [-1, -1], [1, -1]]$/;"	v
+cluster_center_coords	kmeans.py	/^cluster_center_coords = km.cluster_centers_$/;"	v
+cobj	kmedoids.py	/^cobj = KMedoids(n_clusters=3).fit(X)$/;"	v
+colors	kmedoids.py	/^colors = [$/;"	v
+convert_result	quadratic_automated.py	/^def convert_result(soln_dict,index):$/;"	f
+convert_result	qubo.py	/^def convert_result(soln_dict,index):$/;"	f
+count_ones	qubo.py	/^def count_ones(H):$/;"	f
+delta	qubo.py	/^delta = 15$/;"	v
+delta2	qubo.py	/^delta2 = 15 # lagarange multiplier$/;"	v
+exact_sampler	centers.py	/^exact_sampler = dimod.ExactSolver()$/;"	v
+exact_sampler	quantum-centers.py	/^exact_sampler = dimod.ExactSolver()$/;"	v
+find_vars	qubo.py	/^def find_vars(v,k):$/;"	f
+get_bin_str	least-squares-qubo-example.py	/^def get_bin_str(config,isising=True):$/;"	f
+get_bin_str	quadratic_automated.py	/^def get_bin_str(config,isising=True):$/;"	f
+get_bin_str	qubo.py	/^def get_bin_str(config,isising=True):$/;"	f
+h	centers.py	/^h = {}$/;"	v
+h	dwave-test.py	/^h = {}$/;"	v
+h	quantum-centers.py	/^h = {}$/;"	v
+index	qubo.py	/^index = {}$/;"	v
+k	qubo.py	/^k = 3$/;"	v
+km	kmeans.py	/^km = KMeans($/;"	v
+label	4-5-2022.py	/^    label='centroids'$/;"	v
+label	4-5-2022.py	/^    label='cluster 1'$/;"	v
+label	4-5-2022.py	/^    label='cluster 2'$/;"	v
+label	kmeans.py	/^    label='centroids'$/;"	v
+label	kmeans.py	/^    label='cluster 1'$/;"	v
+label	kmeans.py	/^    label='cluster 2'$/;"	v
+label	kmeans.py	/^    label='cluster 3'$/;"	v
+labels	kmedoids.py	/^labels = cobj.labels_$/;"	v
+make_qubo	toyproblem.py	/^def make_qubo(v,w,h,n,bitspower):$/;"	f
+markeredgecolor	kmedoids.py	/^        markeredgecolor="k",$/;"	v
+markeredgecolor	kmedoids.py	/^    markeredgecolor="k",$/;"	v
+markerfacecolor	kmedoids.py	/^        markerfacecolor=tuple(col),$/;"	v
+markerfacecolor	kmedoids.py	/^    markerfacecolor="cyan",$/;"	v
+markersize	kmedoids.py	/^        markersize=6,$/;"	v
+markersize	kmedoids.py	/^    markersize=6,$/;"	v
+n	least-squares-qubo-example.py	/^n = 2$/;"	v
+n	quadratic_automated.py	/^n=2$/;"	v
+n	quadratic_automated.py	/^n=3$/;"	v
+num_reads	qubo.py	/^num_reads  = 3000$/;"	v
+num_samples	qubo.py	/^num_samples = 40$/;"	v
+num_sweeps	qubo.py	/^num_sweeps = 30000$/;"	v
+prec_list	least-squares-qubo-example.py	/^prec_list = [1,0] #bitspower will go from -4 to 3$/;"	v
+prec_list	quadratic_automated.py	/^prec_list = [0]$/;"	v
+prec_list	quadratic_automated.py	/^prec_list = [1,0]$/;"	v
+prec_list	qubo.py	/^prec_list = [2,1,0]     # -8 to +7$/;"	v
+prec_list2	qubo.py	/^prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE$/;"	v
+prec_list_str	qubo.py	/^prec_list_str = ['null', '2', '1', '0']$/;"	v
+q1	quadratic.py	/^q1 = {}$/;"	v
+qubo_prep	least-squares-qubo-example.py	/^def qubo_prep(A,b,n,bitspower):$/;"	f
+qubo_prep	quadratic_automated.py	/^def qubo_prep(A,b,n,bitspower,varnames=None):$/;"	f
+qubo_prep	qubo.py	/^def qubo_prep(A,b,n,bitspower,varnames=None):$/;"	f
+qubo_prep_nonneg	quadratic_automated.py	/^def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):$/;"	f
+qubo_prep_nonneg	qubo.py	/^def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):$/;"	f
+qubo_to_real	least-squares-qubo-example.py	/^def qubo_to_real(binstr,n,prec_list):$/;"	f
+qubo_to_real	quadratic_automated.py	/^def qubo_to_real(binstr,n,prec_list):$/;"	f
+qubo_to_real	qubo.py	/^def qubo_to_real(binstr,n,prec_list):$/;"	f
+response	centers.py	/^response = exact_sampler.sample(bqm)$/;"	v
+response	quantum-centers.py	/^response = exact_sampler.sample(bqm)$/;"	v
+s_score	kmedoids.py	/^s_score = silhouette_score(X, labels)$/;"	v
+sampler	dwave-test.py	/^sampler = EmbeddingComposite(DWaveSampler())$/;"	v
+sampler	least-squares-qubo-example.py	/^sampler = dimod.ExactSolver()$/;"	v
+sampler	quadratic.py	/^sampler = dimod.ExactSolver()$/;"	v
+sampler	quadratic_automated.py	/^sampler = dimod.ExactSolver()$/;"	v
+sampler	qubo.py	/^sampler = neal.SimulatedAnnealingSampler()$/;"	v
+sampler	toyproblem.py	/^sampler = dimod.ExactSolver()$/;"	v
+sampleset	dwave-test.py	/^sampleset = sampler.sample_ising(h, J, num_reads=1000)$/;"	v
+sampleset	least-squares-qubo-example.py	/^sampleset = sampler.sample_qubo(Q)$/;"	v
+sampleset	quadratic_automated.py	/^sampleset = sampler.sample_qubo(Q)$/;"	v
+sampleset	quadratic_automated.py	/^sampleset = sampler.sample_qubo(Q_alt)$/;"	v
+sampleset	qubo.py	/^sampleset = sampler.sample_qubo(Q_total, num_sweeps=num_sweeps, num_reads=num_reads)$/;"	v
+sampleset	toyproblem.py	/^sampleset = sampler.sample_qubo(Q)$/;"	v
+sampleset1	quadratic.py	/^sampleset1 = sampler.sample_qubo(q1)$/;"	v
+sampleset2	toyproblem.py	/^sampleset2 = sampler.sample_qubo(Q2)$/;"	v
+sampleset3	toyproblem.py	/^sampleset3 = sampler.sample_qubo(Q3)$/;"	v
+sampleset4	toyproblem.py	/^sampleset4 = sampler.sample_qubo(Q4)$/;"	v
+soln_bin	least-squares-qubo-example.py	/^soln_bin= get_bin_str(soln_dict,isising=False)$/;"	v
+soln_bin	quadratic_automated.py	/^soln_bin= get_bin_str(soln_dict,isising=False)$/;"	v
+soln_dict	least-squares-qubo-example.py	/^soln_dict = sampleset.first.sample$/;"	v
+soln_dict	quadratic_automated.py	/^soln_dict = convert_result(sampleset.first.sample,index)$/;"	v
+soln_dict	quadratic_automated.py	/^soln_dict = sampleset.first.sample$/;"	v
+solution_dict	qubo.py	/^solution_dict = sampleset.first.sample$/;"	v
+solution_dict	qubo.py	/^solution_dict = {}$/;"	v
+start_centers	toyproblem.py	/^start_centers=np.array([(2,2),(5,5)])$/;"	v
+start_time	qubo.py	/^start_time = datetime.now()$/;"	v
+temp_h	qubo.py	/^        temp_h = "h" + str(i+1) + str(j+1)$/;"	v
+temp_h	qubo.py	/^    temp_h = x_val[1]$/;"	v
+temp_key	qubo.py	/^        temp_key = (key[0].split('_')[0],key[1].split('_')[0])$/;"	v
+temp_str	qubo.py	/^                temp_str = sol_key.split('_')[1]$/;"	v
+temp_w	qubo.py	/^        temp_w = "w" + str(i+1) + str(j+1)$/;"	v
+temp_w	qubo.py	/^        temp_w = x_val[0] + "_" + prec$/;"	v
+temp_x	qubo.py	/^        temp_x = x_key + "_" + prec$/;"	v
+unique_labels	kmedoids.py	/^unique_labels = set(labels)$/;"	v
+v	qubo.py	/^v = np.transpose(V)$/;"	v
+v_input	qubo.py	/^v_input = np.array([$/;"	v
+varnames	quadratic_automated.py	/^varnames = ['x1','x2','x3']$/;"	v
+varnames	quadratic_automated.py	/^varnames = ['x1','x2']$/;"	v
+varnames	qubo.py	/^    varnames = []$/;"	v
+varnames2	qubo.py	/^    varnames2 = []$/;"	v
+varnames2	qubo.py	/^varnames2 = list()$/;"	v
+x	least-squares-qubo-example.py	/^x = qubo_to_real(soln_bin,n,prec_list)$/;"	v
+x	quadratic_automated.py	/^x = qubo_to_real(soln_bin,n,prec_list)$/;"	v
+xy	kmedoids.py	/^    xy = X[class_member_mask]$/;"	v
+y_km	kmeans.py	/^y_km = km.fit_predict(X)$/;"	v
