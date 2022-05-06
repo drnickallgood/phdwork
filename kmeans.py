@@ -18,15 +18,18 @@ from sklearn.cluster import KMeans
 # predfined centers, 3 x 2 nparray
 
 
+centers = np.array([ [1,6], [2,4], [3,5] ])
+centers2 = np.array([ [3,5], [2,4], [1,7] ])
+centers3 = np.array([ [3,7], [2,6], [5,4] ])
+
 X, y = make_blobs(
-    n_samples=50, n_features=2,
-    centers=3, cluster_std=0.5,
-    shuffle=True, random_state=0
-)
+    n_samples=20, n_features=2,
+    cluster_std=0.5,
+    shuffle=True, random_state=0)
 
 km = KMeans(
     n_clusters=3, init='random',
-    n_init=10, max_iter=20,
+    n_init=10, max_iter=10000,
     tol=1e-04, random_state=0
 )
 
@@ -64,10 +67,11 @@ plt.scatter(
 )
 
 print(km.cluster_centers_)
-plt.legend(scatterpoints=1)
-plt.grid()
-plt.show()
-cluster_center_coords = km.cluster_centers_
+print(km.inertia_)
+#plt.legend(scatterpoints=1)
+#plt.grid()
+#plt.show()
+
 
 
 '''

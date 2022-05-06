@@ -4,7 +4,6 @@ import dimod
 import random
 import math
 from math import log
-import dimod
 import pprint
 import neal
 import numpy.linalg as LA
@@ -13,7 +12,8 @@ import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 from datetime import datetime
-
+import tabu
+from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
 
 # v = our V matrix which is p x n matrix
 # w = our W matrix which is p x k
@@ -528,12 +528,15 @@ H = 2 x 2
 
 # Test centers : (2,2) and (5,5)
 
-num_samples = 50
+num_samples = 20
 k = 3
+centers = np.array([ [1,6], [2,4], [3,5] ])
+
+#centers = np.array([ [1,3], [2,4] ])
 
 V, y = make_blobs(
     n_samples=num_samples, n_features=2,
-    centers=k, cluster_std=0.5,
+    centers=centers, cluster_std=0.5,
     shuffle=True, random_state=0
 )
 
@@ -645,7 +648,7 @@ for key, val in v_dict.items():
 print("Applying linearization penalties...\n")
 # linearization
 # Delta == lagaragne param
-delta = 1000
+delta = 20
 for x_key, x_val in x_dict.items():
     temp_h = x_val[1]
     #print(temp_h)
@@ -669,7 +672,6 @@ print("Linearization Penalties: \n")
 ## Need to do like we did above with the h variables and not send them in all at once
 ## Make as nay Q_alt2 as there are columns in H
 ## Each column call qubo_prep_nonneg with the correct varnames to that column
-
         
 #Q,Q_alt,index = qubo_prep_nonneg(A,b,n,prec_list,varnames=varnames)
 
@@ -716,7 +718,7 @@ a is a 1 x k
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 varnames2 = list()
-delta2 = 950 # lagarange multiplier
+delta2 = 20 # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
 print("Applying H penalties...\n")
@@ -762,11 +764,23 @@ for key, val in Q_alt2.items():
 
 print("Sampling QUBO...\n")
 # This is where the quantum piece happens
-num_sweeps = 10000
-num_reads  = 5000
+num_sweeps = 1000	
+num_reads  = 10000   #10000 max for qpu
 
-sampler = neal.SimulatedAnnealingSampler()
-sampleset = sampler.sample_qubo(Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
+# 2000q Sampler
+#sampler = EmbeddingComposite(DWaveSampler(solver='DW_2000Q_6'))
+# Advantage5.1 Pegasus
+#sampler = EmbeddingComposite(DWaveSampler(solver={'topology__type': 'pegasus'}))
+# Hybrid Solver BQM
+sampler = LeapHybridSampler(solver={'category': 'hybrid'})
+#sampler = neal.SimulatedAnnealingSampler()
+#sampler = tabu.TabuSampler()
+# For neal/sim annealing
+#sampleset = sampler.sample_qubo(Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
+sampleset = sampler.sample_qubo(Q_total)
+# Tabu timeout is millisec
+#tabu_timeout = 300000
+#sampleset = sampler.sample_qubo(Q_total, timeout=tabu_timeout)
 
 solution_dict = {}
 solution_dict = sampleset.first.sample
@@ -830,8 +844,10 @@ print("Running time: ", datetime.now()-start_time, "\n")
 print("")
 count_ones(H)
 print("")
-
-
+print("Given Centers: ", centers)
+print("")
+print("Solver: ", sampler.solver.name)
+print(sampleset.info)
 '''
 
 Plotting Code
