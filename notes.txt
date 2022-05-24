@@ -1,0 +1,20 @@
+5/24/2022
+
+> Good body of work to explore...
+	> Focus down..etc
+	> Next experiment or two
+	> Where does this take us?
+	> 3 new experiments
+		> Focus more on the cluster quality stuff
+			> Gate model on current formulation, do it later
+			> Bigger datasets, cluster centroid
+			> Bigger datasets, cluster quality, more scores
+				100 samples, 2 features
+				Re-code stuff, better things
+			> Floating point in quantum stuff? 
+			
+			
+			
+			
+			
+			

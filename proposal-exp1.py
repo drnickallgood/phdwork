@@ -69,6 +69,7 @@ plt.scatter(
 print(km.cluster_centers_)
 print("Inertia: ", km.inertia_)
 print("L2 Norm: ", np.sqrt(km.inertia_))
+print("Iterations: ", km.n_iter_)
 #plt.legend(scatterpoints=1)
 #plt.grid()
 #plt.show()

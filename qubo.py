@@ -534,10 +534,10 @@ centers = np.array([ [1,6], [2,4], [3,5] ])
 
 #centers = np.array([ [1,3], [2,4] ])
 
-V, y = make_blobs(
+V, y, blob_centers = make_blobs(
     n_samples=num_samples, n_features=2,
-    centers=centers, cluster_std=0.5,
-    shuffle=True, random_state=0
+    cluster_std=0.5,center_box=(-8, 7),
+    shuffle=True, random_state=0, return_centers=True
 )
 
 
@@ -648,7 +648,7 @@ for key, val in v_dict.items():
 print("Applying linearization penalties...\n")
 # linearization
 # Delta == lagaragne param
-delta = 20
+delta = 50
 for x_key, x_val in x_dict.items():
     temp_h = x_val[1]
     #print(temp_h)
@@ -718,7 +718,7 @@ a is a 1 x k
 prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
 b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 varnames2 = list()
-delta2 = 20 # lagarange multiplier
+delta2 = 50 # lagarange multiplier
 Q_alt2 = {} # new dict for Q_alt but diff key names
 
 print("Applying H penalties...\n")
@@ -779,7 +779,7 @@ sampler = LeapHybridSampler(solver={'category': 'hybrid'})
 #sampleset = sampler.sample_qubo(Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
 sampleset = sampler.sample_qubo(Q_total)
 # Tabu timeout is millisec
-#tabu_timeout = 300000
+tabu_timeout = 300000
 #sampleset = sampler.sample_qubo(Q_total, timeout=tabu_timeout)
 
 solution_dict = {}
@@ -837,6 +837,7 @@ print("WH Shape: ", np.matmul(W,H).shape, "\n")
 print("\nFirst energy: ", sampleset.first.energy)
 
 print("Norm: ", LA.norm(v - np.matmul(W,H)))
+print("Inertia: ", LA.norm(v - np.matmul(W,H))**2)
 print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
 
 print("Number of samples: ", v.shape[1])
@@ -844,10 +845,11 @@ print("Running time: ", datetime.now()-start_time, "\n")
 print("")
 count_ones(H)
 print("")
-print("Given Centers: ", centers)
+#print("Given Centers: ", centers)
+print("Gaussian Centers: ", blob_centers)
 print("")
-print("Solver: ", sampler.solver.name)
-print(sampleset.info)
+#print("Solver: ", sampler.solver.name)
+#print(sampleset.info)
 '''
 
 Plotting Code

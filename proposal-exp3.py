@@ -18,13 +18,16 @@ from sklearn.cluster import KMeans
 # predfined centers, 3 x 2 nparray
 
 
+#Blob centers
 centers = np.array([ [1,6], [2,4], [3,5] ])
-centers2 = np.array([ [3,5], [2,4], [1,7] ])
-centers3 = np.array([ [3,7], [2,6], [5,4] ])
+
+tabu_centers = np.array([ [1,6], [2,4], [3,5] ])
+simanneal_centers = np.array([ [3,5], [2,4], [1,7] ])
+hybrid_centers = np.array([ [3,7], [2,6], [5,4] ])
 
 X, y = make_blobs(
     n_samples=20, n_features=2,
-    centers=centers2, cluster_std=0.5,
+    centers=centers, cluster_std=0.5,
     shuffle=True, random_state=0)
 
 km = KMeans(
@@ -33,7 +36,29 @@ km = KMeans(
     tol=1e-04, random_state=0
 )
 
+km_tabu = KMeans(
+        n_clusters=3, init=tabu_centers,
+        n_init=10, max_iter=10000,
+        tol=1e-04, random_state=0
+)
+
+km_simanneal = KMeans(
+        n_clusters=3, init=simanneal_centers,
+        n_init=10, max_iter=10000,
+        tol=1e-04, random_state=0
+)
+
+km_hybrid = KMeans(
+        n_clusters=3, init=hybrid_centers,
+        n_init=10, max_iter=10000,
+        tol=1e-04, random_state=0
+)
+
+
 y_km = km.fit_predict(X)
+y_km_tabu = km_tabu.fit_predict(X)
+y_km_simanneal = km_simanneal.fit_predict(X)
+y_km_hybrid = km_hybrid.fit_predict(X)
 
 #plot
 # plot the 3 clusters
@@ -66,9 +91,38 @@ plt.scatter(
     label='centroids'
 )
 
-print(km.cluster_centers_)
-print("Inertia: ", km.inertia_)
-print("L2 Norm: ", np.sqrt(km.inertia_))
+print("\n--- K-means (Random) ---\n")
+print("K-Means (Random) Centers: ", km.cluster_centers_)
+print("K-Means (Random) Iterations: ", km.n_iter_)
+print("K-Means (Random) Inertia: ", km.inertia_)
+
+print("\n--- K-means (Tabu) ---\n")
+print("K-Means (Tabu) Centers: ", km_tabu.cluster_centers_)
+print("K-Means (Tabu) Iterations: ", km_tabu.n_iter_)
+print("K-Means (Tabu) Inertia: ", km_tabu.inertia_)
+
+print("\n--- K-means (Sim. Annealing) ---\n")
+print("K-Means (Sim. Annealing) Centers: ", km_simanneal.cluster_centers_)
+print("K-Means (Sim. Annealing) Iterations: ", km_simanneal.n_iter_)
+print("K-Means (Sim. Annealing) Inertia: ", km_simanneal.inertia_)
+
+print("\n--- K-means (Hybrid BQM) ---\n")
+print("K-Means (Hybrid BQM) Centers: ", km_hybrid.cluster_centers_)
+print("K-Means (Hybrid BQM) Iterations: ", km_hybrid.n_iter_)
+print("K-Means (Hybrid BQM) Inertia: ", km_hybrid.inertia_)
+print()
+
+
+
+
+
+
+
+
+
+
+
+
 #plt.legend(scatterpoints=1)
 #plt.grid()
 #plt.show()
