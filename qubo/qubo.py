@@ -15,13 +15,31 @@ from datetime import datetime
 import tabu
 from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
 import sys
+from .penalizer import Penalizer 
 
 class Qubo:
-    def __init__(self, dataset, num_centers, num_samples):
-        self.dataset = dataset
-        self.num_centers = num_centers
-        self.num_samples = num_samples 
-        
+    def __init__(self, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2):
+        #self.dataset = dataset
+        #self.num_centers = num_centers
+        #self.num_samples = num_samples
+        self.v_dict = v_dict
+        self.x_dict = x_dict
+        self.x_dict_rev = x_dict_rev
+        self.prec_list = prec_list 
+        self.Q_total = {}
+        #print(v_dict)
+        #print(x_dict)
+        #print(prec_list)
+        self.k = k
+        self.p = p
+        self.n = n
+        #prec_list = [2, 1, 0]   #-8 to +7
+        self.prec_list_str = ['null']
+        # Get string versions of prec_list_stirngs
+        prec_strings = [self.prec_list_str.append(str(x)) for x in self.prec_list]
+        self.delta1 = delta1
+        self.delta2 = delta2
+        self.build_qtotal()
     
     #This is just to convert a dictionary based result into a binary string based result
     def get_bin_str(config,isising=True):
@@ -72,7 +90,7 @@ class Qubo:
     ## Code from Ajinkya Borle in nick_quadratic_automated
 
     #Converts a ||Ax-b|| problem into a QUBO
-    def qubo_prep(A,b,n,bitspower,varnames=None):
+    def qubo_prep(self,A,b,n,bitspower,varnames=None):
         #Input:
         #'A' is the matrix which is a np.array(), a matrix which is m x n
         #b is the vector in the expression : Ax-b, an np.array() of length m
@@ -138,7 +156,7 @@ class Qubo:
         else:
             return Qdict #just return the bare bones if varnames not requested
         
-    def qubo_prep_nonneg(A,b,n,bitspower, varnames=None):
+    def qubo_prep_nonneg(self, A,b,n,bitspower, varnames=None):
         #Same as qubo_prep but only for non-negative values
         #bitspower = [0] for binary values
         
@@ -237,71 +255,116 @@ class Qubo:
     def bin_to_real(self,binstr):
         return int(binstr,2)
 
-    # Figure out all v_ij - sum_h w_ih * h_hj
-    # pass in k , # of clusters
+    def build_qtotal(self):
+        #print(self.v_dict)
+        Q_alt2 = {} # new dict for Q_alt but diff key names
+        for key, val in self.v_dict.items():
+           #print(v_dict[key]['wh'])
+            # Go through individual list of tuples
+            varnames = []
+            for item in self.v_dict[key]['wh']:
+                # Get our corresponding x values to WH values
+                varnames.append(self.x_dict_rev[item])
+                # Build a row vector of 1's for A
+                #A = np.zeros([1,k])
+                #A += 1
+                # Get each element of V for qubo_prep
+                # print(varnames)
+                # Also store them as a floating point number vs a string
+            #for v_key, v_val in v_dict.items():
+            # Build a row vector of 1's for A
+            A = np.zeros([1,self.k])
+            A += 1
+            b = float(self.v_dict[key]['v_val'])
+            Q, Q_alt, index = self.qubo_prep(A,b,self.k,self.prec_list,varnames=varnames)
+            # Put everything from each Q_alt dict into master Q_total
+            for key, val in Q_alt.items():
+                # Check if key is already here, if so add to it
+                if key in self.Q_total:
+                    self.Q_total[key] += val
+                else:
+                    self.Q_total[key] = val
+                    
+        penal = Penalizer(self.x_dict, self.delta1, self.delta2, self.Q_total, self.prec_list_str)
+        penal.linearization()
+                    
+        # Make as many q_alt2s as there are columns in H
+        prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
+        b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
+        for h_i in range(0, self.n):        # row
+            varnames2 = []
+            for h_j in range(0, self.k):    # col
+                varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
+                #pprint.pprint(varnames2)
 
-    def find_vars(self, v,k):
+            A = np.zeros([1,self.k])
+            A += 1
+            #pprint.pprint(varnames2)    
+            Q2, Q2_alt, index = self.qubo_prep_nonneg(A, b2, self.k, prec_list2, varnames=varnames2)
+        
+        penal.h_penalty(Q2_alt)
+        
+        
+    def qubo_submit(self, num_sweeps, num_reads, tabu_timeout, solver):
+        #num_sweeps = 1000  
+        #num_reads  = 10000   #10000 max for qpu
 
-        v_list = list()
-
-        # Store our wh values and in reverse
-        x_dict = {}
-        x_dict_rev = {}
-
-        # store our v values
-        # This will essentially be a set of nested dictionaries
-
-        v_dict = {}
-
-        # 
-        wh_dict = {}
-     
-        # Get correct dimensions
-        # V is p x n 
-        p = v.shape[0]
-        n = v.shape[1]
-
-        # W is p x k
-        w_rows = p
-        w_cols = k
-
-        # H is k x n
-        h_rows = k
-        h_cols = n
-
-
-        #Get the V's
-        # V is p x n 
-        for i in range(0,p):
-            for j in range(0, n):
-                # stringify what is in V at this location
-                i_idx = i+1
-                j_idx = j+1
-                v_dict[i_idx,j_idx] = {}
-                v_dict[i_idx,j_idx]['v_val'] = str(v[i][j])
-                v_dict[i_idx,j_idx]['wh'] = []
-                #v_str = str(v[i][j]) + "-"
-                #v_list.append(v_str)
-
-        # Build WH
-        # WH will be same as V , so p x n
-        wh_cnt = 1
-        for i in range(0,w_rows):
-            for j in range(0,h_cols):
-                # This is just indexing to make it match and not index from 0
-                i_idx = i+1
-                j_idx = j+1
-                for l in range(0,w_cols):   # This is the column vector selection
-                    #print("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
-                    #x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1))
-                    x_dict['x'+str(wh_cnt)] = ("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))
-                    x_dict_rev[("w" + str(i+1) + str(l+1), "h" + str(l+1) + str(j+1))] = 'x'+str(wh_cnt)
-                    v_dict[i_idx,j_idx]['wh'].append( ("w"+str(i+1) + str(l+1), "h"+str(l+1)+str(j+1)) )
-                    wh_cnt += 1
-                   # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
-
-        return v_dict, x_dict, x_dict_rev, p, n
+        if solver == "hybrid":
+            print("Submitted to Hybrid Solver...")
+            sampler = LeapHybridSampler(solver={'category': 'hybrid'})
+            sampleset = sampler.sample_qubo(self.Q_total)
+        elif solver == "tabu":
+            print("Submitted to TABU Solver...")
+            sampler = tabu.TabuSampler()
+            sampleset = sampler.sample_qubo(self.Q_total, timeout=tabu_timeout)
+        elif solver == "sim":
+            print("Submitted to Simulated Annealer...")
+            sampler = neal.SimulatedAnnealingSampler()
+            sampleset = sampler.sample_qubo(self.Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
+        else:
+            print("Invalid options for qubo submission")
+            exit(1)
             
+              
+        # 2000q Sampler
+        #sampler = EmbeddingComposite(DWaveSampler(solver='DW_2000Q_6'))
+        # Advantage5.1 Pegasus
+        #sampler = EmbeddingComposite(DWaveSampler(solver={'topology__type': 'pegasus'}))
+        # Hybrid Solver BQM
+        self.solution_dict = {}
+        self.solution_dict = sampleset.first.sample
+        #solution_dict = sampleset2.first.sample
+        
+    def get_solution_dict(self):
+        return self.solution_dict
 
-#if (__name__ == '__main__'):
-#    Qubo.print_test()
+    def qubo_verify(self):
+
+        W = np.zeros([self.p, self.k])
+        #W = np.transpose(W)
+        H = np.zeros([self.k, self.n])
+        #H = np.transpose(H)
+
+
+        print("Creating verification W and H...\n")
+        for i in range(0,self.k):
+            for j in range(0,self.n):
+                temp_h = "h" + str(i+1) + str(j+1)
+                H[i,j] = self.solution_dict[temp_h]
+                
+        for i in range(0,self.p):
+            for j in range(0,self.k):
+                temp_w = "w" + str(i+1) + str(j+1)
+                for sol_key, sol_val in self.solution_dict.items():
+                    if temp_w in sol_key:
+                        #print(temp_w, sol_key)
+                        temp_str = sol_key.split('_')[1]
+                        #print(temp_str)
+                        if temp_str == "null":
+                            W[i,j] += -(2**(self.prec_list[0]+1))*sol_val
+                        else:
+                            W[i,j] += (2**int(temp_str))*sol_val
+            
+                
+    def get_qtotal(self):
+        return self.Q_total

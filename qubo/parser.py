@@ -1,4 +1,5 @@
-
+import qubo 
+import numpy as np
 
 class Parser:
     def __init__(self, v, k):
@@ -10,6 +11,7 @@ class Parser:
         self.x_dict_rev = {}
         self.p = 0
         self.n = 0
+        self.Q_total = {}
         
     def find_vars(self):
 
@@ -78,8 +80,45 @@ class Parser:
                     wh_cnt += 1
                    # x_dict['x'+str(i)] = "w" + str(i+1) + str(l+1) + "h" + str(l+1) + str(j+1)
 
+    def parse_vdict(self):
+        #print("Parsing V dictionary...\n")
+        # Go through main dictionary to get data
+        for key, val in self.v_dict.items():
+           #print(v_dict[key]['wh'])
+            # Go through individual list of tuples
+            varnames = []
+            for item in self.v_dict[key]['wh']:
+                # Get our corresponding x values to WH values
+                varnames.append(self.x_dict_rev[item])
+                # Build a row vector of 1's for A
+                #A = np.zeros([1,k])
+                #A += 1
+                # Get each element of V for qubo_prep
+                # print(varnames)
+                # Also store them as a floating point number vs a string
+            #for v_key, v_val in v_dict.items():
+            # Build a row vector of 1's for A
+            A = np.zeros([1,self.k])
+            A += 1
+            b = float(self.v_dict[key]['v_val'])
+            Q, Q_alt, index = qubo.Qubo.qubo_prep(A,b,self.k,prec_list,varnames=varnames)
+            # Put everything from each Q_alt dict into master Q_total
+            for key, val in Q_alt.items():
+                # Check if key is already here, if so add to it
+                if key in self.Q_total:
+                    self.Q_total[key] += val
+                else:
+                    self.Q_total[key] = val
+            
+            
     def get_vars(self):
         self.find_vars()
+        #self.parse_vdict()
         return self.v_dict, self.x_dict, self.x_dict_rev, self.p, self.n
+        
+    def get_qtotal(self):
+        return self.Q_total
+        
+        
         
         
