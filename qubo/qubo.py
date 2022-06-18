@@ -18,7 +18,7 @@ import sys
 from .penalizer import Penalizer 
 
 class Qubo:
-    def __init__(self, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2):
+    def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2):
         #self.dataset = dataset
         #self.num_centers = num_centers
         #self.num_samples = num_samples
@@ -39,6 +39,7 @@ class Qubo:
         prec_strings = [self.prec_list_str.append(str(x)) for x in self.prec_list]
         self.delta1 = delta1
         self.delta2 = delta2
+        self.v = v
         self.build_qtotal()
     
     #This is just to convert a dictionary based result into a binary string based result
@@ -320,7 +321,7 @@ class Qubo:
         elif solver == "sim":
             print("Submitted to Simulated Annealer...")
             sampler = neal.SimulatedAnnealingSampler()
-            sampleset = sampler.sample_qubo(self.Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
+            self.sampleset = sampler.sample_qubo(self.Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
         else:
             print("Invalid options for qubo submission")
             exit(1)
@@ -332,7 +333,7 @@ class Qubo:
         #sampler = EmbeddingComposite(DWaveSampler(solver={'topology__type': 'pegasus'}))
         # Hybrid Solver BQM
         self.solution_dict = {}
-        self.solution_dict = sampleset.first.sample
+        self.solution_dict = self.sampleset.first.sample
         #solution_dict = sampleset2.first.sample
         
     def get_solution_dict(self):
@@ -340,9 +341,9 @@ class Qubo:
 
     def qubo_verify(self):
 
-        W = np.zeros([self.p, self.k])
+        self.W = np.zeros([self.p, self.k])
         #W = np.transpose(W)
-        H = np.zeros([self.k, self.n])
+        self.H = np.zeros([self.k, self.n])
         #H = np.transpose(H)
 
 
@@ -350,7 +351,7 @@ class Qubo:
         for i in range(0,self.k):
             for j in range(0,self.n):
                 temp_h = "h" + str(i+1) + str(j+1)
-                H[i,j] = self.solution_dict[temp_h]
+                self.H[i,j] = self.solution_dict[temp_h]
                 
         for i in range(0,self.p):
             for j in range(0,self.k):
@@ -361,9 +362,67 @@ class Qubo:
                         temp_str = sol_key.split('_')[1]
                         #print(temp_str)
                         if temp_str == "null":
-                            W[i,j] += -(2**(self.prec_list[0]+1))*sol_val
+                            self.W[i,j] += -(2**(self.prec_list[0]+1))*sol_val
                         else:
-                            W[i,j] += (2**int(temp_str))*sol_val
+                            self.W[i,j] += (2**int(temp_str))*sol_val
+        
+                            
+    def get_lagrange_params(self):
+        return self.delta1, self.delta2
+        
+        
+    def count_ones(self):
+        bad_cols = 0
+        for col_num in range(0, self.H.shape[1]):
+            col_count = 0
+            for row_num in range(0, self.H.shape[0]):
+                #print("Row: ", row_num, "Col: ", col_num)
+                if self.H[row_num][col_num] == 1:
+                    col_count += 1
+                
+            if col_count > 1 or col_count == 0:
+                print("Bad solution, multiple or no 1's in column: ", col_num)
+                bad_cols += 1
+                
+                    
+            print("Col: ", col_num, "1count: ", col_count)
+        print("Total Violated Columns: ", bad_cols)
+                            
+                            
+    def get_results(self):
+        #print("\n--- Sampleset ---\n")
+        #print(sampleset)
+        self.qubo_verify()
+        print("\n--- Verification ---\n")
+        delta1, delta2 = self.get_lagrange_params()
+        print("delta1: ", delta1, "\ndelta2: ", delta2)
+        print("Num Clusters: ", self.k, "\n")
+
+
+        #print("V (transposed) = \n", v, "\n")
+       # print("V Shape (transposed): " , v.shape)
+        print("\nComputed W = \n", self.W, "\n")
+        #print("W Shape: ", W.shape)
+        print("\nComputed H = \n", self.H, "\n")
+        #print("H Shape: ", H.shape)
+        print("\nComputed WH = \n ", np.matmul(self.W, self.H))
+        #print("WH Shape: ", np.matmul(W,H).shape, "\n")
+        print("\nFirst energy: ", self.sampleset.first.energy)
+
+        print("Norm: ", LA.norm(self.v - np.matmul(self.W, self.H)))
+        print("Inertia: ", LA.norm(self.v - np.matmul(self.W, self.H))**2)
+        print("Verifying best energy via Frobenius Norm: ", LA.norm(self.v, 'fro')**2, "\n")
+
+        #print("Number of samples: ", v.shape[1])
+        #print("Running time: ", datetime.now()-start_time, "\n")
+        #print("")
+        self.count_ones()
+        print("")
+        #print("Given Centers: ", centers)
+        #print("Gaussian Centers: ", blob_centers)
+       # print("")
+        #print("Solver: ", sampler.solver.name)
+        #print(sampleset.info)
             
                 
     def get_qtotal(self):
