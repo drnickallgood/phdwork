@@ -54,8 +54,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
-delta1 = 15
-delta2 = 15
+delta1 = 5
+delta2 = 10
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -63,14 +63,23 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 99999
-num_reads = 1500
+num_sweeps = 9999
+num_reads = 999
 tabu_timeout = 300000   #ms
 solver = "sim"
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
+
+#pprint.pprint(myqubo.get_solution_dict())
+
+
+W, H = myqubo.get_w_h()
+
+#print(W)
+#print(H)
+
 myqubo.get_results()
 
-
+print("\nInitial Centers: ", blob_centers)
 print("\nRunning time: ", datetime.now()-start_time, "\n")
 
 

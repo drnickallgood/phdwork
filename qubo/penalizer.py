@@ -7,10 +7,11 @@ class Penalizer:
         self.delta2 = delta2
         self.Q_total = Q_total
         self.prec_list_str = prec_list_str
+        #self.Q_alt2 = {}
 
         
     def linearization(self):
-        print("Applying linearization penalties...\n")
+       # print("Applying linearization penalties...\n")
         # linearization
         # Delta == lagaragne param
         #delta = 50
@@ -28,7 +29,7 @@ class Penalizer:
                 self.Q_total[temp_x, temp_x] += 6 * self.delta1
         
     def h_penalty(self, Q2_alt):
-        print("Applying H penalties...\n")
+        #print("Applying H penalties...\n")
         Q_alt2 = {} # new dict for Q_alt but diff key names
 
         for key,value in Q2_alt.items():

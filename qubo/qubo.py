@@ -27,9 +27,6 @@ class Qubo:
         self.x_dict_rev = x_dict_rev
         self.prec_list = prec_list 
         self.Q_total = {}
-        #print(v_dict)
-        #print(x_dict)
-        #print(prec_list)
         self.k = k
         self.p = p
         self.n = n
@@ -40,6 +37,9 @@ class Qubo:
         self.delta1 = delta1
         self.delta2 = delta2
         self.v = v
+        self.W = np.zeros([self.p, self.k])
+        self.H = np.zeros([self.k, self.n])
+
         self.build_qtotal()
     
     #This is just to convert a dictionary based result into a binary string based result
@@ -226,26 +226,6 @@ class Qubo:
         for key,value in soln_dict.items():
             new_dict[index[key]] = value
         return new_dict
-
-    def count_ones(H):
-        bad_cols = 0
-        for col_num in range(0, H.shape[1]):
-            col_count = 0
-            for row_num in range(0, H.shape[0]):
-                #print("Row: ", row_num, "Col: ", col_num)
-                if H[row_num][col_num] == 1:
-                    col_count += 1
-                
-            if col_count > 1 or col_count == 0:
-                print("Bad solution, multiple or no 1's in column: ", col_num)
-                bad_cols += 1
-                
-                    
-            print("Col: ", col_num, "1count: ", col_count)
-        print("Total Violated Columns: ", bad_cols)
-        
-    def print_test():
-        print("test failed successfully")
     
     # Annealer will return binary value, need to convert back to reals
     # using approximation
@@ -258,7 +238,7 @@ class Qubo:
 
     def build_qtotal(self):
         #print(self.v_dict)
-        Q_alt2 = {} # new dict for Q_alt but diff key names
+        #Q_alt2 = {} # new dict for Q_alt but diff key names
         for key, val in self.v_dict.items():
            #print(v_dict[key]['wh'])
             # Go through individual list of tuples
@@ -287,11 +267,14 @@ class Qubo:
                     self.Q_total[key] = val
                     
         penal = Penalizer(self.x_dict, self.delta1, self.delta2, self.Q_total, self.prec_list_str)
+        print("Applying linearization penalties...")
         penal.linearization()
                     
         # Make as many q_alt2s as there are columns in H
         prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
         b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
+        
+        print("Applying penalties to H...")
         for h_i in range(0, self.n):        # row
             varnames2 = []
             for h_j in range(0, self.k):    # col
@@ -303,7 +286,7 @@ class Qubo:
             #pprint.pprint(varnames2)    
             Q2, Q2_alt, index = self.qubo_prep_nonneg(A, b2, self.k, prec_list2, varnames=varnames2)
         
-        penal.h_penalty(Q2_alt)
+            penal.h_penalty(Q2_alt)
         
         
     def qubo_submit(self, num_sweeps, num_reads, tabu_timeout, solver):
@@ -313,11 +296,11 @@ class Qubo:
         if solver == "hybrid":
             print("Submitted to Hybrid Solver...")
             sampler = LeapHybridSampler(solver={'category': 'hybrid'})
-            sampleset = sampler.sample_qubo(self.Q_total)
+            self.sampleset = sampler.sample_qubo(self.Q_total)
         elif solver == "tabu":
             print("Submitted to TABU Solver...")
             sampler = tabu.TabuSampler()
-            sampleset = sampler.sample_qubo(self.Q_total, timeout=tabu_timeout)
+            self.sampleset = sampler.sample_qubo(self.Q_total, timeout=tabu_timeout)
         elif solver == "sim":
             print("Submitted to Simulated Annealer...")
             sampler = neal.SimulatedAnnealingSampler()
@@ -341,9 +324,9 @@ class Qubo:
 
     def qubo_verify(self):
 
-        self.W = np.zeros([self.p, self.k])
+        #self.W = np.zeros([self.p, self.k])
         #W = np.transpose(W)
-        self.H = np.zeros([self.k, self.n])
+        #self.H = np.zeros([self.k, self.n])
         #H = np.transpose(H)
 
 
@@ -366,6 +349,8 @@ class Qubo:
                         else:
                             self.W[i,j] += (2**int(temp_str))*sol_val
         
+        self.count_ones()
+        print("")
                             
     def get_lagrange_params(self):
         return self.delta1, self.delta2
@@ -416,14 +401,23 @@ class Qubo:
         #print("Number of samples: ", v.shape[1])
         #print("Running time: ", datetime.now()-start_time, "\n")
         #print("")
-        self.count_ones()
-        print("")
+        #self.count_ones()
+        #print("")
         #print("Given Centers: ", centers)
         #print("Gaussian Centers: ", blob_centers)
        # print("")
         #print("Solver: ", sampler.solver.name)
         #print(sampleset.info)
             
+    def get_quantum_centers(self):
+        pass
                 
     def get_qtotal(self):
         return self.Q_total
+        
+    
+    def get_w_h(self):
+        self.qubo_verify()
+        return self.W, self.H
+        
+        
