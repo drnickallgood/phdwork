@@ -410,7 +410,52 @@ class Qubo:
         #print(sampleset.info)
             
     def get_quantum_centers(self):
-        pass
+        '''
+        Parse columns of W which are our center points
+        '''
+        centers = list()
+        
+        '''
+        Computed W =
+         [[-2. -2. -2.]
+         [-2. -2. -2.]]
+         
+         columns are center coordinates
+         
+          int i, j, k;
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
+            res[i][j] = 0;
+            for (k = 0; k < N; k++)
+                res[i][j] += mat1[i][k] * mat2[k][j];
+                
+            for col_num in range(0, self.H.shape[1]):
+            col_count = 0
+            for row_num in range(0, self.H.shape[0]):
+                #print("Row: ", row_num, "Col: ", col_num)
+                if self.H[row_num][col_num] == 1:
+                    col_count += 1
+                
+            if col_count > 1 or col_count == 0:
+                print("Bad solution, multiple or no 1's in column: ", col_num)
+                bad_cols += 1
+
+                    for i in range(0, data.shape[1]):
+...     data[:, i:i+1]
+
+        '''
+        for i in range(0, self.W.shape[1]):
+            centers.append(self.W[:, i:i+1].tolist())
+            #print(self.W[:, i:i+1].tolist())
+                
+            #print(self.W[:, i:i+1])
+            #for j in self.W[:, i:i+1]:
+             #   print(j)
+            #centers.append(self.W[:, i:i+1])
+            #print(self.W[:, i:i+1])
+
+        return centers
+                    
                 
     def get_qtotal(self):
         return self.Q_total

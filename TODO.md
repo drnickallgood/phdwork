@@ -1,11 +1,10 @@
 ## TO DO ##
 
-*** Make find_ones() quieter, less printing
+** Make find_ones() quieter, less printing
 
+** Fix / add additional verfiication method, since we dont' support floating point right now, need to 
+check to see/avoid having identical numbers in the center points/same cluster.
 
-*** add method to parse centers from matrix
-
-
-*** possibly automate delta1 and delta2 finding 
+** possibly automate delta1 and delta2 finding 
 
 
