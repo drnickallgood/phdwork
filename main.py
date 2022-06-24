@@ -27,7 +27,7 @@ Q_total = {}
 
     
 
-num_samples = 10
+num_samples = 500
 k = 3
 centers = np.array([ [1,6], [2,4], [3,5] ])
 
@@ -54,8 +54,9 @@ prec_list = [2, 1, 0]   #-8 to +7
 
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
-delta1 = 10
-delta2 = 20
+
+delta1 = 100
+delta2 = 150
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -63,10 +64,10 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 10000
-num_reads = 2000
-tabu_timeout = 300000   #ms
-solver = "sim"
+num_sweeps = 65000
+num_reads = 6500
+tabu_timeout = 300000  #ms
+solver = "tabu"
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 
 #pprint.pprint(myqubo.get_solution_dict())
@@ -84,7 +85,7 @@ qcenters = myqubo.get_quantum_centers()
 print("\nInitial Centers: ", blob_centers)
 
 
-print("Compueted Centers")
+print("\nComputed Centers")
 #print(qcenters)
 
 for coords in qcenters:

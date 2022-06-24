@@ -366,18 +366,20 @@ class Qubo:
                     col_count += 1
                 
             if col_count > 1 or col_count == 0:
-                print("Bad solution, multiple or no 1's in column: ", col_num)
+                #print("Bad solution, multiple or no 1's in column: ", col_num)
                 bad_cols += 1
                 
                     
-            print("Col: ", col_num, "1count: ", col_count)
+            #print("Col: ", col_num, "1count: ", col_count)
         print("Total Violated Columns: ", bad_cols)
                             
+        return bad_cols
+        
                             
     def get_results(self):
         #print("\n--- Sampleset ---\n")
         #print(sampleset)
-        self.qubo_verify()
+        #self.qubo_verify()
         print("\n--- Verification ---\n")
         delta1, delta2 = self.get_lagrange_params()
         print("delta1: ", delta1, "\ndelta2: ", delta2)
@@ -386,11 +388,11 @@ class Qubo:
 
         #print("V (transposed) = \n", v, "\n")
        # print("V Shape (transposed): " , v.shape)
-        print("\nComputed W = \n", self.W, "\n")
+        #print("\nComputed W = \n", self.W, "\n")
         #print("W Shape: ", W.shape)
-        print("\nComputed H = \n", self.H, "\n")
+        #print("\nComputed H = \n", self.H, "\n")
         #print("H Shape: ", H.shape)
-        print("\nComputed WH = \n ", np.matmul(self.W, self.H))
+        #print("\nComputed WH = \n ", np.matmul(self.W, self.H))
         #print("WH Shape: ", np.matmul(W,H).shape, "\n")
         print("\nFirst energy: ", self.sampleset.first.energy)
 
@@ -413,46 +415,35 @@ class Qubo:
         '''
         Parse columns of W which are our center points
         '''
+        
+        #self.qubo_verify()
         centers = list()
         
-        '''
-        Computed W =
-         [[-2. -2. -2.]
-         [-2. -2. -2.]]
-         
-         columns are center coordinates
-         
-          int i, j, k;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            res[i][j] = 0;
-            for (k = 0; k < N; k++)
-                res[i][j] += mat1[i][k] * mat2[k][j];
-                
-            for col_num in range(0, self.H.shape[1]):
-            col_count = 0
-            for row_num in range(0, self.H.shape[0]):
-                #print("Row: ", row_num, "Col: ", col_num)
-                if self.H[row_num][col_num] == 1:
-                    col_count += 1
-                
-            if col_count > 1 or col_count == 0:
-                print("Bad solution, multiple or no 1's in column: ", col_num)
-                bad_cols += 1
-
-                    for i in range(0, data.shape[1]):
-...     data[:, i:i+1]
-
+        # Using this method because we ensure qubo_verify only gets called once.
+        W, H = self.get_w_h()
+        print(W)
+        w_transpose = np.transpose(W)
+        
+        for row in range(0, w_transpose.shape[0]):
+            coords = list()
+            for col in range(0, w_transpose.shape[1]):
+                coords.append(w_transpose[row][col])
+            centers.append(coords)
+            
+        
+        #print(w_transpose.shape[1])
+        
         '''
         for i in range(0, self.W.shape[1]):
-            centers.append(self.W[:, i:i+1].tolist())
-            #print(self.W[:, i:i+1].tolist())
+            #centers.append(self.W[:, i:i+1].tolist())
+            print( self.W[:, i:i+1].shape )
                 
             #print(self.W[:, i:i+1])
             #for j in self.W[:, i:i+1]:
              #   print(j)
             #centers.append(self.W[:, i:i+1])
             #print(self.W[:, i:i+1])
+        '''
 
         return centers
                     
@@ -461,6 +452,11 @@ class Qubo:
         return self.Q_total
         
     
+    '''
+        Only use this if you need to check W and H, be careful as it calls
+        qubo_verify twice which messes up some math if you pair it with get_results
+        so make sure to not use it or if you do comment it out first
+    '''
     def get_w_h(self):
         self.qubo_verify()
         return self.W, self.H

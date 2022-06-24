@@ -1,5 +1,15 @@
 import numpy as np 
 
+''' 
+Uses to apply penalization to our matrix. Essentially delta1 and delta 2 are lagrange parameters
+and they are used to ensure that our H matrix has no violated columns. A violation in this case
+is when a column in H has more than a single binary 1 in the column.
+
+There are other things that need to be accounted for such as only 0's in a H column, 
+and also if the W columns are equal.. though this might be fixed with adding some bits of precision
+ie floating point.
+
+'''
 class Penalizer:
     def __init__(self, x_dict, delta1, delta2, Q_total, prec_list_str):
         self.x_dict = x_dict
