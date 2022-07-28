@@ -1,4 +1,4 @@
-import qubo 
+import qubo
 import numpy as np
 import copy
 import dimod
@@ -16,8 +16,6 @@ from datetime import datetime
 import tabu
 from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
 
-
-
 start_time = datetime.now()
 # In a 2x2 situation, we basicallay have to send one quadratic expression at a time
 Q = {}
@@ -25,18 +23,18 @@ Q_alt = {}
 index = {}
 Q_total = {}
 
-    
 
-num_samples = 500
+
+num_samples = 100
 k = 3
 centers = np.array([ [1,6], [2,4], [3,5] ])
 
 
 # Test Data
 V, y, blob_centers = make_blobs(
-    n_samples=num_samples, n_features=2,
+    n_samples=num_samples, n_features=2,centers=k,
     cluster_std=0.5,center_box=(-8, 7),
-    shuffle=True, random_state=0, return_centers=True
+    shuffle=True, random_state=7, return_centers=True
 )
 
 # Transpose matrix
@@ -55,8 +53,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 100
-delta2 = 150
+delta1 = 1500
+delta2 = 2000
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -64,10 +62,20 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 65000
-num_reads = 6500
-tabu_timeout = 300000  #ms
-solver = "tabu"
+num_sweeps = 99999
+num_reads = 9999
+#tabu_timeout = 300000  #ms  #5min
+tabu_timeout = 600000  #ms  #10min
+#tabu_timeout = 900000  #ms  #15min
+#tabu_timeout = 1200000  #ms  #20min
+#tabu_timeout = 1800000  #ms  #30min
+#tabu_timeout = 3600000  #ms #1hr
+#tabu_timeout = 7200000  #ms  #2hr
+#tabu_timeout = 28800000       #8hr
+#tabu_timeout = 57600000       #16hr
+
+#solver = "tabu"
+solver = "sim"
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 
 #pprint.pprint(myqubo.get_solution_dict())
