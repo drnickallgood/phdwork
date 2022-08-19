@@ -375,7 +375,40 @@ class Qubo:
                             
         return bad_cols
         
-                            
+    def cluster_analysis(self, v, w, h):
+        '''
+        This will do our full cluster analysis
+        We need Inertia, Silohouette Scores, Homogeneity, Completeness, V-measure
+        Scikit has all of this stuff, but we can calculate it
+
+        Inertia = Sum of Squared errors = L2_Norm(V - WH)^2)
+
+        :param V - Original data matrix
+        :param W: - calculated W matrix
+        :param H:  - Calculated H matrix
+        :return:
+        '''
+
+        self.inertia = LA.norm(v - np.matmul(w, h)) ** 2
+
+        '''
+        Calculation of Silhouette Value –
+        If the Silhouette index value is high, the object is well-matched to its own cluster and poorly matched to neighbouring clusters. 
+        The Silhouette Coefficient is calculated using the mean intra-cluster distance (a) and the mean nearest-cluster distance (b) for each sample. 
+        The Silhouette Coefficient is defined as –
+
+        S(i) = ( b(i) – a(i) ) / ( max { ( a(i), b(i) ) }
+        
+        Where,
+        
+        a(i) is the average dissimilarity of ith object to all other objects in the same cluster
+        b(i) is the average dissimilarity of ith object with all objects in the closest cluster.
+        '''
+
+
+        return True
+
+
     def get_results(self):
         #print("\n--- Sampleset ---\n")
         #print(sampleset)
@@ -421,7 +454,9 @@ class Qubo:
         
         # Using this method because we ensure qubo_verify only gets called once.
         W, H = self.get_w_h()
-        print(W)
+        print("W: ", W)
+        print("H: ", H)
+
         w_transpose = np.transpose(W)
         
         for row in range(0, w_transpose.shape[0]):
