@@ -31,10 +31,10 @@ centers = np.array([ [1,6], [2,4], [3,5] ])
 
 
 # Test Data
-V, y, blob_centers = make_blobs(
-    n_samples=num_samples, n_features=2,centers=k,
+V, blob_labels, blob_centers = make_blobs(
+    n_samples=num_samples, n_features=2,centers=centers,
     cluster_std=0.5,center_box=(-8, 7),
-    shuffle=True, random_state=7, return_centers=True
+    shuffle=True, random_state=0, return_centers=True
 )
 
 # Transpose matrix
@@ -82,17 +82,21 @@ myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 #pprint.pprint(myqubo.get_solution_dict())
 
 
-#W, H = myqubo.get_w_h()
+W, H = myqubo.get_w_h()
 
-#print(W)
-#print(H)
 
 myqubo.get_results()
 qcenters = myqubo.get_quantum_centers()
 
+print("Num Samples: ", num_samples)
+print("Initial Centers: ", blob_centers)
+print("blob labels", blob_labels)
+print("W: ", W, "\n")
+print("H: ", H)
 
-print("\nInitial Centers: ", blob_centers)
-
+print("\n Norm: ", LA.norm(v - np.matmul(W, H)))
+print("Inertia: ", LA.norm(v - np.matmul(W, H))**2)
+print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
 
 print("\nComputed Centers")
 #print(qcenters)

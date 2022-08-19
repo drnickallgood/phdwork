@@ -15,7 +15,8 @@ from datetime import datetime
 import tabu
 from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
 import sys
-from .penalizer import Penalizer 
+from .penalizer import Penalizer
+from sklearn import metrics
 
 class Qubo:
     def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2):
@@ -375,7 +376,7 @@ class Qubo:
                             
         return bad_cols
         
-    def cluster_analysis(self, v, w, h):
+    def cluster_analysis(self):
         '''
         This will do our full cluster analysis
         We need Inertia, Silohouette Scores, Homogeneity, Completeness, V-measure
@@ -388,22 +389,24 @@ class Qubo:
         :param H:  - Calculated H matrix
         :return:
         '''
+        # We need to do some label computations here
 
-        self.inertia = LA.norm(v - np.matmul(w, h)) ** 2
+        ## Need original blob labels for comparison
 
-        '''
-        Calculation of Silhouette Value –
-        If the Silhouette index value is high, the object is well-matched to its own cluster and poorly matched to neighbouring clusters. 
-        The Silhouette Coefficient is calculated using the mean intra-cluster distance (a) and the mean nearest-cluster distance (b) for each sample. 
-        The Silhouette Coefficient is defined as –
 
-        S(i) = ( b(i) – a(i) ) / ( max { ( a(i), b(i) ) }
-        
-        Where,
-        
-        a(i) is the average dissimilarity of ith object to all other objects in the same cluster
-        b(i) is the average dissimilarity of ith object with all objects in the closest cluster.
-        '''
+        # Inertia
+        self.inertia = LA.norm(self.v - np.matmul(self.W, self.H)) ** 2
+
+        # Silhouette
+
+
+        # Homogeneity
+
+
+        # Completeness
+
+
+        # V-Measure
 
 
         return True
@@ -429,9 +432,9 @@ class Qubo:
         #print("WH Shape: ", np.matmul(W,H).shape, "\n")
         print("\nFirst energy: ", self.sampleset.first.energy)
 
-        print("Norm: ", LA.norm(self.v - np.matmul(self.W, self.H)))
-        print("Inertia: ", LA.norm(self.v - np.matmul(self.W, self.H))**2)
-        print("Verifying best energy via Frobenius Norm: ", LA.norm(self.v, 'fro')**2, "\n")
+        #print("Norm: ", LA.norm(self.v - np.matmul(self.W, self.H)))
+        #print("Inertia: ", LA.norm(self.v - np.matmul(self.W, self.H))**2)
+        #print("Verifying best energy via Frobenius Norm: ", LA.norm(self.v, 'fro')**2, "\n")
 
         #print("Number of samples: ", v.shape[1])
         #print("Running time: ", datetime.now()-start_time, "\n")
@@ -454,8 +457,8 @@ class Qubo:
         
         # Using this method because we ensure qubo_verify only gets called once.
         W, H = self.get_w_h()
-        print("W: ", W)
-        print("H: ", H)
+       # print("W: ", W)
+       # print("H: ", H)
 
         w_transpose = np.transpose(W)
         

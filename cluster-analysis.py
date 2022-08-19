@@ -48,16 +48,34 @@ h = np.array([[0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0],
 
 computed_centers = np.transpose(w)
 
+computed_labels = []
+
+transposed_h = np.transpose(h)
+#print(transposed_h)
+#for i in range(0,computed_labels.size):
+for j in range(0, transposed_h.shape[0]):       # row
+    for k in range(0, transposed_h.shape[1]):   # col
+        #print(transposed_h[j][k])
+        # k is right val for label
+        if transposed_h[j][k] == 1:
+            #print("Label for: ", transposed_h[j][k] , "is: ", str(k))
+            computed_labels.append(k)
+
+
+#print(type(computed_labels))
+#print(computed_labels)
+computed_labels = np.array(computed_labels)
+#print(type(computed_labels))
+#print(computed_labels)
+#print(computed_labels.shape)
+#print(computed_labels.size)
+
+#print(np.transpose(v))
+
 ## Inertia ##
 # Sum of squared errors, uses L2 Norm
-
-#print( np.matmul(w,h))
-#inertia = LA.norm(v - np.matmul(w, h)) ** 2
-
-#print("Inertia: ", inertia)
-
-#print("\n\n ", np.matmul(w,h))
-
+inertia = LA.norm(v - np.matmul(w, h)) ** 2
+print("Inertia: ", inertia)
 
 ## Silohouette ##
 
@@ -77,45 +95,27 @@ computed_centers = np.transpose(w)
 # Need to convert H to labels 1D array, 3 clustsers = 0, 1, 2
 # Transpose H, iterate through rows of H, where there is a 1, that position is a label
 
-computed_labels = []
-
-transposed_h = np.transpose(h)
-print(transposed_h)
-#for i in range(0,computed_labels.size):
-for j in range(0, transposed_h.shape[0]):       # row
-    for k in range(0, transposed_h.shape[1]):   # col
-        #print(transposed_h[j][k])
-        # k is right val for label
-        if transposed_h[j][k] == 1:
-            #print("Label for: ", transposed_h[j][k] , "is: ", str(k))
-            computed_labels.append(k)
-
-
-print(type(computed_labels))
-print(computed_labels)
-computed_labels = np.array(computed_labels)
-print(type(computed_labels))
-print(computed_labels)
-print(computed_labels.shape)
-print(computed_labels.size)
-
-print(np.transpose(v))
 
 s_score = metrics.silhouette_score(np.transpose(v), computed_labels, metric='euclidean')
-print(s_score)
+print("Silhouette score: ", s_score)
 
 
 # Homogeneity
 
+homogeneity_score = metrics.homogeneity_score(blob_labels, computed_labels)  
 
+print("Homogeneity Score: ", homogeneity_score)
 
 # Completeness
 
+completeness_score =  metrics.completeness_score(blob_labels, computed_labels) 
+print("Completeness Score: ", completeness_score)
 
 
 # V-measure
 
-
+vmeasure = metrics.v_measure_score(blob_labels, computed_labels)    
+print("V-measure: ", vmeasure)
 
 
 
