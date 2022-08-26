@@ -15,6 +15,7 @@ from sklearn.cluster import KMeans
 from datetime import datetime
 import tabu
 from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
+from sklearn import metrics
 
 start_time = datetime.now()
 # In a 2x2 situation, we basicallay have to send one quadratic expression at a time
@@ -25,7 +26,7 @@ Q_total = {}
 
 
 
-num_samples = 20
+num_samples = 100
 k = 3
 centers = np.array([ [1,6], [2,4], [3,5] ])
 
@@ -33,7 +34,7 @@ centers = np.array([ [1,6], [2,4], [3,5] ])
 # Test Data
 V, blob_labels, blob_centers = make_blobs(
     n_samples=num_samples, n_features=2,centers=centers,
-    cluster_std=0.5,center_box=(-8, 7),
+    cluster_std=1,center_box=(-8, 7),
     shuffle=True, random_state=0, return_centers=True
 )
 
@@ -53,8 +54,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 10
-delta2 = 10
+delta1 = 150
+delta2 = 190
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -65,11 +66,12 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 num_sweeps = 999
 num_reads = 999
 #tabu_timeout =   60000  # 1 min
-tabu_timeout = 300000  #ms  #5min
-#tabu_timeout = 600000  #ms  #10min
+#tabu_timeout = 300000  #ms  #5min
+tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
 #tabu_timeout = 1200000  #ms  #20min
 #tabu_timeout = 1800000  #ms  #30min
+
 #tabu_timeout = 3600000  #ms #1hr
 #tabu_timeout = 7200000  #ms  #2hr
 #tabu_timeout = 28800000       #8hr
@@ -84,19 +86,53 @@ myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 
 W, H = myqubo.get_w_h()
 
-
 myqubo.get_results()
 qcenters = myqubo.get_quantum_centers()
 
+computed_labels = []
+
+transposed_h = np.transpose(H)
+
+for j in range(0, transposed_h.shape[0]):       # row
+    for k in range(0, transposed_h.shape[1]):   # col
+        #print(transposed_h[j][k])
+        # k is right val for label
+        if transposed_h[j][k] == 1:
+            computed_labels.append(k)
+
+computed_labels = np.array(computed_labels)
+
+print("Blob label size", blob_labels.size)
+print("Computed Label size", computed_labels.size)
+
+
+# Set V back to the way it was format wise with transpose
+s_score = metrics.silhouette_score(np.transpose(v), computed_labels, metric='euclidean')
+#print("Silhouette score: ", s_score)
+# Homogeneity
+homogeneity_score = metrics.homogeneity_score(blob_labels, computed_labels)
+
+# Completeness
+completeness_score =  metrics.completeness_score(blob_labels, computed_labels)
+
+# V-measure
+vmeasure = metrics.v_measure_score(blob_labels, computed_labels)
+
+
 print("Num Samples: ", num_samples)
 print("Initial Centers: ", blob_centers)
-print("blob labels", blob_labels)
-print("W: ", W, "\n")
-print("H: ", H)
+#print("V: ", V)
+#print("blob labels", blob_labels)
+#print("W: ", W, "\n")
+#print("H: ", H)
 
 print("\n Norm: ", LA.norm(v - np.matmul(W, H)))
 print("Inertia: ", LA.norm(v - np.matmul(W, H))**2)
-print("Verifying best energy via Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
+print("Silhouette Score: ", s_score)
+print("Homogeneity Score: ", homogeneity_score)
+print("Completeness Score: ", completeness_score)
+print("V-measure: ", vmeasure)
+print("Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
 
 print("\nComputed Centers")
 #print(qcenters)
