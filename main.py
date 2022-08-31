@@ -26,7 +26,7 @@ Q_total = {}
 
 
 
-num_samples = 100
+num_samples = 40
 k = 3
 centers = np.array([ [1,6], [2,4], [3,5] ])
 
@@ -55,7 +55,7 @@ prec_list = [2, 1, 0]   #-8 to +7
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
 delta1 = 150
-delta2 = 190
+delta2 = 250
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -63,8 +63,8 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 999
-num_reads = 999
+num_sweeps = 35000
+num_reads = 15000
 #tabu_timeout =   60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 tabu_timeout = 600000  #ms  #10min
@@ -77,8 +77,8 @@ tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 28800000       #8hr
 #tabu_timeout = 57600000       #16hr
 
-solver = "tabu"
-#solver = "sim"
+#solver = "tabu"
+solver = "sim"
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 
 #pprint.pprint(myqubo.get_solution_dict())
