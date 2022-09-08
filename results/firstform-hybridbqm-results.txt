@@ -1,0 +1,148 @@
+== 20 samples == 
+
+delta1:  20
+delta2:  35
+Num Clusters:  3
+
+
+First energy:  -1287.7173156738281
+Creating verification W and H...
+
+Total Violated Columns:  0
+
+Blob label size 20
+Computed Label size 20
+Num Samples:  20
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+
+ Norm:  33.769291964265726
+Inertia:  1140.3650797678217
+Silhouette Score:  -0.10663986498205828
+Homogeneity Score:  0.07344787340955021
+Completeness Score:  0.07344787340955021
+V-measure:  0.07344787340955021
+Frobenius Norm:  715.799658372631
+
+
+Computed Centers
+[2.0, 10.0]
+[6.0, 10.0]
+[6.0, 14.0]
+
+
+== 30 samples ==
+
+delta1:  100
+delta2:  175
+Num Clusters:  3
+
+
+First energy:  -5769.3919677734375
+Creating verification W and H...
+
+Total Violated Columns:  0
+
+Blob label size 30
+Computed Label size 30
+Num Samples:  30
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+
+ Norm:  61.25537322412528
+Inertia:  3752.220748826884
+Silhouette Score:  -0.11310827106668304
+Homogeneity Score:  0.010001860354301657
+Completeness Score:  0.011177004803343214
+V-measure:  0.010556830159716549
+Frobenius Norm:  983.0049835891405
+
+
+Computed Centers
+[10.0, 14.0]
+[10.0, 12.0]
+[-2.0, 14.0]
+
+Running time:  0:00:08.633620
+
+
+
+== 35 samples ==
+
+delta1:  125
+delta2:  275
+Num Clusters:  3
+
+
+First energy:  -9865.047729492188
+Creating verification W and H...
+
+Total Violated Columns:  0
+
+Blob label size 35
+Computed Label size 35
+Num Samples:  35
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+
+ Norm:  62.77369553758607
+Inertia:  3940.5368514455536
+Silhouette Score:  -0.11281128063228987
+Homogeneity Score:  0.054661447465558316
+Completeness Score:  0.05530790619959637
+V-measure:  0.05498277671731393
+Frobenius Norm:  1106.6323959107897
+
+
+Computed Centers
+[10.0, 14.0]
+[-2.0, 14.0]
+[-4.0, -2.0]
+
+Running time:  0:00:08.833111
+
+
+
+== 40 samples == 
+
+
+delta1:  450
+delta2:  625
+Num Clusters:  3
+
+
+First energy:  -24635.098876953125
+Creating verification W and H...
+
+Total Violated Columns:  0
+
+Blob label size 40
+Computed Label size 40
+Num Samples:  40
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+
+ Norm:  49.93880634763093
+Inertia:  2493.8843794261834
+Silhouette Score:  -0.06031614650340296
+Homogeneity Score:  0.004726163593386374
+Completeness Score:  0.004824963265269935
+V-measure:  0.004775052422862176
+Frobenius Norm:  1254.081632722048
+
+
+Computed Centers
+[4.0, -2.0]
+[6.0, -2.0]
+[-2.0, -2.0]
+
+Running time:  0:00:08.347873
+
+
+
+
+== 45 samples == 
