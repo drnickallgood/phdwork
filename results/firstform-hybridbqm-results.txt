@@ -146,3 +146,36 @@ Running time:  0:00:08.347873
 
 
 == 45 samples == 
+
+delta1:  10000
+delta2:  25500
+Num Clusters:  3
+
+
+First energy:  -1146956.10546875
+Creating verification W and H...
+
+Total Violated Columns:  0
+
+Blob label size 45
+Computed Label size 45
+Num Samples:  45
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+
+ Norm:  68.40385871685946
+Inertia:  4679.08788735607
+Silhouette Score:  -0.08535794850883176
+Homogeneity Score:  0.021754724075488778
+Completeness Score:  0.022023827858418943
+V-measure:  0.021888448885623066
+Frobenius Norm:  1443.3156103876836
+
+
+Computed Centers
+[-2.0, -2.0]
+[-2.0, 14.0]
+[-2.0, -6.0]
+
+Running time:  0:00:10.289392
