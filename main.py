@@ -54,8 +54,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 3500
-delta2 = 8500
+delta1 = 10000
+delta2 = 25500
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -63,8 +63,8 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 55000
-num_reads = 45000
+num_sweeps = 75000
+num_reads = 65000
 #tabu_timeout =   60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 tabu_timeout = 600000  #ms  #10min
