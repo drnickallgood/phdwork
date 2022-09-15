@@ -1,0 +1,138 @@
+=== Kmeans Results ===
+
+-- Base , random centers -- 
+
+
+** 20 samples ** 
+
+Num Samples:  20
+Num Clusters:  3
+Centroids:  [[ 2.71858256  0.47816537]
+ [-2.02199278  2.68123716]
+ [ 1.31752976  4.41954794]]
+Iterations:  2
+
+** 30 samples **
+
+Num Samples:  30
+Num Clusters:  3
+Centroids:  [[ 1.92884872  3.7468892 ]
+ [-2.09299022  2.88979044]
+ [ 1.62947839  0.35568311]]
+Iterations:  4
+
+
+
+
+
+** 35 samples **
+
+Num Samples:  35
+Num Clusters:  3
+Centroids:  [[-1.71195795  2.80488595]
+ [ 1.50354419  0.65827459]
+ [ 1.6503048   4.1987795 ]]
+Iterations:  5
+
+
+
+
+
+** 40 samples **
+
+Num Samples:  40
+Num Clusters:  3
+Centroids:  [[ 1.5609254   0.84244839]
+ [ 1.49258738  4.27721966]
+ [-1.66198322  2.66952431]]
+Iterations:  3
+
+
+
+
+** 45 samples **
+
+Num Samples:  45
+Num Clusters:  3
+Centroids:  [[-1.43499434  3.07796146]
+ [ 1.5629551   0.6614816 ]
+ [ 1.51254171  4.3923409 ]]
+Iterations:  2
+
+
+
+** 50 samples **
+
+Num Samples:  50
+Num Clusters:  3
+Centroids:  [[-1.76463842  3.52306053]
+ [ 1.38470379  0.74766619]
+ [ 1.43059325  4.34405079]]
+Iterations:  4
+
+
+
+--- TABU Centers ---
+
+
+** 20 samples **
+(2, 12), (6, 8), (8, 12)
+tabu_centers_20 = np.array([ [2,12], [6,8], [8,12] ])
+
+Num Samples:  20
+Num Clusters:  3
+Centroids:  [[-3.2331742   4.86865766]
+ [ 2.08833437  2.62347028]
+ [-1.53256597  2.55650457]]
+Iterations:  4
+
+
+** 30 samples **
+
+tabu_centers_30 = np.array([])
+
+
+** 35 samples **
+
+tabu_centers_35 = np.array([])
+
+
+
+** 40 samples **
+
+tabu_centers_40 = np.array([])
+
+
+** 45 samples **
+
+tabu_centers_45 = np.array([])
+
+
+** 50 samples **
+
+(0, 8), (4, 8), (4, 12)
+
+tabu_centers_50 = np.array([ [0,8], [4,8], [4,12] ])
+
+Num Samples:  50
+Num Clusters:  3
+Centroids:  [[ 1.43059325  4.34405079]
+ [ 1.46095199  0.65500003]
+ [-1.64881825  3.44805617]]
+Iterations:  11
+
+
+
+** 100 samples **
+
+(12, 8), (4, 12), (-10, -2)
+tabu_centers_100 = np.array([ [12,8], [4,12], [-10,2] ])
+
+Num Samples:  100
+Num Clusters:  3
+Centroids:  [[ 0.75743639  4.14817394]
+ [ 2.2388868   1.35992734]
+ [-1.82049132  2.84315898]]
+Iterations:  12
+
+
