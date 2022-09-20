@@ -89,7 +89,14 @@ Iterations:  4
 
 ** 30 samples **
 
-tabu_centers_30 = np.array([])
+tabu_centers_30 = np.array([ [4,12], [6,10], [4,8] ])
+(4, 12), (6, 10), (4, 8)
+
+
+
+
+
+
 
 
 ** 35 samples **
