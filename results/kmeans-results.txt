@@ -12,6 +12,13 @@ Centroids:  [[ 2.71858256  0.47816537]
  [ 1.31752976  4.41954794]]
 Iterations:  2
 
+Inertia:  33.944715137557345
+Silhouette Score:  0.5478002135488816
+Homogeneity Score:  0.7391798662883622
+Completeness Score:  0.7440452930743494
+V-measure:  0.7416045996462074
+
+
 ** 30 samples **
 
 Num Samples:  30
@@ -21,8 +28,11 @@ Centroids:  [[ 1.92884872  3.7468892 ]
  [ 1.62947839  0.35568311]]
 Iterations:  4
 
-
-
+Inertia:  43.30601493463453
+Silhouette Score:  0.5631903631144015
+Homogeneity Score:  0.6935825644031117
+Completeness Score:  0.7095029552051385
+V-measure:  0.7014524378530583
 
 
 ** 35 samples **
@@ -34,6 +44,11 @@ Centroids:  [[-1.71195795  2.80488595]
  [ 1.6503048   4.1987795 ]]
 Iterations:  5
 
+Inertia:  49.054055587605546
+Silhouette Score:  0.5404844117962923
+Homogeneity Score:  0.8208328392144446
+Completeness Score:  0.8208328392144446
+V-measure:  0.8208328392144446
 
 
 
@@ -47,6 +62,12 @@ Centroids:  [[ 1.5609254   0.84244839]
  [-1.66198322  2.66952431]]
 Iterations:  3
 
+Inertia:  56.83238135828276
+Silhouette Score:  0.5239007795724231
+Homogeneity Score:  0.7069753768264706
+Completeness Score:  0.7082170085925991
+V-measure:  0.7075956480311368
+
 
 
 
@@ -59,6 +80,12 @@ Centroids:  [[-1.43499434  3.07796146]
  [ 1.51254171  4.3923409 ]]
 Iterations:  2
 
+Inertia:  63.746069715937175
+Silhouette Score:  0.5249543042523043
+Homogeneity Score:  0.7282634348116802
+Completeness Score:  0.7311617981671671
+V-measure:  0.7297097384693817
+
 
 
 ** 50 samples **
@@ -70,14 +97,31 @@ Centroids:  [[-1.76463842  3.52306053]
  [ 1.43059325  4.34405079]]
 Iterations:  4
 
+Inertia:  70.59663750498788
+Silhouette Score:  0.5362899464603533
+Homogeneity Score:  0.6561112314765791
+Completeness Score:  0.6575650021849793
+V-measure:  0.6568373124281347
+
+
+** 100 samples **
+
+Num Samples:  100
+Num Clusters:  3
+Centroids:  [[-1.5510878   2.88827923]
+ [ 2.2427373   1.30652003]
+ [ 0.9801637   4.30837857]]
+Iterations:  5
+Inertia:  167.75875127963718
+Silhouette Score:  0.448216009834362
+Homogeneity Score:  0.692447152706235
+Completeness Score:  0.6933814722138959
+V-measure:  0.6929139975030331
+
 
 
 --- TABU Centers ---
 
-
-** 20 samples **
-(2, 12), (6, 8), (8, 12)
-tabu_centers_20 = np.array([ [2,12], [6,8], [8,12] ])
 
 Num Samples:  20
 Num Clusters:  3
@@ -85,61 +129,108 @@ Centroids:  [[-3.2331742   4.86865766]
  [ 2.08833437  2.62347028]
  [-1.53256597  2.55650457]]
 Iterations:  4
+Inertia:  83.83928431959028
+Silhouette Score:  0.3121049059967256
+Homogeneity Score:  0.467378474915996
+Completeness Score:  0.6476440819093291
+V-measure:  0.5429395153277989
+
+
 
 
 ** 30 samples **
 
-tabu_centers_30 = np.array([ [4,12], [6,10], [4,8] ])
-(4, 12), (6, 10), (4, 8)
-
-
-
-
-
+Num Samples:  30
+Num Clusters:  3
+Centroids:  [[ 1.62947839  0.35568311]
+ [-2.09299022  2.88979044]
+ [ 1.92884872  3.7468892 ]]
+Iterations:  4
+Inertia:  43.306014934634526
+Silhouette Score:  0.5631903631144015
+Homogeneity Score:  0.6935825644031118
+Completeness Score:  0.7095029552051386
+V-measure:  0.7014524378530583
 
 
 
 ** 35 samples **
 
-tabu_centers_35 = np.array([])
+Num Clusters:  3
+Centroids:  [[ 1.32534279  0.5140977 ]
+ [ 1.77609352  4.03733827]
+ [-1.71195795  2.80488595]]
+Iterations:  5
+Inertia:  49.808584378697006
+Silhouette Score:  0.5376947499005247
+Homogeneity Score:  0.7651580825611116
+Completeness Score:  0.7686482716533858
+V-measure:  0.7668992061301216
 
 
 
 ** 40 samples **
 
-tabu_centers_40 = np.array([])
+Num Samples:  40
+Num Clusters:  3
+Centroids:  [[ 1.5609254   0.84244839]
+ [-1.66198322  2.66952431]
+ [ 1.49258738  4.27721966]]
+Iterations:  5
+Inertia:  56.83238135828273
+Silhouette Score:  0.5239007795724231
+Homogeneity Score:  0.7069753768264707
+Completeness Score:  0.7082170085925992
+V-measure:  0.707595648031137
+
 
 
 ** 45 samples **
 
-tabu_centers_45 = np.array([])
+m Samples:  45
+Num Clusters:  3
+Centroids:  [[ 1.26443273 -0.54464725]
+ [ 1.7778415   1.14534215]
+ [-0.21551149  3.69895652]]
+Iterations:  4
+Inertia:  131.04122119795082
+Silhouette Score:  0.30300981242746633
+Homogeneity Score:  0.43544136132707156
+Completeness Score:  0.5955089158756065
+V-measure:  0.5030489224269429
+
 
 
 ** 50 samples **
 
-(0, 8), (4, 8), (4, 12)
-
-tabu_centers_50 = np.array([ [0,8], [4,8], [4,12] ])
-
 Num Samples:  50
 Num Clusters:  3
-Centroids:  [[ 1.43059325  4.34405079]
- [ 1.46095199  0.65500003]
- [-1.64881825  3.44805617]]
-Iterations:  11
+Centroids:  [[-1.64881825  3.44805617]
+ [ 1.43059325  4.34405079]
+ [ 1.46095199  0.65500003]]
+Iterations:  7
+Inertia:  70.75958280911023
+Silhouette Score:  0.532502722256916
+Homogeneity Score:  0.683568516440739
+Completeness Score:  0.683568516440739
+V-measure:  0.683568516440739
+
 
 
 
 ** 100 samples **
 
-(12, 8), (4, 12), (-10, -2)
-tabu_centers_100 = np.array([ [12,8], [4,12], [-10,2] ])
-
 Num Samples:  100
 Num Clusters:  3
-Centroids:  [[ 0.75743639  4.14817394]
- [ 2.2388868   1.35992734]
- [-1.82049132  2.84315898]]
-Iterations:  12
+Centroids:  [[ 2.2427373   1.30652003]
+ [ 0.9801637   4.30837857]
+ [-1.5510878   2.88827923]]
+Iterations:  9
+Inertia:  167.7587512796372
+Silhouette Score:  0.448216009834362
+Homogeneity Score:  0.6924471527062351
+Completeness Score:  0.6933814722138961
+V-measure:  0.6929139975030332
+
 
 
