@@ -54,8 +54,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 10000
-delta2 = 25500
+delta1 = 75
+delta2 = 100
 
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
@@ -67,10 +67,10 @@ num_sweeps = 75000
 num_reads = 65000
 #tabu_timeout =   60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
-tabu_timeout = 600000  #ms  #10min
+#tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
 #tabu_timeout = 1200000  #ms  #20min
-#tabu_timeout = 1800000  #ms  #30min
+tabu_timeout = 1800000  #ms  #30min
 
 #tabu_timeout = 3600000  #ms #1hr
 #tabu_timeout = 7200000  #ms  #2hr
@@ -78,7 +78,7 @@ tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 57600000       #16hr
 
 #solver = "tabu"
-solver = "hybrid"
+solver = "tabu"
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 
 #pprint.pprint(myqubo.get_solution_dict())
