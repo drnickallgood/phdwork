@@ -1,0 +1,28 @@
+-- 40 samples --
+
+delta1:  50
+delta2:  75
+
+
+-- 45 samples --
+
+delta1:  75
+delta2:  100
+
+
+
+
+
+-- 50 samples ---
+
+delta1:  50
+delta2:  65
+
+
+
+
+-- 100 samples --
+
+
+delta1:  150
+delta2:  150

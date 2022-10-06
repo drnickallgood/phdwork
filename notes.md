@@ -2,31 +2,23 @@ Research Notes
 
 ** Current Status **
 
-* Updated dissertation doc, had wrong info in Tabu Kmeans chart
-* Working on mathematica notebook for graphs, going to graph kmeans comparisons
-    * Inertia, Sil, Homog, Compl, V-measure, Iterations of kmeans
-    * Comparing Random, Tabu, SimA, Hybrid processes
-* Need to start work on SimA kmeans exp and HybridBQM Exp
+* Uploaded Graphs / k-means comparisons to dissertation doc
 
 
 ** TO DO **
 
 * Expand Tabu Charts for 20, 30, 35, 40, 45, 50, 100 samples , get graphs
-* Graphs (Default, Tabu , Sim , Hybrid )
-    * Inertia
-    * Silhouette
-    * HomoG
-    * Compl
-    * V-measure
-    * Iterations
 
 * Tabu Kmeans comparison (DONE) - Do writeup comparing to classical 
-* Tabu kmeans graphs - inertia, silhouette, homog, compl, v-measure
-* Simulated Annealing kmeans Comparison
-* Hybrid BQM Kmeans Comparison
-* kmedoids comparison analysis and iterations
-* Diff number of clusters , 1, 2, 4, 5
-* Diff seed values
+
+* Diff Seed value + 5 cluters + 45 samples
+    * Tabu 30 min
+    * Sim Annealing
+    * Hybrid BQM  (longer time_limit) 
+        * See if we can return time_limit from existing exp
+        * sample_qubo(Q, time_limit=6)   # 6 seconds
+        * sampler.properties
+        * sampler.parameters
 
 
 * Adaptive solution which allows the use of floating point in the results
