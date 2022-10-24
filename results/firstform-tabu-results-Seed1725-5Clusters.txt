@@ -269,11 +269,6 @@ Computed Centers
 -- 100 samples --
 
 
-delta1:  175
-delta2:  275
-Num Clusters:  5
-
-
 First energy:  -29846.110148199412
 Creating verification W and H...
 
