@@ -6,8 +6,12 @@ from sklearn.cluster import KMeans
 import numpy.linalg as LA
 
 
-num_samples = 45 
-num_clusters = 3
+num_samples = 50 
+num_clusters = 5 
+rand_seed = 1725
+
+centers_1725_5 = np.array([ [1, 6], [2, 4], [3, 5], [-1, -4], [8, -3] ])
+
 tabu_centers_20 = np.array([ [2,12], [6,8], [8,12] ])
 tabu_centers_30 = np.array([ [4,12], [6,10], [4,8] ])
 tabu_centers_35 = np.array([ [4,12], [4,8], [2,12] ])
@@ -30,21 +34,43 @@ hybrid_centers_40 = np.array([ [4, -2], [6, -2], [-2, -2] ])
 hybrid_centers_45 = np.array([ [-2, -2], [-2, 14], [-2, -6] ])
 
 
+tabu20_5_1725 = np.array([ [4, 10], [0, -8], [14, -6], [8, 12], [-2, 12] ])
+tabu30_5_1725 = np.array([ [0, -8], [0, 10], [0, 12], [14, -6], [4, 8] ])
+tabu35_5_1725 = np.array([ [14,-8], [0, 12], [8, 8], [0, -8], [4, 8] ])
+tabu40_5_1725 = np.array([ [14, 0], [2, 10], [12, -4], [0, 8], [0, -8] ])
+tabu45_5_1725 = np.array([ [0, -8], [0, -12], [12, -8], [0, 8], [-2, -10] ])
+tabu50_5_1725 = np.array([ [12, -6], [0, -8], [12, 6], [-2, -8], [0, 8] ])
+tabu100_5_1725 = np.array([ [8, 0], [0, -16], [14, -2], [4, 0], [0, 8] ])
 
 
+sim20_5_1725 = np.array([ [-4, -8], [2, 8], [14,-6], [0, 12], [8, 12] ])
+sim30_5_1725 = np.array([ [-2, 10], [6, -2], [10, -2], [-4, 8], [14, -2] ])
+sim35_5_1725 = np.array([ [0, 12], [-2, -2], [10, -2], [-4, -2], [12, 12] ])
+sim40_5_1725 = np.array([ [ ] ])
+sim45_5_1725 = np.array([ [14, -2], [10, -2], [12, -2], [-2, 14], [-2, -2] ])
+sim50_5_1725 = np.array([ [ ] ])
 
 
-### Default K-Means ###
+hybrid20_5_1725 = np.array([ [-6, 14], [-2, 2], [14, -8], [4, 10], [8, 10] ])
+hybrid30_5_1725 = np.array([ [-2, -2], [6, 2], [14, -2], [-2, 14], [-2, -4] ])
+hybrid35_5_1725 = np.array([ [14, -2], [8, -4], [-4, 14], [-2, -2], [-2, 6] ])
+hybrid40_5_1725 = np.array([ [-2, 6], [-2, 14], [-2, -6], [-2, -2], [14, -2] ])
+hybrid45_5_1725 = np.array([ [-2, 14], [-2, -2], [-10, -2], [14, -2], [-2, 6] ])
+hybrid50_5_1725 = np.array([ [-2, -2], [14, -2], [-2, 14], [0, -2], [2, -2] ])
+ 
+
+
+## Default K-Means ###
 
 X, y = make_blobs(
-    n_samples=num_samples, n_features=2,
-    cluster_std=1,shuffle=True, random_state=0
+    n_samples=num_samples, n_features=2, centers=centers_1725_5,
+    cluster_std=1,shuffle=True, random_state=rand_seed
     )
 
 default_km = KMeans(
     n_clusters=num_clusters, 
     n_init=10, max_iter=10000,
-    tol=1e-04, init=hybrid_centers_45 
+    tol=1e-04, init=hybrid50_5_1725 
 )
 
 default_y_km = default_km.fit_predict(X)
