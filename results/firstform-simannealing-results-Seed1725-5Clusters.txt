@@ -126,10 +126,48 @@ Running time:  1:05:46.039442
 
 -- 40 samples --
 
-num_sweeps = 20000
-num_reads = 15000
 
--- Could not get reliably --
+delta1:  77
+delta2:  357
+Num Clusters:  5
+
+
+First energy:  -14710.233625396504
+Creating verification W and H...
+
+Total Violated Columns:  0
+
+Blob label size 40
+Computed Label size 40
+Num Samples:  40
+Initial Centers:  [[ 1  6]
+ [ 2  4]
+ [ 3  5]
+ [-1 -4]
+ [ 8 -3]]
+Delta1:  77
+Delta2:  357
+Seed:  1725
+Clusters (k):  5
+
+ Norm:  57.574610587733105
+Inertia:  3314.8357843291087
+Silhouette Score:  -0.12264696307502321
+Homogeneity Score:  0.2670987488168117
+Completeness Score:  0.27280906857908527
+V-measure:  0.2699237111802086
+Frobenius Norm:  1579.3030351207894
+
+
+Computed Centers
+[14.0, -2.0]
+[-2.0, -2.0]
+[6.0, 12.0]
+[-2.0, 10.0]
+[-2.0, 14.0]
+
+Running time:  3:27:32.366612
+
 
 
 
@@ -184,4 +222,26 @@ Running time:  15:23:39.576944
 -- 50 samples --
 
 
--- could not get reliably --
+Delta1:  29
+Delta2:  167.13121
+Seed:  1725
+Clusters (k):  5
+
+ Norm:  66.6512822102455
+Inertia:  4442.393420269788
+Silhouette Score:  -0.2525929319621735
+Homogeneity Score:  0.23523116362070134
+Completeness Score:  0.25223398936249314
+V-measure:  0.2434360464920306
+Frobenius Norm:  2050.762962004128
+
+
+Computed Centers
+[14.0, -2.0]
+[-2.0, 14.0]
+[-2.0, -2.0]
+[-4.0, 14.0]
+[12.0, 6.0]
+
+Running time:  0:35:31.287780
+
