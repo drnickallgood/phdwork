@@ -152,7 +152,7 @@ def get_bin_str(config,isising=True):
 num_samples = 20
 k = 3
 seed=0
-
+n = num_samples
 upper_limit = 100
 lower_limit  = -100
 bits_no = 3
@@ -193,7 +193,7 @@ for key, val in v_dict.items():
     for item in v_dict[key]['wh']:
         varnames.append(x_dict_rev[item])
 
-    A = np.zeros([1,n-1])
+    A = np.zeros([1,n])
     A += 1
     b = float(v_dict[key]['v_val'])
     Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
