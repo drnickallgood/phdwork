@@ -1,23 +1,15 @@
 Research Notes
 
 ** Current Status **
-  * Changing / modifying delta 2 even down to longer decimal places can actually help this formultaion
+  * Changing / modifying delta 2 even down to longer decimal places can actually help this formultaion.
+
 
 
 ** TO DO **
 
-
-* 
-* Include STDEV and seed for gaussian blobs in dissertation **
-* add 5 cluster, 1725 seed data to charts in dissertation
-* Add comparison graphs:
-* Inertia comparison for all 3 processes
-* Silhouette, Homog, Compl, V-measure for all 3 processes
-
-
-* Expand Tabu Charts for 20, 30, 35, 40, 45, 50, 100 samples , get graphs
-
-
+* Add NMF basics to Chapter 2 dissertation.
+* Write math out for NMF solution
+* Write math out for Adaptive Formulation using offsets 
 
 * Adaptive solution which allows the use of floating point in the results
     * Tabu
@@ -30,13 +22,14 @@ Research Notes
     * See how close we get, MOTIF has ground truth labels or close to it...
 
 
+* Expand Tabu Charts for 20, 30, 35, 40, 45, 50, 100 samples , get graphs
+
 
 ** Tentative Schedule **
 
 * Experiments done:  Dec 31, 2022
 * Dissertation Draft:  March 15, 2023
 * Dissertation Defense: April 15, 2023
-
 
 
 ** Prospective Papers **
