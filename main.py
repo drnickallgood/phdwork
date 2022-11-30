@@ -25,12 +25,12 @@ index = {}
 Q_total = {}
 
 
-num_samples = 50 
-k = 5 
+num_samples = 20
+k = 3
 
 
 centers = np.array([ [1,6], [2,4], [3,5], [-1,-4], [8, -3] ])
-seed = 1725
+seed = 0
 
 
 # Test Data
@@ -51,6 +51,15 @@ Q_total = {}
 
 
 prec_list = [2, 1, 0]   #-8 to +7
+
+for key, val in v_dict.items():
+    for item in v_dict[key]['wh']:
+        print(v_dict[key]['wh'])
+
+
+    exit(1)
+
+
 #prec_list_str = ['null']
 # Get string versions of prec_list_stirngs
 #prec_strings = [prec_list_str.append(str(x)) for x in prec_list]
