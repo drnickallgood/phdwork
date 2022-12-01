@@ -126,7 +126,7 @@ class Qubo:
             for j in range(i,n):
                 Qinit[i,j] = 2*sum(A[:,i]*A[:,j])    
         bnew = 2*b
-        
+     
         
         for i in range(0,n*len(powersoftwo)):
             if i%len(powersoftwo)==0 and i>0:
@@ -188,6 +188,7 @@ class Qubo:
         bnew = 2*b
        # print("b: ", b)
        # print("2*b:", bnew)
+
         
         for i in range(0,n*len(powersoftwo)):
             if i%len(powersoftwo)==0 and i>0:

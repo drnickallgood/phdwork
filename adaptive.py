@@ -45,6 +45,7 @@ def qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=None):
             i_powerctr=0
         n_j_ctr = n_i_ctr
         j_powerctr = i_powerctr
+
         for j in range(i,n*bits_no):
             if i==j: #Linear coefficients
                 Qdict[i,i] = (scale_list[n_i_ctr]**2)*(powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - scale_list[n_i_ctr]*powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
@@ -187,7 +188,7 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
     #convert qubo result to an np.array of floating point values
     x_cur = qubo_to_real_adaptive(binstr,n,scale_list,offset_list,bits_no)
     x_cur = np.array(x_cur)
-    
+
     print("Iteration: ",itr, " x_cur: ",x_cur, " cur norm: ",LA.norm(np.matmul(A,x_cur)- b))
     
     #Here we re-adjust the scale and offset for each variable

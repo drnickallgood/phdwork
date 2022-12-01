@@ -47,17 +47,15 @@ qubo_vars = qubo.parser.Parser(v,k)
 
 
 v_dict, x_dict, x_dict_rev, p, n = qubo_vars.get_vars()
+
+print(n)
+
+exit(1)
 Q_total = {}
 
 
 prec_list = [2, 1, 0]   #-8 to +7
 
-for key, val in v_dict.items():
-    for item in v_dict[key]['wh']:
-        print(v_dict[key]['wh'])
-
-
-    exit(1)
 
 
 #prec_list_str = ['null']
@@ -91,9 +89,9 @@ tabu_timeout = 1800000  #ms  #30min
 #tabu_timeout = 28800000       #8hr
 #tabu_timeout = 57600000       #16hr
 
-solver = "sim"
+#solver = "sim"
 #solver = "hybrid"
-#solver = "tabu"
+solver = "tabu"
 
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 

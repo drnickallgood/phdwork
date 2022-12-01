@@ -1,15 +1,11 @@
 Research Notes
 
 ** Current Status **
- * Issue with indexing with varnames, took a few days but figured out where the culprit seems to be:, seems to be n_j_ctr which is then referenced by varnames[n_j_ctr]
+ * IIssue resolved with indexing, needed to use 'k' instead of 'n' for everything outside of the adaptive-modified.py file.. 
 
- j_pwr_ctr 2
-varnames[n_j_ctr x3
-str_bitspower[j_powerctr] 0
-J:  9
-n_j_ctr 3
-j_pwr_ctr 0
-
+ ** Current issue now is with k = 3, this seems to give us 3 values, when we really have 2 values
+ per cluster, so for 3 clusters we would need 6 values
+ 
 
 
 ** TO DO **
@@ -19,14 +15,34 @@ j_pwr_ctr 0
 * Write math out for Adaptive Formulation using offsets 
 
 * Adaptive solution which allows the use of floating point in the results
-    * Tabu
+  3 cluster, seed=0
+
+    * Tabu (30 min only)
     * Sim Annealing
     * Hybrid BQM
+
+* K-Means test using Centroids, default kmeans as control 
+    seed = 0
+      Tabu
+      Sim
+      Hybrid BQM
 
 
 * Real life data (Malware MOTIF data set)
     * \# of samples out of specific malware famalies, cluster them
     * See how close we get, MOTIF has ground truth labels or close to it...
+      * Tabu
+      * Sim
+      * Hybrid
+
+  * Real life data (Malware MOTIF data set) - Kmeans 
+    * \# of samples out of specific malware famalies, cluster them
+    * See how close we get, MOTIF has ground truth labels or close to it...
+      * Tabu
+      * Sim
+      * Hybrid
+
+
 
 
 * Expand Tabu Charts for 20, 30, 35, 40, 45, 50, 100 samples , get graphs
