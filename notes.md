@@ -1,7 +1,14 @@
 Research Notes
 
 ** Current Status **
-  * Changing / modifying delta 2 even down to longer decimal places can actually help this formultaion.
+ * Issue with indexing with varnames, took a few days but figured out where the culprit seems to be:, seems to be n_j_ctr which is then referenced by varnames[n_j_ctr]
+
+ j_pwr_ctr 2
+varnames[n_j_ctr x3
+str_bitspower[j_powerctr] 0
+J:  9
+n_j_ctr 3
+j_pwr_ctr 0
 
 
 
