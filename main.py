@@ -31,7 +31,7 @@ index = {}
 Q_total = {}
 
 
-num_samples = 20
+num_samples = 20 
 k = 3
 
 centers = np.array([ [1,6], [2,4], [3,5], [-1,-4], [8, -3] ])
@@ -51,7 +51,8 @@ motif = np.zeros([num_samples, 2])
 for i in range(0,num_samples):
     rand_sample = random.randint(0,num_samples)
     #print(ember_norm_X[rand_sample])
-    motif[i] = ember_norm_X[rand_sample]
+    #motif[i] = ember_norm_X[rand_sample]
+    motif[i] = ember_norm_X[i]
 
 
 # Test Data
@@ -123,8 +124,8 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 15000 
-num_reads = 3500 
+num_sweeps = 9999 
+num_reads = 999 
 #tabu_timeout =   60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
@@ -137,9 +138,10 @@ tabu_timeout = 1800000  #ms  #30min
 #tabu_timeout = 28800000       #8hr
 #tabu_timeout = 57600000       #16hr
 
-#solver = "sim"
+#solver = "exact"
+#solver = "tabu"
+solver = "sim"
 #solver = "hybrid"
-solver = "tabu"
 
 myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 
@@ -185,9 +187,9 @@ print("Num Samples: ", num_samples)
 print("Initial Centers: ", blob_centers)
 #print("V: ", V)
 #print("blob labels", blob_labels)
-print("W: ", W, "\n")
-print("H: ", H, "\n")
-print("WH:", np.matmul(W, H), "\n")
+#print("W: ", W, "\n")
+#print("H: ", H, "\n")
+#print("WH:", np.matmul(W, H), "\n")
 
 
 print("Delta1: ", delta1)

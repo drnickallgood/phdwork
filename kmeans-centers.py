@@ -13,7 +13,7 @@ import ember
 import random
 
 
-num_samples = 20 
+num_samples = 50 
 num_clusters = 3 
 rand_seed = 0 
 random.seed(a=0)
@@ -92,9 +92,9 @@ for i in range(0,num_samples):
     rand_sample = random.randint(0,num_samples)
     #print(ember_norm_X[rand_sample])
 	# Get random sample for motif X
-    motif[i] = ember_norm_X[rand_sample]
+    motif[i] = ember_norm_X[i]
 	# get random sample for motif y
-    motif_y[i] = ember_y[rand_sample]
+    motif_y[i] = ember_y[i]
 
 
 ## Kmeans
