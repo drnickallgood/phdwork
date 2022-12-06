@@ -5,6 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 import pprint
 import ember
 import random
+import numpy as np
 
 if __name__ == "__main__":
 
@@ -18,7 +19,11 @@ if __name__ == "__main__":
     num_samples = 50 
     random.seed(a=0)
 
+    motif50 = np.zeros([num_samples, 2])
+
     for i in range(0,num_samples):
         rand_sample = random.randint(0,num_samples)
-        print(ember_norm_X[rand_sample])
+        #print(ember_norm_X[rand_sample])
+        motif50[i] = ember_norm_X[rand_sample]
 
+    np.save('./samples/motif50.npy', motif50)
