@@ -15,7 +15,7 @@ if __name__ == "__main__":
     ember_norm_X = ember_X.copy()
     ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
 
-    num_samples = 20
+    num_samples = 50 
     random.seed(a=0)
 
     for i in range(0,num_samples):
