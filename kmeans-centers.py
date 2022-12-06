@@ -4,11 +4,19 @@ from sklearn.datasets import make_blobs
 from sklearn import metrics
 from sklearn.cluster import KMeans
 import numpy.linalg as LA
+from sklearn import metrics
+from ember import read_vectorized_features
+from sklearn.decomposition import PCA
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler
+import ember
+import random
 
 
-num_samples = 50 
-num_clusters = 5 
-rand_seed = 1725
+num_samples = 20 
+num_clusters = 3 
+rand_seed = 0 
+random.seed(a=0)
 
 centers_1725_5 = np.array([ [1, 6], [2, 4], [3, 5], [-1, -4], [8, -3] ])
 
@@ -67,21 +75,48 @@ X, y = make_blobs(
     cluster_std=1,shuffle=True, random_state=rand_seed
     )
 
+## Motif Data Set ##
+
+# Get EMBER vectors for MOTIF dataset
+ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
+
+
+# Normalize EMBER vectors and apply PCA
+ember_norm_X = ember_X.copy()
+ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
+
+motif = np.zeros([num_samples, 2])
+motif_y = np.zeros([num_samples,])
+
+for i in range(0,num_samples):
+    rand_sample = random.randint(0,num_samples)
+    #print(ember_norm_X[rand_sample])
+	# Get random sample for motif X
+    motif[i] = ember_norm_X[rand_sample]
+	# get random sample for motif y
+    motif_y[i] = ember_y[rand_sample]
+
+
+## Kmeans
 default_km = KMeans(
     n_clusters=num_clusters, 
     n_init=10, max_iter=10000,
-    tol=1e-04, init=sim50_5_1725 
+    tol=1e-04, init='random', random_state=0 
 )
 
-default_y_km = default_km.fit_predict(X)
+#default_y_km = default_km.fit_predict(X)
+default_y_km = default_km.fit_predict(motif)
+
 
 default_centers = default_km.cluster_centers_
 default_iterations = default_km.n_iter_
 
-default_km_sscore = metrics.silhouette_score(X, default_y_km, metric='euclidean')
-default_km_homog = metrics.homogeneity_score(y, default_y_km)
-default_km_compl = metrics.completeness_score(y, default_y_km)
-default_km_vm = metrics.v_measure_score(y, default_y_km)
+## for motif we need a matching yin the correct dimension?
+
+default_km_sscore = metrics.silhouette_score(motif, default_y_km, metric='euclidean')
+default_km_homog = metrics.homogeneity_score(motif_y, default_y_km)
+default_km_compl = metrics.completeness_score(motif_y, default_y_km)
+default_km_vm = metrics.v_measure_score(motif_y, default_y_km)
 
 
 

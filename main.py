@@ -16,6 +16,12 @@ from datetime import datetime
 import tabu
 from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
 from sklearn import metrics
+from ember import read_vectorized_features
+from sklearn.decomposition import PCA
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler
+import ember
+
 
 start_time = datetime.now()
 # In a 2x2 situation, we basicallay have to send one quadratic expression at a time
@@ -28,9 +34,24 @@ Q_total = {}
 num_samples = 20
 k = 3
 
-
 centers = np.array([ [1,6], [2,4], [3,5], [-1,-4], [8, -3] ])
 seed = 0
+
+# Get EMBER vectors for MOTIF dataset
+ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
+
+# Normalize EMBER vectors and apply PCA
+ember_norm_X = ember_X.copy()
+ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
+
+random.seed(a=0)
+
+motif = np.zeros([num_samples, 2])
+
+for i in range(0,num_samples):
+    rand_sample = random.randint(0,num_samples)
+    #print(ember_norm_X[rand_sample])
+    motif[i] = ember_norm_X[rand_sample]
 
 
 # Test Data
@@ -40,8 +61,36 @@ V, blob_labels, blob_centers = make_blobs(
     shuffle=True, random_state=seed, return_centers=True
 )
 
+'''
+motif20 = np.load('./samples/motif20.npy')
+motif30 = np.load('./samples/motif30.npy')
+motif35 = np.load('./samples/motif35.npy')
+motif40 = np.load('./samples/motif40.npy')
+motif45 = np.load('./samples/motif45.npy')
+motif50 = np.load('./samples/motif50.npy')
+
+motif20_t = np.transpose(motif20)
+motif30_t = np.transpose(motif30)
+motif35_t = np.transpose(motif35)
+motif40_t = np.transpose(motif40)
+motif45_t = np.transpose(motif45)
+motif50_t = np.transpose(motif50)
+'''
+
+
 # Transpose matrix
-v = np.transpose(V)
+#v = np.transpose(V)
+
+# Motif
+v = np.transpose(motif)
+
+## This is for mnotif samplesets
+#v = motif20_t
+#v = motif30_t
+#v = motif35_t
+#v = motif40_t
+#v = motif45_t
+#v = motif50_t
 
 qubo_vars = qubo.parser.Parser(v,k)
 
@@ -64,8 +113,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 29 
-delta2 = 167.13121 
+delta1 = 10 
+delta2 = 20 
 
 # Builds the qubo with appropriate penalties
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
@@ -136,8 +185,9 @@ print("Num Samples: ", num_samples)
 print("Initial Centers: ", blob_centers)
 #print("V: ", V)
 #print("blob labels", blob_labels)
-#print("W: ", W, "\n")
-#print("H: ", H)
+print("W: ", W, "\n")
+print("H: ", H, "\n")
+print("WH:", np.matmul(W, H), "\n")
 
 
 print("Delta1: ", delta1)
