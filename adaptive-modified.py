@@ -208,7 +208,10 @@ def qubo_to_real_adaptive(binstr,n,scale_list,offset_list,bits_no):
 #Function to convert the solution dictionary from alphanumeric variables to integer 
 def convert_result(soln_dict,index):
     new_dict = {}
+    print("index", index)
     for key,value in soln_dict.items():
+        print("key", key)
+        print("value", value)
         new_dict[index[key]] = value
     return new_dict
 
@@ -418,138 +421,107 @@ Q_total = {}
 tolerance = 10**-2
 solution_dict = {}
 
-## First part, build q_Total 
-for key, val in v_dict.items():
-    #print(v_dict[key]['wh'])
-    # Go through individual list of tuples
-    varnames = []
-    for item in v_dict[key]['wh']:
-        # Get our corresponding x values to WH values
-        varnames.append(x_dict_rev[item])
+index_dict = {}
 
-    # Build a row vector of 1's for A
-    A = np.zeros([1,k])
-    A += 1
 
-    ## Will need to maybe look into this for b
-    b = float(v_dict[key]['v_val'])
+A = np.zeros([1,k])
+A += 1
 
-    # Now we have our varnames and A and B built, lets iterate 
-    #while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
-    while(w_itr < 5):
-        print("scale_list: ",scale_list," offset_list: ",offset_list)
-        print("A:\n", A)
-        print("b:\n", b)
-        print("x_cur:\n", x_cur)
+# Starting val for B we fix this later
+
+b = np.array([1])
+
+
+while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
+
+    # Build Q_total 
+    for key, val in v_dict.items():
+        #print(v_dict[key]['wh'])
+        # Go through individual list of tuples
+        varnames = []
+        for item in v_dict[key]['wh']:
+            # Get our corresponding x values to WH values
+            varnames.append(x_dict_rev[item])
+
+        # Build a row vector of 1's for A
+        A = np.zeros([1,k])
+        A += 1
+
+        ## Will need to maybe look into this for b
+        b = float(v_dict[key]['v_val'])
 
         Q, Q_alt,index = qubo_prep_adaptive(A,b,k,scale_list,offset_list,bits_no,varnames=varnames)
 
-        # Lets run it against the annealer
-        sampler = tabu.TabuSampler()
+        for ikey,ival in index.items():
+            index_dict[ikey] = ival 
 
-        sampleset = sampler.sample_qubo(Q_alt, timeout=10)
+        # We're out of the iteration so lets add it to Q_Total to be used for WH later
+        for key, val in Q_alt.items():
+            # Check if key is already here, if so add to it
+            if key in Q_total:
+                Q_total[key] += val
+            else:
+                Q_total[key] = val
 
-        # result
-        soln_dict = convert_result(sampleset.first.sample, index)
+    # Linearization penalties
+    penal = Penalizer(x_dict, delta1, delta2, Q_total, prec_list_str)
+    prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
+    b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 
-        #convert solution into binary string
-        binstr = get_bin_str(soln_dict,isising=False)
-        binstr_vec = ['' for i in range(0,k)]
-        temp_ctr = 0
+   # H Penalties 
+    for h_i in range(0, n):        # row
+        varnames2 = []
+        for h_j in range(0, k):    # col
+            varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
+ 
+        Q2, Q2_alt, index2 = qubo_prep_nonneg(A, b2, k, prec_list2, varnames=varnames2)
 
-        for i in range(0,k):
-            for j in range(0,bits_no):
-                binstr_vec[i]+= binstr[temp_ctr]
-                temp_ctr += 1
+        for ikey2,ival2 in index2.items():
+            index_dict[ikey2] = ival2
 
-        x_cur = qubo_to_real_adaptive(binstr,k,scale_list,offset_list,bits_no)
-        x_cur = np.array(x_cur)
-        #print("Iteration: ",itr, " x_cur: ",x_cur, " cur norm: ",LA.norm(np.matmul(A,x_cur)- b))
-        new_scale_list = []
-        new_offset_list = []
+        penal.h_penalty(Q2_alt)
 
-        for i in range(0,k):
-            temp_scale,temp_offset = get_scale_offset(binstr_vec[i],scale_list[i],offset_list[i],upper_limit,lower_limit,bits_no,2)
-            new_scale_list.append(temp_scale)
-            new_offset_list.append(temp_offset)
-    
-        scale_list = new_scale_list
-        offset_list = new_offset_list
-        w_itr += 1
-        print("--------------------")
+    # Submit
 
-    # We're out of the iteration so lets add it to Q_Total to be used for WH later
-    for key, val in Q_alt.items():
-        # Check if key is already here, if so add to it
-        if key in Q_total:
-            Q_total[key] += val
-        else:
-            Q_total[key] = val
-    
+    sampler = tabu.TabuSampler()
+    sampleset = sampler.sample_qubo(Q_total, timeout=10)
+
+    # get results
+
+    # interpret new range and scale 
+
+    ## Issue is here: converting result
+
+    soln_dict = convert_result(sampleset.first.sample, index_dict)
+
+    #convert solution into binary string
+    binstr = get_bin_str(soln_dict,isising=False)
+    binstr_vec = ['' for i in range(0,k)]
+    temp_ctr = 0
+
+    for i in range(0,k):
+        for j in range(0,bits_no):
+            binstr_vec[i]+= binstr[temp_ctr]
+            temp_ctr += 1
+
+    x_cur = qubo_to_real_adaptive(binstr,k,scale_list,offset_list,bits_no)
+    x_cur = np.array(x_cur)
+    print("Iteration: ",itr, " x_cur: ",x_cur, " cur norm: ",LA.norm(np.matmul(A,x_cur)- b))
+    new_scale_list = []
+    new_offset_list = []
+
+    for i in range(0,k):
+        temp_scale,temp_offset = get_scale_offset(binstr_vec[i],scale_list[i],offset_list[i],upper_limit,lower_limit,bits_no,2)
+        new_scale_list.append(temp_scale)
+        new_offset_list.append(temp_offset)
+
+    scale_list = new_scale_list
+    offset_list = new_offset_list
+    w_itr += 1
+    print("--------------------")
+
 
 
 ## END of Q_total loop
-
-print("Applying linearization penalties")
-
-penal = Penalizer(x_dict, delta1, delta2, Q_total, prec_list_str)
-prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
-b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
-
-print("Applying penalties to H...")
-for h_i in range(0, n):        # row
-    varnames2 = []
-    for h_j in range(0, k):    # col
-        varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
-        #pprint.pprint(varnames2)
-
-    A = np.zeros([1, k])
-    A += 1
-    #pprint.pprint(varnames2)    
-     # def qubo_prep_nonneg(self, A,b,n,bitspower, varnames=None):
-    Q2, Q2_alt, index = qubo_prep_nonneg(A, b2, k, prec_list2, varnames=varnames2)
-
-    penal.h_penalty(Q2_alt)
-
-
-print("Sending Q_Total to Solver...")
-
-sol = {}
-sampleset = sampler.sample_qubo(Q_total, timeout=10)
-
-sol = sampleset.first.sample
-
-#pprint.pprint(sol)
-
-## This doesn't work as we expect, as we don't get floating point stuff..
-
-for skey, sval in sol.items():
-    print(skey, ":", sval)
-
-exit(1)
-print("Creating verification W and H...\n")
-for i in range(0,k):
-    for j in range(0,n):
-        temp_h = "h" + str(i+1) + str(j+1)
-        H[i,j] = sol[temp_h]
-        
-for i in range(0,p):
-    for j in range(0,k):
-        temp_w = "w" + str(i+1) + str(j+1)
-        for sol_key, sol_val in sol.items():
-            if temp_w in sol_key:
-                #print(temp_w, sol_key)
-                temp_str = sol_key.split('_')[1]
-                #print(temp_str)
-                if temp_str == "null":
-                    W[i,j] += -(2**(prec_list[0]+1))*sol_val
-                else:
-                    W[i,j] += (2**int(temp_str))*sol_val
-
-
-
-
-### Create W and H based on soln_dict or really sampleset.first.sample
-    
 
 

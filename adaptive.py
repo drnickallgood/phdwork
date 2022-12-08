@@ -164,27 +164,29 @@ Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames
 x_cur = [0 for x in range(0,n)]
 x_cur = np.array(x_cur)
 itr = 0
+
+# For this loop, A and b don't change, but x_cur does...
+
 while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
     print("scale_list: ",scale_list," offset_list: ",offset_list)
     Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
     #Q = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no)
     sampleset = dimod.ExactSolver().sample_qubo(Q_alt)
 
+    print("index:", index)
 
-    print("A:\n", A)
-    print("b:\n", b)
-    print("x_cur:\n", x_cur)
-    
     #Get the solution in the form of the non-labelled index (compatible with legacy code that way)
+
     soln_dict = convert_result(sampleset.first.sample,index)
-    
+
     #convert solution into binary string
     binstr = get_bin_str(soln_dict,isising=False)
 
     binstr_vec = ['' for i in range(0,n)]
     temp_ctr = 0
     
-    #from the binstr create a list with entries for each variable in n, Eg for n=2, if binstr = '011100' then binstr_vec = ['011','110']
+    #from the binstr create a list with entries for each variable in n, Eg for n=2, 
+    #if binstr = '011100' then binstr_vec = ['011','110']
     for i in range(0,n):
         for j in range(0,bits_no):
             binstr_vec[i]+= binstr[temp_ctr]
@@ -192,6 +194,7 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
     print("binstr_vec",binstr_vec)
     
     #convert qubo result to an np.array of floating point values
+    ## This is the super important part that makes them floating point...
     x_cur = qubo_to_real_adaptive(binstr,n,scale_list,offset_list,bits_no)
     x_cur = np.array(x_cur)
 

@@ -1,6 +1,6 @@
 Research Notes
 
-** NEED TO REDO TABU MOTIF ! NEED TO ENSURE USING MOTIF LABELING STUFF **
+** Be sure to go through dissertation and make updates based on reviewer comments
 ** For H stuff, STILL CALL NONNEG QUBO PREP!!
 ** Another option we could do, is process Q_Total, then try to get WH from it
 ** adaptive solution submits one problem at a time in the example.
@@ -11,6 +11,11 @@ Research Notes
 ** Adaptive should still need to extract centers from WH.. i think
 
 --- Ajinkya Notes below --
+
+0. take an initial range and scale
+1. build q_total, submit,
+2.  get results, if results in acceptable threshold of error OR certain no of counts are over, BREAK LOOP
+3. interpret new range and scale from results, GOTO step 1 
 
 (6 - x1 - x2)
 
