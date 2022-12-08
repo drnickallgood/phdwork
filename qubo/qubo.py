@@ -289,6 +289,10 @@ class Qubo:
             Q2, Q2_alt, index = self.qubo_prep_nonneg(A, b2, self.k, prec_list2, varnames=varnames2)
         
             penal.h_penalty(Q2_alt)
+
+        for l, m in self.Q_total.items():
+            print("key:", l, "value:", m)
+        exit(1)
         
         
     def qubo_submit(self, num_sweeps, num_reads, tabu_timeout, solver):

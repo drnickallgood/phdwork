@@ -139,6 +139,7 @@ def get_bin_str(config,isising=True):
 
 ####
 
+
 n=2
 upper_limit = 100
 lower_limit  = -100
@@ -168,6 +169,11 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
     Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
     #Q = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no)
     sampleset = dimod.ExactSolver().sample_qubo(Q_alt)
+
+
+    print("A:\n", A)
+    print("b:\n", b)
+    print("x_cur:\n", x_cur)
     
     #Get the solution in the form of the non-labelled index (compatible with legacy code that way)
     soln_dict = convert_result(sampleset.first.sample,index)

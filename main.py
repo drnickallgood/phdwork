@@ -38,21 +38,21 @@ centers = np.array([ [1,6], [2,4], [3,5], [-1,-4], [8, -3] ])
 seed = 0
 
 # Get EMBER vectors for MOTIF dataset
-ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
+#ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
 
 # Normalize EMBER vectors and apply PCA
-ember_norm_X = ember_X.copy()
-ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
+#ember_norm_X = ember_X.copy()
+#ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
 
-random.seed(a=0)
+#random.seed(a=0)
 
-motif = np.zeros([num_samples, 2])
+#motif = np.zeros([num_samples, 2])
 
-for i in range(0,num_samples):
-    rand_sample = random.randint(0,num_samples)
+#for i in range(0,num_samples):
+    #rand_sample = random.randint(0,num_samples)
     #print(ember_norm_X[rand_sample])
     #motif[i] = ember_norm_X[rand_sample]
-    motif[i] = ember_norm_X[i]
+    #motif[i] = ember_norm_X[i]
 
 
 # Test Data
@@ -80,10 +80,10 @@ motif50_t = np.transpose(motif50)
 
 
 # Transpose matrix
-#v = np.transpose(V)
+v = np.transpose(V)
 
 # Motif
-v = np.transpose(motif)
+#v = np.transpose(motif)
 
 ## This is for mnotif samplesets
 #v = motif20_t
