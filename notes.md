@@ -1,16 +1,28 @@
 Research Notes
 
-** Be sure to go through dissertation and make updates based on reviewer comments
-** For H stuff, STILL CALL NONNEG QUBO PREP!!
-** Another option we could do, is process Q_Total, then try to get WH from it
-** adaptive solution submits one problem at a time in the example.
-** WH are built from the solution dictionary which is the sampleset's first sample
-** I think everything for adaptive needs to be moved below the LA.Norm loop... including the buliding of Q_Total
-** Old version relies on buliding a Q_Total up first then submitting the whole thing
-** Adaptive version relies on offset after the results of a solver are processed...
-** Adaptive should still need to extract centers from WH.. i think
+** Make main2.py and qubo2.py , update imports, and convert to class/objects
+  ** Try to use them, but instead of qubo_prep use qubo_prep_adaptive
+    ** Prec_list for adaptive won't begin with null
+    ** prec_list_str set to []
+    ** make sure eto not use convert_result, this was something setup for one problem 
+    ** When we get WH back first, we get integers, but then we use convert_real to make it real
+      ** based on scale list
+
 
 --- Ajinkya Notes below --
+
+See section B of this paper should give you an idea:
+https://arxiv.org/abs/2106.04305
+
+Other papers
+First paper that suggested an iterative approach:
+https://www.nature.com/articles/s41598-019-46729-0
+(associated github repo)
+https://github.com/cchang5/quantum_poly_solver/blob/master/DWSolveQUBO.py
+
+THis other work also does things iteratively
+https://arxiv.org/abs/2005.02846
+
 
 0. take an initial range and scale
 1. build q_total, submit,

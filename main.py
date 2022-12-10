@@ -34,7 +34,7 @@ Q_total = {}
 num_samples = 20 
 k = 3
 
-centers = np.array([ [1,6], [2,4], [3,5], [-1,-4], [8, -3] ])
+centers = np.array([ [1,6], [2,4], [3,5] ])
 seed = 0
 
 # Get EMBER vectors for MOTIF dataset
@@ -62,6 +62,18 @@ V, blob_labels, blob_centers = make_blobs(
     shuffle=True, random_state=seed, return_centers=True
 )
 
+motif = np.zeros([num_samples, 2])
+motif_y = np.zeros([num_samples,])
+
+for i in range(0,num_samples):
+    rand_sample = random.randint(0,num_samples)
+    #print(ember_norm_X[rand_sample])
+	# Get random sample for motif X
+    motif[i] = ember_norm_X[i]
+	# get random sample for motif y
+    motif_y[i] = ember_y[i]
+
+
 '''
 motif20 = np.load('./samples/motif20.npy')
 motif30 = np.load('./samples/motif30.npy')
@@ -80,10 +92,10 @@ motif50_t = np.transpose(motif50)
 
 
 # Transpose matrix
-v = np.transpose(V)
+#v = np.transpose(V)
 
 # Motif
-#v = np.transpose(motif)
+v = np.transpose(motif)
 
 ## This is for mnotif samplesets
 #v = motif20_t

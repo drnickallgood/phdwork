@@ -44,13 +44,16 @@ seed = 0
 
 #random.seed(a=0)
 
-#motif = np.zeros([num_samples, 2])
+motif = np.zeros([num_samples, 2])
+motif_y = np.zeros([num_samples,])
 
-#for i in range(0,num_samples):
-    #rand_sample = random.randint(0,num_samples)
+for i in range(0,num_samples):
+    rand_sample = random.randint(0,num_samples)
     #print(ember_norm_X[rand_sample])
-    #motif[i] = ember_norm_X[rand_sample]
-    #motif[i] = ember_norm_X[i]
+	# Get random sample for motif X
+    motif[i] = ember_norm_X[i]
+	# get random sample for motif y
+    motif_y[i] = ember_y[i]
 
 
 # Test Data
