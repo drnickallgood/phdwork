@@ -18,7 +18,7 @@ import sys
 from .penalizer import Penalizer
 from sklearn import metrics
 
-class Qubo:
+class QuboA:
     def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2):
         #self.dataset = dataset
         #self.num_centers = num_centers

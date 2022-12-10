@@ -431,7 +431,7 @@ A += 1
 
 b = np.array([1])
 
-
+# while(w_itr < 5):
 while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
 
     # Build Q_total 
@@ -452,8 +452,10 @@ while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
 
         Q, Q_alt,index = qubo_prep_adaptive(A,b,k,scale_list,offset_list,bits_no,varnames=varnames)
 
-        for ikey,ival in index.items():
-            index_dict[ikey] = ival 
+        for ikey, ival in index.items():
+            index_dict[ikey] = ival
+
+        #print(index)
 
         # We're out of the iteration so lets add it to Q_Total to be used for WH later
         for key, val in Q_alt.items():
@@ -465,6 +467,10 @@ while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
 
     # Linearization penalties
     penal = Penalizer(x_dict, delta1, delta2, Q_total, prec_list_str)
+    penal.linearization()
+
+
+
     prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
     b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
 
@@ -476,23 +482,32 @@ while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
  
         Q2, Q2_alt, index2 = qubo_prep_nonneg(A, b2, k, prec_list2, varnames=varnames2)
 
-        for ikey2,ival2 in index2.items():
-            index_dict[ikey2] = ival2
+        for ikey, ival in index2.items():
+            index_dict[ikey] = ival
 
+        #print(index2)
         penal.h_penalty(Q2_alt)
-
+    
     # Submit
 
-    sampler = tabu.TabuSampler()
-    sampleset = sampler.sample_qubo(Q_total, timeout=10)
+    ## return penalizer q_total
+    Q_total2 = penal.get_penalized_qtotal()
 
+    sampler = tabu.TabuSampler()
+    sampleset = sampler.sample_qubo(Q_total2, timeout=10)
+
+    #print(sampleset.first.sample)
+    #print(index_dict)
+    
     # get results
 
     # interpret new range and scale 
 
     ## Issue is here: converting result
 
-    soln_dict = convert_result(sampleset.first.sample, index_dict)
+    #soln_dict = convert_result(sampleset.first.sample, index)
+
+    soln_dict = sampleset.first.sample 
 
     #convert solution into binary string
     binstr = get_bin_str(soln_dict,isising=False)
@@ -504,6 +519,7 @@ while LA.norm(np.matmul(A,x_cur)- b) > tolerance:
             binstr_vec[i]+= binstr[temp_ctr]
             temp_ctr += 1
 
+    # Converts binary string returned into a real value based on scale offsets
     x_cur = qubo_to_real_adaptive(binstr,k,scale_list,offset_list,bits_no)
     x_cur = np.array(x_cur)
     print("Iteration: ",itr, " x_cur: ",x_cur, " cur norm: ",LA.norm(np.matmul(A,x_cur)- b))

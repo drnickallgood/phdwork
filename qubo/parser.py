@@ -101,7 +101,7 @@ class Parser:
             A = np.zeros([1,self.k])
             A += 1
             b = float(self.v_dict[key]['v_val'])
-            Q, Q_alt, index = qubo.Qubo.qubo_prep(A,b,self.k,prec_list,varnames=varnames)
+            Q, Q_alt, index = qubo.QuboA.qubo_prep(A,b,self.k,prec_list,varnames=varnames)
             # Put everything from each Q_alt dict into master Q_total
             for key, val in Q_alt.items():
                 # Check if key is already here, if so add to it
