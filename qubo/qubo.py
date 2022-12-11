@@ -318,6 +318,7 @@ class Qubo:
         #sampler = EmbeddingComposite(DWaveSampler(solver={'topology__type': 'pegasus'}))
         # Hybrid Solver BQM
         self.solution_dict = {}
+        self.sampleset = sampleset 
         self.solution_dict = self.sampleset.first.sample
         #solution_dict = sampleset2.first.sample
         

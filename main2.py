@@ -31,10 +31,19 @@ index = {}
 Q_total = {}
 
 centers = np.array([ [1,6], [2,4], [3,5] ])
-num_samples = 20 
+num_samples = 10
 k = 3
 seed = 0
+upper_limit = 100
+lower_limit  = -100
+bits_no = 3
+s = (upper_limit - lower_limit)/(2**(bits_no) - 1)
+scale_list = [s for i in range(0,k)]
+offset_list = [lower_limit for i in range(0,k)]
 
+
+
+'''
 # Get EMBER vectors for MOTIF dataset
 #ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
 
@@ -44,17 +53,18 @@ seed = 0
 
 #random.seed(a=0)
 
-motif = np.zeros([num_samples, 2])
-motif_y = np.zeros([num_samples,])
+#motif = np.zeros([num_samples, 2])
+#motif_y = np.zeros([num_samples,])
 
 for i in range(0,num_samples):
-    rand_sample = random.randint(0,num_samples)
+    #rand_sample = random.randint(0,num_samples)
     #print(ember_norm_X[rand_sample])
 	# Get random sample for motif X
     motif[i] = ember_norm_X[i]
 	# get random sample for motif y
     motif_y[i] = ember_y[i]
 
+'''
 
 # Test Data
 V, blob_labels, blob_centers = make_blobs(
@@ -96,18 +106,12 @@ v = np.transpose(V)
 
 qubo_vars = qubo.parser.Parser(v,k)
 
-
 v_dict, x_dict, x_dict_rev, p, n = qubo_vars.get_vars()
-
 
 Q_total = {}
 
-
 prec_list = [2, 1, 0]   #-8 to +7
 
-
-
-#prec_list_str = ['null']
 # Get string versions of prec_list_stirngs
 #prec_strings = [prec_list_str.append(str(x)) for x in prec_list]
 
@@ -118,8 +122,7 @@ prec_list = [2, 1, 0]   #-8 to +7
 delta1 = 10 
 delta2 = 20 
 
-# Builds the qubo with appropriate penalties
-myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
+
 
 #Q_total = myqubo.get_qtotal()
 
@@ -128,7 +131,9 @@ myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, d
 num_sweeps = 9999 
 num_reads = 999
 
-tabu_timeout = 1
+#tabu_timeout = 1
+tabu_timeout = 10000   # 10 sec
+#tabu_timeout = 30000  # 30 sec
 #tabu_timeout =   60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
@@ -146,32 +151,52 @@ solver = "tabu"
 #solver = "sim"
 #solver = "hybrid"
 
-myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
+# Builds the qubo with appropriate penalties
+#myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
+
+# New method submits when qubo is built
+myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver)
+
+#myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
+#myqubo.qubo_submit()
+
+## New method will submit automatically 
 
 #pprint.pprint(myqubo.get_solution_dict())
+
 
 W, H = myqubo.get_w_h()
 
 myqubo.get_results()
 qcenters = myqubo.get_quantum_centers()
 
+#print("qcenters:", qcenters)
+
 computed_labels = []
 
 transposed_h = np.transpose(H)
+
+# 20 rows, 3 columns
 
 for j in range(0, transposed_h.shape[0]):       # row
     for l in range(0, transposed_h.shape[1]):   # col
         #print(transposed_h[j][l])
         # k is right val for label
         if transposed_h[j][l] == 1:
+            #print("h[" + str(j) + "][" + str(l) + "] = ", 1)
             computed_labels.append(l)
 
+## RIght now this will break so we're existing early...
 
+print(computed_labels)
 computed_labels = np.array(computed_labels)
+
+#print(computed_labels.shape)
 
 print("Blob label size", blob_labels.size)
 print("Computed Label size", computed_labels.size)
 
+exit(1)
 
 # Set V back to the way it was format wise with transpose
 s_score = metrics.silhouette_score(np.transpose(v), computed_labels, metric='euclidean')

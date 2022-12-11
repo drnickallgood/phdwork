@@ -28,7 +28,7 @@ def qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=None):
         powersoftwo[i] = 2**(bits_no - i-1)
     
     str_bitspower = [str(item) for item in range(bits_no-1,-1,-1)] #For the labelled variables, goes from [bits_no -1 ... 0]
-    print(str_bitspower)
+    #print(str_bitspower)
     #prepare Qinit
     for i in range(0,n):
         for j in range(i,n):
@@ -99,11 +99,18 @@ def qubo_to_real_adaptive(binstr,n,scale_list,offset_list,bits_no):
         
     bin_ctr=0
     cur_real = np.zeros(n)
+
+
     for i in range(0,n):
         for j in range(0,bits_no):
             cur_real[i] += scale_list[i]*powersoftwo[j]*int(binstr[bin_ctr])
+            #print("curr_real[i] before: ", cur_real[i])
+           # print("binstr[bin_ctr]:", binstr[bin_ctr])
             bin_ctr += 1
+       # print("scale_list[i]:", scale_list[i])
+        #print("offset_list[i]:", offset_list[i])
         cur_real[i] += offset_list[i]
+        #print("curr_real[i] before: ", cur_real[i])
     
     return cur_real
 
@@ -122,6 +129,22 @@ def get_bin_str(config,isising=True):
     #Output:
     # a binary string of 0s and 1s
     binstr = ""
+
+    # So this goes through each key and item in binstr
+    for k,v in config.items():
+        #print(k, ":", v)
+        if isising == True:
+            if v == 1:
+                binstr += str(1)
+            elif v == -1:
+                binstr += str(0)
+        else:
+            if v == 1:
+                binstr += str(1)
+            elif v == 0:
+                binstr += str(0)
+
+    '''
     if isising == True:
         for i in range(0,len(config)):
             if config[i] == 1:
@@ -134,6 +157,9 @@ def get_bin_str(config,isising=True):
                 binstr += str(1)
             elif config[i] == 0:
                 binstr += str(0)
+            print("binstr so far:", binstr)
+    '''
+
     return binstr
 
 
@@ -167,13 +193,15 @@ itr = 0
 
 # For this loop, A and b don't change, but x_cur does...
 
-while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
-    print("scale_list: ",scale_list," offset_list: ",offset_list)
+while LA.norm(np.matmul(A,x_cur)- b) > 10**-1:
+    #print("scale_list: ",scale_list," offset_list: ",offset_list)
+
+    #print("scale_list before: ", scale_list)
+    #print("offset_list before: ", offset_list)
+    
     Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
     #Q = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no)
     sampleset = dimod.ExactSolver().sample_qubo(Q_alt)
-
-    print("index:", index)
 
     #Get the solution in the form of the non-labelled index (compatible with legacy code that way)
 
@@ -182,17 +210,27 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
     #convert solution into binary string
     binstr = get_bin_str(soln_dict,isising=False)
 
+    print("binstr:", binstr)
+
     binstr_vec = ['' for i in range(0,n)]
     temp_ctr = 0
-    
+
+
     #from the binstr create a list with entries for each variable in n, Eg for n=2, 
     #if binstr = '011100' then binstr_vec = ['011','110']
     for i in range(0,n):
         for j in range(0,bits_no):
             binstr_vec[i]+= binstr[temp_ctr]
+            #print("type(binstr_vec[i])", type(binstr_vec[i]))
+            #print("binstr_vec[i]:", binstr_vec[i])
+
             temp_ctr += 1
+
+
+    #print("binstr", binstr)
     print("binstr_vec",binstr_vec)
-    
+    #print("tempctr", temp_ctr)
+
     #convert qubo result to an np.array of floating point values
     ## This is the super important part that makes them floating point...
     x_cur = qubo_to_real_adaptive(binstr,n,scale_list,offset_list,bits_no)
@@ -211,6 +249,10 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-10:
     
     scale_list = new_scale_list
     offset_list = new_offset_list
+
+    #print("scale_list after: ", scale_list)
+    #print("offset_list after: ", offset_list)
+
     itr += 1
     print("--------------------")
 

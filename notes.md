@@ -1,12 +1,20 @@
 Research Notes
 
+** Adapted main2.py and quboa.py to adaptive formulation, still issues:
+  ** first is related to with iterations and larger samples (such as 10), we may get a binstr like this:
+  binstr: 000000000000000000001111111111111111111111111111001001111001001111001001111001001001111010011111001001111010011001111001001111101001111001001111111001001111001001111001001111001100001111001001111010011111001001111111111001001111
+  ** This has a lot of 0's in front, and when we make our binstr vec we seem to constantly get the first 3 of 3 digits, so ['000', '000', '000']
+  ** Possibility we may not need to do this, double checking...
+  ** We might be able to just use the offset_list and subtract from W values to get center points. 
+  ** Will need to find a better iteration form to iterate from
+
 ** Make main2.py and qubo2.py , update imports, and convert to class/objects
   ** Try to use them, but instead of qubo_prep use qubo_prep_adaptive
     ** Prec_list for adaptive won't begin with null
     ** prec_list_str set to []
     ** make sure eto not use convert_result, this was something setup for one problem 
     ** When we get WH back first, we get integers, but then we use convert_real to make it real
-      ** based on scale list
+      ** based on scale list, might have eto do some other stuff
 
 
 --- Ajinkya Notes below --
