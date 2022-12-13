@@ -1,15 +1,69 @@
-Research Notes
+** Research Notes **
 
-** Working through issues with indexing and sizes related to offset_list, scale_list, etc
-  ** got pretty close now.. the issue now is offset_list, binstr_vec, and scale_list differ in size
-  ** scale_list = 60
-  ** offset_list = 60
-  ** binstr_vec = 76 .. this was created by diving the length of the binstr / no_bits 
+** Got the indexing stuff mostly worked out, but issues still remain.
+  ** seems the norm is increasing vs decreasing which compared to adaptive we go down
+  ** x_cur does change though...
+  ** Still need to workout how to subtract offsets from specific WH entries.. for final results
+    ** possibly need to ensure we get correct B value here.. for the norm
 
-** Adapted main2.py and quboa.py to adaptive formulation, still issues:
-  ** Added num_x parameter to quboa object to allow for # of x variables
-  ** the entire part about adaptive pieces relies on num of x_variables
 
+** TO DO **
+
+* Add NMF basics to Chapter 2 dissertation.
+* Write math out for NMF solution
+* Write math out for Adaptive Formulation using offsets 
+
+* Adaptive solution which allows the use of floating point in the results
+  3 cluster, seed=0
+
+    * Tabu (30 min only)
+    * Sim Annealing
+    * Hybrid BQM
+
+* K-Means test using Centroids, default kmeans as control 
+    seed = 0
+      Tabu
+      Sim
+      Hybrid BQM
+
+
+* Real life data (Malware MOTIF data set)
+    * \# of samples out of specific malware famalies, cluster them
+    * See how close we get, MOTIF has ground truth labels or close to it...
+      * Tabu
+      * Sim
+      * Hybrid
+
+  * Real life data (Malware MOTIF data set) - Kmeans 
+    * \# of samples out of specific malware famalies, cluster them
+    * See how close we get, MOTIF has ground truth labels or close to it...
+      * Tabu
+      * Sim
+      * Hybrid
+
+
+
+
+* Expand Tabu Charts for 20, 30, 35, 40, 45, 50, 100 samples , get graphs
+
+
+** Tentative Schedule **
+
+* Experiments done:  Dec 31, 2022
+* Dissertation Draft:  March 15, 2023
+* Dissertation Defense: April 15, 2023
+
+
+** Prospective Papers **
+
+* Quantum NMF and clustering with it
+* Adaptive Quantum NMF
+* Quantum clustering of malware data
+* Quantum clustering of DNA data
+
+
+
+*** Old Notes ***
 
 Seems to be related to having larger than bits_no variables for n.. 
 
@@ -111,61 +165,3 @@ Space between numbers above , controled , scaled by lambda
      Fixed number of iterations for now... variable should govern max iteration
 
   resulting values = [x1, x2] -- returned in iterations 
-
-
-
-
-
-** TO DO **
-
-* Add NMF basics to Chapter 2 dissertation.
-* Write math out for NMF solution
-* Write math out for Adaptive Formulation using offsets 
-
-* Adaptive solution which allows the use of floating point in the results
-  3 cluster, seed=0
-
-    * Tabu (30 min only)
-    * Sim Annealing
-    * Hybrid BQM
-
-* K-Means test using Centroids, default kmeans as control 
-    seed = 0
-      Tabu
-      Sim
-      Hybrid BQM
-
-
-* Real life data (Malware MOTIF data set)
-    * \# of samples out of specific malware famalies, cluster them
-    * See how close we get, MOTIF has ground truth labels or close to it...
-      * Tabu
-      * Sim
-      * Hybrid
-
-  * Real life data (Malware MOTIF data set) - Kmeans 
-    * \# of samples out of specific malware famalies, cluster them
-    * See how close we get, MOTIF has ground truth labels or close to it...
-      * Tabu
-      * Sim
-      * Hybrid
-
-
-
-
-* Expand Tabu Charts for 20, 30, 35, 40, 45, 50, 100 samples , get graphs
-
-
-** Tentative Schedule **
-
-* Experiments done:  Dec 31, 2022
-* Dissertation Draft:  March 15, 2023
-* Dissertation Defense: April 15, 2023
-
-
-** Prospective Papers **
-
-* Quantum NMF and clustering with it
-* Adaptive Quantum NMF
-* Quantum clustering of malware data
-* Quantum clustering of DNA data
