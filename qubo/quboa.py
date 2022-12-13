@@ -19,7 +19,8 @@ from .penalizer import Penalizer
 from sklearn import metrics
 
 class QuboA:
-    def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver):
+    #def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver, num_x):
+    def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver):
         #self.dataset = dataset
         #self.num_centers = num_centers
         #self.num_samples = num_samples
@@ -43,14 +44,18 @@ class QuboA:
         self.H = np.zeros([self.k, self.n])
         self.upper_limit = upper_limit
         self.lower_limit = lower_limit
-        self.offset_list = offset_list 
-        self.scale_list = scale_list
+        #self.offset_list = offset_list 
+        self.offset_list = []
+        #self.scale_list = scale_list
+        self.scale_list = [] 
         self.bits_no = bits_no 
         self.num_sweeps = num_sweeps
         self.num_reads = num_reads
         self.tabu_timeout = tabu_timeout
         self.solver = solver 
         self.solution_dict = {}
+        #self.num_x = num_x 
+
 
         self.build_qtotal()
     
@@ -260,14 +265,22 @@ class QuboA:
     def bin_to_real(self,binstr):
         return int(binstr,2)
 
+    # This is modified for adaptive. 
+    # n for this is number of variables
+    # A = 1 x n
+    # x = n x 1 
+    # b = 1 x 1
     def build_qtotal(self):
 
         w_itr = 0
 
-        x_cur = [0 for x in range(0,self.k)]
-        x_cur = np.array(x_cur)
-        
-        while(w_itr < 5):
+        #x_cur = [0 for x in range(0,self.k)]
+        # # num of x variables
+        # x = n x 1 
+        #x_cur = [0 for x in range(0,self.num_x)]
+        #x_cur = np.array(x_cur)
+
+        while(w_itr < 3):
 
             print("iteration: ", w_itr)
 
@@ -278,6 +291,7 @@ class QuboA:
                 # Go through individual list of tuples
                 varnames = []
                 for item in self.v_dict[key]['wh']:
+                    
                     # Get our corresponding x values to WH values
                     varnames.append(self.x_dict_rev[item])
                     # Build a row vector of 1's for A
@@ -286,13 +300,31 @@ class QuboA:
                     # Get each element of V for qubo_prep
                     # print(varnames)
                     # Also store them as a floating point number vs a string
-                #for v_key, v_val in v_dict.items():
-                # Build a row vector of 1's for A
+                    #for v_key, v_val in v_dict.items():
+                    # Build a row vector of 1's for A
+                    #A = np.zeros([1,self.k])
+                    # A for adaptive is size n x 1
+                    #A = np.zeros([1,self.num_x])
+                    
+                    #Build scale list based on # of x variables in current pass
+                s2 = (self.upper_limit - self.lower_limit)/(2**(self.bits_no) - 1)
+                scale_list2 = [s2 for i in range(0, len(varnames))]
+                offset_list2 = [self.lower_limit for i in range(0, len(varnames))]
+
+                # extend main scale list with new items
+                self.scale_list.extend(scale_list2)
+                self.offset_list.extend(offset_list2)
+
                 A = np.zeros([1,self.k])
                 A += 1
-                b = float(self.v_dict[key]['v_val'])
+                b = np.array(float(self.v_dict[key]['v_val']))
+
                 #Q, Q_alt, index = self.qubo_prep(A,b,self.k,self.prec_list,varnames=varnames)
-                Q, Q_alt, index = self.qubo_prep_adaptive(A,b,self.k, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
+                ## SHould be not self.k but something else , perhaps len(varnames)
+                #Q, Q_alt, index = self.qubo_prep_adaptive(A, b, self.k, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
+                Q, Q_alt, index = self.qubo_prep_adaptive(A, b, self.k, scale_list2, offset_list2, self.bits_no, varnames=varnames)
+
+                #Q, Q_alt, index = self.qubo_prep_adaptive(A,b,self.num_x, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
 
                 # Put everything from each Q_alt dict into master Q_total
                 for key, val in Q_alt.items():
@@ -301,7 +333,10 @@ class QuboA:
                         self.Q_total[key] += val
                     else:
                         self.Q_total[key] = val
-                        
+            
+            
+            ## QTOTAL IS BUILT AT THIS POINT !! ## 
+
             penal = Penalizer(self.x_dict, self.delta1, self.delta2, self.Q_total, self.prec_list_str)
             print("Applying linearization penalties...")
             penal.linearization()
@@ -318,56 +353,74 @@ class QuboA:
                     #pprint.pprint(varnames2)
 
                 A = np.zeros([1,self.k])
+                #A = np.zeros([1,self.num_x])
                 A += 1
                 #pprint.pprint(varnames2)    
                 Q2, Q2_alt, index2 = self.qubo_prep_nonneg(A, b2, self.k, prec_list2, varnames=varnames2)
             
                 penal.h_penalty(Q2_alt)
 
+
             # Q_total is now built lets submit
             self.qubo_submit()
-
 
             # now we need to do the scaling
                 #convert solution into binary string
             #soln_dict = self.convert_result(self.sampleset.first.sample, index)
             binstr = self.get_bin_str(self.solution_dict, isising=False)
-            print("binstr:", binstr)
+            print("binstr:", len(binstr))
+            print(binstr)
 
-            binstr_vec = ['' for i in range(0, self.k)]
+            #binstr_vec = ['' for i in range(0, self.k)]
+            binstr_vec = ['' for i in range(0, int(len(binstr)/self.bits_no)) ]
             temp_ctr = 0
 
+
             # Break up chunks of binary string 
-            for i in range(0,self.k):
+            #for i in range(0,self.k):
+
+            for i in range(0, len(binstr_vec)):
                 for j in range(0,self.bits_no):
                     binstr_vec[i]+= binstr[temp_ctr]
                     temp_ctr += 1
-            
-            print("binstr_vec", binstr_vec)
 
-            #print("binstr_vec:", binstr_vec)
+
             # Converts binary string returned into a real value based on scale offsets
             # This is used to loop and converge, will use later
 
-            x_cur = self.qubo_to_real_adaptive(binstr,self.k, self.scale_list,self.offset_list, self.bits_no)
+            #x_cur = self.qubo_to_real_adaptive(binstr,self.k, self.scale_list,self.offset_list, self.bits_no)
+            x_cur = self.qubo_to_real_adaptive(binstr, len(self.scale_list), self.scale_list, self.offset_list, self.bits_no)
             x_cur = np.array(x_cur)
 
-           # print("x_cur: ", x_cur)
-           # print("curr norm:", LA.norm(np.matmul(A,x_cur)-b))
+            print("x_cur: ", x_cur)
+
+
+           # print("curr norm:", LA.norm(np.matmul(A3,x_cur)-b))
 
             # This updates thes scaling
             new_scale_list = []
             new_offset_list = []
+
+            print("binstr vec len: ", len(binstr_vec))
+            print("scale list len:", len(self.scale_list))
+            print("offset list len:", len(self.offset_list))
+
+            exit(1)
             
-           # print("scale_list before: ", self.scale_list)
-          #  print("offset_list before: ", self.offset_list)
-            for i in range(0,self.k):
-                temp_scale,temp_offset = self.get_scale_offset(binstr_vec[i],self.scale_list[i], self.offset_list[i],self.upper_limit, self.lower_limit, self.bits_no, 2)
+            # This adjust the scale list 
+            for i in range(0, self.num_x):
+                temp_scale,temp_offset = self.get_scale_offset(binstr_vec[i], self.scale_list[i], self.offset_list[i],
+                self.upper_limit, self.lower_limit, self.bits_no, 2)
                 new_scale_list.append(temp_scale)
                 new_offset_list.append(temp_offset)
 
             self.scale_list = new_scale_list
-            self.offset_list = new_offset_list
+            self.offset_list = new_offset_list 
+
+            print(self.scale_list)
+            print(self.offset_list)
+
+
 
             w_itr += 1
          #   print("scale_list after:", self.scale_list)
@@ -430,11 +483,17 @@ class QuboA:
                         if temp_str == "null":
                             self.W[i,j] += -(2**(self.prec_list[0]+1))*sol_val
                         else:
-                            self.W[i,j] += (2**int(temp_str))*sol_val
+                            temp_w_entry = (2**int(temp_str))*sol_val
+                            temp_w_entry = self.scale_list[0] * temp_w_entry + self.offset_list[0]
+                            self.W[i,j] += temp_w_entry 
+                            #self.W[i,j] += scale * temp_w_entry + offset 
+                            #self.W[i,j] += (2**int(temp_str))*sol_val
+                            #final_W_entry = scale * temp_W_entry + offset
         
         self.count_ones()
         print("")
-                            
+
+                         
     def get_lagrange_params(self):
         return self.delta1, self.delta2
         
@@ -609,7 +668,13 @@ class QuboA:
         
         return cur_real
 
-    def qubo_prep_adaptive(self, A,b,n,scale_list,offset_list,bits_no,varnames=None):
+    # n for this is number of variables
+    # A = 1 x n
+    # x = n x 1 
+    # b = 1 x 1
+    # Example call - self.qubo_prep_adaptive(A,b,self.num_x, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
+    def qubo_prep_adaptive(self, A, b, n, scale_list, offset_list, bits_no, varnames=None):
+
         n_i_ctr = 0
         i_powerctr = 0
         i_twosymb = 0
@@ -618,7 +683,7 @@ class QuboA:
         Qinit = np.zeros([n,n])
         Qdict = {}
         powersoftwo = np.zeros(bits_no)
-        
+
         Qdict_alt = {} #This dictionary saves the alternate QUBO with alphanumeric variable (keys) names
         index_dict = {} #Dictionary that maps alphanumeric variables to the integer ones
 
@@ -652,9 +717,6 @@ class QuboA:
                 if i==j: #Linear coefficients
                     Qdict[i,i] = (scale_list[n_i_ctr]**2)*(powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - scale_list[n_i_ctr]*powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
 
-                    ## THIS IS WHERE IT BREAKS DUE TO INDEXING ISSUE
-                    ## Probably need to use better counters
-
                     if varnames != None:
                         tempvar1 = varnames[n_i_ctr] + '_' + str_bitspower[i_powerctr]
                         #print("tempvar1", tempvar1)
@@ -668,28 +730,15 @@ class QuboA:
                     
                     Qdict[i,j] = scale_list[n_i_ctr]*scale_list[n_j_ctr]*powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
 
-                ## Here is where it dies out due to indexing issues
                     if varnames != None:
-                        #print("J: ", j)
-                        #print("n_j_ctr", n_j_ctr)
-                        #print("j_pwr_ctr", j_powerctr)
-                        #print("varnames[n_j_ctr", varnames[n_j_ctr])
-                        #print("str_bitspower[j_powerctr]", str_bitspower[j_powerctr])
                         tempvar2 = varnames[n_j_ctr] + '_' + str_bitspower[j_powerctr]
-                        #print("tempvar2:", tempvar2)
-                        #print("Qdict[i,j]", Qdict[i,j])
                         Qdict_alt[tempvar1,tempvar2] = Qdict[i,j]
 
 
                 j_powerctr = j_powerctr + 1
-                #print("i: ", i)
-                #print("n_i_ctr", n_i_ctr)
-                #print("i_pwr_ctr", i_powerctr)
-                                
-                #print("len of bitspower", len(str_bitspower))
-                #print("Len of varnames", len(varnames))
 
             i_powerctr = i_powerctr + 1
+
 
         if varnames != None:
             return Qdict, Qdict_alt, index_dict

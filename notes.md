@@ -1,20 +1,53 @@
 Research Notes
 
+** Working through issues with indexing and sizes related to offset_list, scale_list, etc
+  ** got pretty close now.. the issue now is offset_list, binstr_vec, and scale_list differ in size
+  ** scale_list = 60
+  ** offset_list = 60
+  ** binstr_vec = 76 .. this was created by diving the length of the binstr / no_bits 
+
 ** Adapted main2.py and quboa.py to adaptive formulation, still issues:
+  ** Added num_x parameter to quboa object to allow for # of x variables
+  ** the entire part about adaptive pieces relies on num of x_variables
+
+
+Seems to be related to having larger than bits_no variables for n.. 
+
+## issue seems to be with varnames only being of size 3.. being fed in wrong?
+## When building q_total we're only maknig 3 varnames and sending it in, with new x variable list we're sending in full variable for qubo_prep adaptive... so ti's causing indexing issues.
+## Did more testing and it looks like we get the same # of x vals in the first 2 loops of v_dict.. which is expected
+## perhaps we either need to loop through and do qubo_prep first , then do adaptive on the result, then add that to Q_Total?
+## perhaps we need to just have the x vals that correspond from x_dict.. 
+## POr maybe we just need to use self.k for qubo_prep_adaptive part only and use the x_num for later things? - NO
+** using self.k i think works as a coincidence here, but really since we're iterating through it should be a certain length
+   that isn't tied to k but equal in value, perhaps len(varnames)
+** Then W and H will use the num_x in the correct offset lists.. 
+** move scale list to build_qtotal... 
+
+
+number of x variables (before discretization) is the length of those lists
+
+  ** qubo_to_real_adaptive isn't necessary for this afterall..
+  ** W modification:
+      but a little correction, you need to do the following for every entry in W
+    final_W_entry = scale * temp_W_entry + offset
+    (temp_W_entry is what you have after doing the get_W_h procedure currently)
+    ** scale_list all entries have same value
+    ** offset_list all entries have different values
+    ** Question now is how do we correspond offset_values to specific W entries..
+      ** AJ notes **
+        both offset_list and scale_list are meant for keeping offset and scale information for each x variable (in my original code). So you would need to know which x corresponds to which W and transitively which position in scale_list and offset_list does it correspond with.
+
+its based on the number of x variables, I forget how many it relates to wrt W or its constituent dimensions
+
+  ** binstr issues for scaling reduction ...
+
   ** first is related to with iterations and larger samples (such as 10), we may get a binstr like this:
   binstr: 000000000000000000001111111111111111111111111111001001111001001111001001111001001001111010011111001001111010011001111001001111101001111001001111111001001111001001111001001111001100001111001001111010011111001001111111111001001111
   ** This has a lot of 0's in front, and when we make our binstr vec we seem to constantly get the first 3 of 3 digits, so ['000', '000', '000']
   ** Possibility we may not need to do this, double checking...
   ** We might be able to just use the offset_list and subtract from W values to get center points. 
   ** Will need to find a better iteration form to iterate from
-
-** Make main2.py and qubo2.py , update imports, and convert to class/objects
-  ** Try to use them, but instead of qubo_prep use qubo_prep_adaptive
-    ** Prec_list for adaptive won't begin with null
-    ** prec_list_str set to []
-    ** make sure eto not use convert_result, this was something setup for one problem 
-    ** When we get WH back first, we get integers, but then we use convert_real to make it real
-      ** based on scale list, might have eto do some other stuff
 
 
 --- Ajinkya Notes below --

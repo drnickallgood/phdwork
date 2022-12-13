@@ -196,8 +196,8 @@ itr = 0
 while LA.norm(np.matmul(A,x_cur)- b) > 10**-1:
     #print("scale_list: ",scale_list," offset_list: ",offset_list)
 
-    #print("scale_list before: ", scale_list)
-    #print("offset_list before: ", offset_list)
+    print("scale_list before: ", scale_list)
+    print("offset_list before: ", offset_list)
     
     Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
     #Q = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no)
@@ -210,7 +210,7 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-1:
     #convert solution into binary string
     binstr = get_bin_str(soln_dict,isising=False)
 
-    print("binstr:", binstr)
+    #print("binstr:", binstr)
 
     binstr_vec = ['' for i in range(0,n)]
     temp_ctr = 0
@@ -228,7 +228,7 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-1:
 
 
     #print("binstr", binstr)
-    print("binstr_vec",binstr_vec)
+    #print("binstr_vec",binstr_vec)
     #print("tempctr", temp_ctr)
 
     #convert qubo result to an np.array of floating point values
@@ -250,8 +250,8 @@ while LA.norm(np.matmul(A,x_cur)- b) > 10**-1:
     scale_list = new_scale_list
     offset_list = new_offset_list
 
-    #print("scale_list after: ", scale_list)
-    #print("offset_list after: ", offset_list)
+    print("scale_list after: ", scale_list)
+    print("offset_list after: ", offset_list)
 
     itr += 1
     print("--------------------")

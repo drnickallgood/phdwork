@@ -37,9 +37,7 @@ seed = 0
 upper_limit = 100
 lower_limit  = -100
 bits_no = 3
-s = (upper_limit - lower_limit)/(2**(bits_no) - 1)
-scale_list = [s for i in range(0,k)]
-offset_list = [lower_limit for i in range(0,k)]
+
 
 
 
@@ -108,9 +106,21 @@ qubo_vars = qubo.parser.Parser(v,k)
 
 v_dict, x_dict, x_dict_rev, p, n = qubo_vars.get_vars()
 
+
+# The below for offset_list and scale_list is based on # of x variables
+
+x_var_len = len(x_dict)
+
+
+s = (upper_limit - lower_limit)/(2**(bits_no) - 1)
+scale_list = [s for i in range(0, k)]
+offset_list = [lower_limit for i in range(0, k)]
+
+
 Q_total = {}
 
 prec_list = [2, 1, 0]   #-8 to +7
+
 
 # Get string versions of prec_list_stirngs
 #prec_strings = [prec_list_str.append(str(x)) for x in prec_list]
@@ -155,7 +165,9 @@ solver = "tabu"
 #myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
 
 # New method submits when qubo is built
-myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver)
+#myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver, x_var_len)
+
+myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver)
 
 #myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 #myqubo.qubo_submit()
@@ -164,8 +176,14 @@ myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, d
 
 #pprint.pprint(myqubo.get_solution_dict())
 
+exit(1)
 
 W, H = myqubo.get_w_h()
+
+print("W:\n", W)
+print("H:\n", H)
+
+exit(1)
 
 myqubo.get_results()
 qcenters = myqubo.get_quantum_centers()
