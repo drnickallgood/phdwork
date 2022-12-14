@@ -142,9 +142,9 @@ num_sweeps = 9999
 num_reads = 999
 
 #tabu_timeout = 1
-tabu_timeout = 10000   # 10 sec
+#tabu_timeout = 10000   # 10 sec
 #tabu_timeout = 30000  # 30 sec
-#tabu_timeout =   60000  # 1 min
+tabu_timeout =  60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
@@ -175,8 +175,6 @@ myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, d
 ## New method will submit automatically 
 
 #pprint.pprint(myqubo.get_solution_dict())
-
-exit(1)
 
 W, H = myqubo.get_w_h()
 

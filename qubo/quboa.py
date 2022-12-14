@@ -272,8 +272,6 @@ class QuboA:
     # b = 1 x 1
     def build_qtotal(self):
 
-        w_itr = 0
-
         #x_cur = [0 for x in range(0,self.k)]
         # # num of x variables
         # x = n x 1 
@@ -281,146 +279,140 @@ class QuboA:
         #x_cur = np.array(x_cur)
         # Reset scsale list and offset list
 
-        while(w_itr < 3):
+        scale_temp = []
+        offset_temp = []
+        b_list = []
 
-            scale_temp = []
-            offset_temp = []
+        #print(self.v_dict)
+        #Q_alt2 = {} # new dict for Q_alt but diff key names
+        for key, val in self.v_dict.items():
+        #print(v_dict[key]['wh'])
+            # Go through individual list of tuples
+            varnames = []
+            for item in self.v_dict[key]['wh']:
+                
+                # Get our corresponding x values to WH values
+                varnames.append(self.x_dict_rev[item])
+                # Build a row vector of 1's for A
+                #A = np.zeros([1,k])
+                #A += 1
+                # Get each element of V for qubo_prep
+                # print(varnames)
+                # Also store them as a floating point number vs a string
+                #for v_key, v_val in v_dict.items():
+                # Build a row vector of 1's for A
+                #A = np.zeros([1,self.k])
+                # A for adaptive is size n x 1
+                #A = np.zeros([1,self.num_x])
+                
+            #Build scale list based on # of x variables in current pass
+            s2 = (self.upper_limit - self.lower_limit)/(2**(self.bits_no) - 1)
+            scale_list2 = [s2 for i in range(0, len(varnames))]
+            offset_list2 = [self.lower_limit for i in range(0, len(varnames))]
+
+            # extend main scale list with new items
+            # Temp holding spot to keep building up all the stuff we have
+            scale_temp.extend(scale_list2)
+            offset_temp.extend(offset_list2)
+
+            #A = np.zeros([1,self.k])
+
+            A = np.zeros([1, len(scale_list2)])
+            A += 1
+            b = np.array(float(self.v_dict[key]['v_val']))
+            b_list.append(b)
+
+            #Q, Q_alt, index = self.qubo_prep(A,b,self.k,self.prec_list,varnames=varnames)
+            ## SHould be not self.k but something else , perhaps len(varnames)
+            #Q, Q_alt, index = self.qubo_prep_adaptive(A, b, self.k, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
+            Q, Q_alt, index = self.qubo_prep_adaptive(A, b, len(scale_list2), scale_list2, offset_list2, self.bits_no, varnames=varnames)
+
+            #Q, Q_alt, index = self.qubo_prep_adaptive(A,b,self.num_x, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
+
+            # Put everything from each Q_alt dict into master Q_total
+            for key, val in Q_alt.items():
+                # Check if key is already here, if so add to it
+                if key in self.Q_total:
+                    self.Q_total[key] += val
+                else:
+                    self.Q_total[key] = val
+
+        ## QTOTAL IS BUILT AT THIS POINT !! ## 
+        # Q_total is done, lets get the correct scale and offset list per Q_total to use later
+        self.scale_list = scale_temp
+        self.offset_list = offset_temp 
+
+        penal = Penalizer(self.x_dict, self.delta1, self.delta2, self.Q_total, self.prec_list_str)
+        print("Applying linearization penalties...")
+        penal.linearization()
+                    
+        # Make as many q_alt2s as there are columns in H
+        prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
+        b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
+        
+        print("Applying penalties to H...")
+        for h_i in range(0, self.n):        # row
+            varnames2 = []
+            for h_j in range(0, self.k):    # col
+                varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
+                #pprint.pprint(varnames2)
+
+            A2 = np.zeros([1,self.k])
+            #A = np.zeros([1,self.num_x])
+            A2 += 1
+            #pprint.pprint(varnames2)    
+            Q2, Q2_alt, index2 = self.qubo_prep_nonneg(A2, b2, self.k, prec_list2, varnames=varnames2)
+        
+            penal.h_penalty(Q2_alt)
+
+        # Q_total is built, now we can run it through the adaptive piece
+        self.adaptive_form(b_list)
+
+        
+    def adaptive_form(self, b_list):
+        
+        w_itr = 0
+        b_ctr = 0
+        
+        while(w_itr < 6):
+
+            # temp scale lists
+            new_scale_list = []
+            new_offset_list = []
 
             print("iteration: ", w_itr)
 
-            #print(self.v_dict)
-            #Q_alt2 = {} # new dict for Q_alt but diff key names
-            for key, val in self.v_dict.items():
-            #print(v_dict[key]['wh'])
-                # Go through individual list of tuples
-                varnames = []
-                for item in self.v_dict[key]['wh']:
-                    
-                    # Get our corresponding x values to WH values
-                    varnames.append(self.x_dict_rev[item])
-                    # Build a row vector of 1's for A
-                    #A = np.zeros([1,k])
-                    #A += 1
-                    # Get each element of V for qubo_prep
-                    # print(varnames)
-                    # Also store them as a floating point number vs a string
-                    #for v_key, v_val in v_dict.items():
-                    # Build a row vector of 1's for A
-                    #A = np.zeros([1,self.k])
-                    # A for adaptive is size n x 1
-                    #A = np.zeros([1,self.num_x])
-                    
-                #Build scale list based on # of x variables in current pass
-                s2 = (self.upper_limit - self.lower_limit)/(2**(self.bits_no) - 1)
-                scale_list2 = [s2 for i in range(0, len(varnames))]
-                offset_list2 = [self.lower_limit for i in range(0, len(varnames))]
-
-                # extend main scale list with new items
-                # Temp holding spot to keep building up all the stuff we have
-                scale_temp.extend(scale_list2)
-                offset_temp.extend(offset_list2)
-
-                #A = np.zeros([1,self.k])
-
-                A = np.zeros([1, len(scale_list2)])
-                A += 1
-                b = np.array(float(self.v_dict[key]['v_val']))
-
-                #Q, Q_alt, index = self.qubo_prep(A,b,self.k,self.prec_list,varnames=varnames)
-                ## SHould be not self.k but something else , perhaps len(varnames)
-                #Q, Q_alt, index = self.qubo_prep_adaptive(A, b, self.k, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
-                Q, Q_alt, index = self.qubo_prep_adaptive(A, b, len(scale_list2), scale_list2, offset_list2, self.bits_no, varnames=varnames)
-
-                #Q, Q_alt, index = self.qubo_prep_adaptive(A,b,self.num_x, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
-
-                # Put everything from each Q_alt dict into master Q_total
-                for key, val in Q_alt.items():
-                    # Check if key is already here, if so add to it
-                    if key in self.Q_total:
-                        self.Q_total[key] += val
-                    else:
-                        self.Q_total[key] = val
-    
-            ## QTOTAL IS BUILT AT THIS POINT !! ## 
-            # Q_total is done, lets get the correct scale and offset list per Q_total to use later
-            self.scale_list = scale_temp
-            self.offset_list = offset_temp 
-
-            penal = Penalizer(self.x_dict, self.delta1, self.delta2, self.Q_total, self.prec_list_str)
-            print("Applying linearization penalties...")
-            penal.linearization()
-                        
-            # Make as many q_alt2s as there are columns in H
-            prec_list2 = [0] #all variables are binary, DO NOT CHANGE VALUE
-            b2 = np.array([1]) # This 1 enforces only one variable to be a 1 :D
-            
-            print("Applying penalties to H...")
-            for h_i in range(0, self.n):        # row
-                varnames2 = []
-                for h_j in range(0, self.k):    # col
-                    varnames2.append('h'+str( (h_j+1) ) + str( (h_i+1) ))
-                    #pprint.pprint(varnames2)
-
-                A2 = np.zeros([1,self.k])
-                #A = np.zeros([1,self.num_x])
-                A2 += 1
-                #pprint.pprint(varnames2)    
-                Q2, Q2_alt, index2 = self.qubo_prep_nonneg(A2, b2, self.k, prec_list2, varnames=varnames2)
-            
-                penal.h_penalty(Q2_alt)
-
-            # Q_total is now built lets submit
+            # submit qubo
             self.qubo_submit()
 
-            # now we need to do the scaling
-                #convert solution into binary string
-            #soln_dict = self.convert_result(self.sampleset.first.sample, index)
+            # get binary string from solution dictionary
             binstr = self.get_bin_str(self.solution_dict, isising=False)
-            #print("binstr:", len(binstr))
-            #print(binstr)
-
-            #binstr_vec = ['' for i in range(0, self.k)]
-            #binstr vec should be # of x_vars
+        
+            # Put binstr into vector
             binstr_vec = ['' for i in range(0, len(self.scale_list)) ]
             temp_ctr = 0
-
-            #print("binstr len:", len(binstr))
-            #print("binstr_vec len", len(binstr_vec))
-            #print("scale_list len", len(self.scale_list))
-
-            # Break up chunks of binary string 
-            #for i in range(0,self.k):
 
             for i in range(0, len(self.scale_list)):
                 for j in range(0,self.bits_no):
                     binstr_vec[i]+= binstr[temp_ctr]
                     temp_ctr += 1
 
-            #print(binstr_vec)
-            # Converts binary string returned into a real value based on scale offsets
-            # This is used to loop and converge, will use later
-
-            #x_cur = self.qubo_to_real_adaptive(binstr,self.k, self.scale_list,self.offset_list, self.bits_no)
             x_cur = self.qubo_to_real_adaptive(binstr, len(self.scale_list), self.scale_list, self.offset_list, self.bits_no)
             x_cur = np.array(x_cur)
 
-            print("x_cur: ", x_cur)
+            #print("x_cur: ", x_cur)
 
-            A3 = np.zeros([1, len(self.scale_list)])
-            A3 += 1
 
-            print("curr norm:", LA.norm(np.matmul(A3,x_cur)-b))
+            #This is intended to be used for scaling/iterations
+            #Problem is we need ot ensure it subtracts from correct b value
+            #possibly need to store all b values.. and go that way
 
-            # This updates thes scaling
-            new_scale_list = []
-            new_offset_list = []
+            A = np.zeros([1, len(self.scale_list)])
+            A += 1
 
-            '''
-            print("------------------------------\n")
-            print("scale_list before", self.scale_list)
-            print("offset_list before", self.offset_list)
-            print("------------------------------\n")
-            '''
+            b = b_list[b_ctr]
+            print("curr norm:", LA.norm(np.matmul(A,x_cur)-b))
+            b_ctr += 1
 
             # This adjust the scale list 
             for i in range(0, len(self.scale_list)):
@@ -430,23 +422,17 @@ class QuboA:
                 new_offset_list.append(temp_offset)
 
             self.scale_list = new_scale_list
-            self.offset_list = new_offset_list 
-
-            '''
-            print("------------------------------\n")
-            print("scale_list after\n", self.scale_list)
-            print("offset_list after\n", self.offset_list)
-            print("------------------------------\n")
-            '''
-            
+            self.offset_list = new_offset_list         
 
             w_itr += 1
-            ## End main loop
+      
+            #print("scale_list:", self.scale_list, "\n")
+            #print("offset_list:", self.offset_list, "\n")  
 
-        #print("scale_list:", self.scale_list)
-        #print("offset_list:", self.offset_list)
+        # End while loop
         exit(1)
-        
+
+
 
     def qubo_submit(self):
         if self.solver == "hybrid":

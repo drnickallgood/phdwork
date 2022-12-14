@@ -1,10 +1,14 @@
 ** Research Notes **
 
-** Got the indexing stuff mostly worked out, but issues still remain.
-  ** seems the norm is increasing vs decreasing which compared to adaptive we go down
-  ** x_cur does change though...
-  ** Still need to workout how to subtract offsets from specific WH entries.. for final results
-    ** possibly need to ensure we get correct B value here.. for the norm
+  ** Things seem to be working as expected, or better than thay were after breaking adaptive code out to 
+  its own method
+
+  ** Need to update the WH stuff next, basically i have to go through each entry in WH and subtract from teh computed offset
+
+  ** The L2 norm does seem to decrease over time, it starts and goes up then gradually goes down
+    ** using TABU only, the timeout period affects this, the longer the period , the larger the jump in norm.
+    ** the other tweak is to only have a bit of the process happening, but lots more iterations
+
 
 
 ** TO DO **
