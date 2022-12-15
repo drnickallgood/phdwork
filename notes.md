@@ -2,8 +2,19 @@
 
   ** Things seem to be working as expected, or better than thay were after breaking adaptive code out to 
   its own method
+    ** Seems to stop after 10 iterations, or ther size of b_list.. this doesn't match
+    ** scale_list is the length of # of x variables...
+    ** offset_list is also length of # of x variables
+    ** b is the num of b values...
+    ** in adaptive.py , A or b don't change, but x_cur does...
+    ** attempting to work around it by using just a single b value..
+      ** The norm reduces but after a certain point it's very minmal
+        ** for iterations, perhaps keep a delta between what changed? And if it's >= 1 iterate.. 
+        
 
   ** Need to update the WH stuff next, basically i have to go through each entry in WH and subtract from teh computed offset
+    ** I think i need to make another dictionary where the x_var is the key and the offset is the value
+    ** Then i can correlate to the x_var to the respective w and h values
 
   ** The L2 norm does seem to decrease over time, it starts and goes up then gradually goes down
     ** using TABU only, the timeout period affects this, the longer the period , the larger the jump in norm.

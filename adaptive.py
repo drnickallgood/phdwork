@@ -184,7 +184,7 @@ prec_list = [1,0]
 b = np.array([6])
 n=2
 varnames = ['x1','x2']
-Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
+#Q,Q_alt,index = qubo_prep_adaptive(A,b,n,scale_list,offset_list,bits_no,varnames=varnames)
 
 
 x_cur = [0 for x in range(0,n)]

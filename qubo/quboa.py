@@ -265,28 +265,16 @@ class QuboA:
     def bin_to_real(self,binstr):
         return int(binstr,2)
 
-    # This is modified for adaptive. 
-    # n for this is number of variables
-    # A = 1 x n
-    # x = n x 1 
-    # b = 1 x 1
     def build_qtotal(self):
 
-        #x_cur = [0 for x in range(0,self.k)]
-        # # num of x variables
-        # x = n x 1 
-        #x_cur = [0 for x in range(0,self.num_x)]
-        #x_cur = np.array(x_cur)
-        # Reset scsale list and offset list
+        print("Building Q_total...")
 
         scale_temp = []
         offset_temp = []
         b_list = []
 
-        #print(self.v_dict)
-        #Q_alt2 = {} # new dict for Q_alt but diff key names
         for key, val in self.v_dict.items():
-        #print(v_dict[key]['wh'])
+
             # Go through individual list of tuples
             varnames = []
             for item in self.v_dict[key]['wh']:
@@ -320,6 +308,7 @@ class QuboA:
             A = np.zeros([1, len(scale_list2)])
             A += 1
             b = np.array(float(self.v_dict[key]['v_val']))
+            #print(b)
             b_list.append(b)
 
             #Q, Q_alt, index = self.qubo_prep(A,b,self.k,self.prec_list,varnames=varnames)
@@ -373,8 +362,11 @@ class QuboA:
         
         w_itr = 0
         b_ctr = 0
-        
-        while(w_itr < 6):
+        iter_delta = 0
+
+        self.offset_xvar_dict = {}
+
+        while(w_itr < 5):
 
             # temp scale lists
             new_scale_list = []
@@ -382,13 +374,13 @@ class QuboA:
 
             print("iteration: ", w_itr)
 
-            # submit qubo
+            # submit qubo, data is tsored in self.solution_dict
             self.qubo_submit()
 
-            # get binary string from solution dictionary
+            # get binary string from solution dictionary, from quantum solver
             binstr = self.get_bin_str(self.solution_dict, isising=False)
         
-            # Put binstr into vector
+            # Put binstr into vector, range is 0 to num of x_variables
             binstr_vec = ['' for i in range(0, len(self.scale_list)) ]
             temp_ctr = 0
 
@@ -409,10 +401,9 @@ class QuboA:
 
             A = np.zeros([1, len(self.scale_list)])
             A += 1
-
-            b = b_list[b_ctr]
-            print("curr norm:", LA.norm(np.matmul(A,x_cur)-b))
-            b_ctr += 1
+            
+            b = b_list[0]
+            print("curr norm:", LA.norm(np.matmul(A,x_cur)-b), "\n", x_cur, "\n")
 
             # This adjust the scale list 
             for i in range(0, len(self.scale_list)):
@@ -430,12 +421,25 @@ class QuboA:
             #print("offset_list:", self.offset_list, "\n")  
 
         # End while loop
+        off_ctr = 0
+        for k,v in self.x_dict_rev.items():
+            self.offset_xvar_dict[k] = self.offset_list[off_ctr]
+            off_ctr += 1
+
+        pprint.pprint(self.offset_xvar_dict)
+
         exit(1)
+
+    # End method 
 
 
 
     def qubo_submit(self):
-        if self.solver == "hybrid":
+        if self.solver == "exact":
+            print("Submitting to Exact Solver...")
+            sampler = dimod.ExactSolver()
+            sampleset = sampler.sample_qubo(self.Q_total)
+        elif self.solver == "hybrid":
             print("Submitted to Hybrid Solver...")
             sampler = LeapHybridSampler(solver={'category': 'hybrid'})
             sampleset = sampler.sample_qubo(self.Q_total)
@@ -463,6 +467,31 @@ class QuboA:
     def get_solution_dict(self):
         return self.solution_dict
 
+    def qubo_verify_adaptive(self):
+
+        print("Creating verification W and H...\n")
+        for i in range(0,self.k):
+            for j in range(0,self.n):
+                temp_h = "h" + str(i+1) + str(j+1)
+                self.H[i,j] = self.solution_dict[temp_h]
+                
+        # For W we have to basically subtract the scale list from W
+        for i in range(0,self.p):
+            for j in range(0,self.k):
+                temp_w = "w" + str(i+1) + str(j+1)
+                for sol_key, sol_val in self.solution_dict.items():
+                    if temp_w in sol_key:
+                       
+                       # This is the part we need to do stuff with the scale list
+                        temp_str = sol_key.split('_')[1]
+                        temp_w_entry = (2**int(temp_str))*sol_val
+                        temp_w_entry = self.scale_list[0] * temp_w_entry + self.offset_list[0]
+                        self.W[i,j] += temp_w_entry 
+
+        
+        self.count_ones()
+        print("")
+
     def qubo_verify(self):
 
         #self.W = np.zeros([self.p, self.k])
@@ -475,6 +504,10 @@ class QuboA:
             for j in range(0,self.n):
                 temp_h = "h" + str(i+1) + str(j+1)
                 self.H[i,j] = self.solution_dict[temp_h]
+
+        for sol_key, sol_val in self.solution_dict.items():
+            print(sol_key, ":", sol_val)
+        exit(1)
                 
         # For W we have to basically subtract the scale list from W
         for i in range(0,self.p):
@@ -489,8 +522,11 @@ class QuboA:
                         if temp_str == "null":
                             self.W[i,j] += -(2**(self.prec_list[0]+1))*sol_val
                         else:
+                        #but a little correction, you need to do the following for every entry in W
+                        #final_W_entry = scale * temp_W_entry + offset
+                        # (temp_W_entry is what you have after doing the get_W_h procedure currently)
                             temp_w_entry = (2**int(temp_str))*sol_val
-                            temp_w_entry = self.scale_list[0] * temp_w_entry + self.offset_list[0]
+                            temp_w_entry = self.scale_list[i] * temp_w_entry + self.offset_list[i]
                             self.W[i,j] += temp_w_entry 
                             #self.W[i,j] += scale * temp_w_entry + offset 
                             #self.W[i,j] += (2**int(temp_str))*sol_val
@@ -644,7 +680,8 @@ class QuboA:
         so make sure to not use it or if you do comment it out first
     '''
     def get_w_h(self):
-        self.qubo_verify()
+        #self.qubo_verify()
+        self.qubo_verify_adaptive()
         return self.W, self.H
         
 ## Adaptive Stuff

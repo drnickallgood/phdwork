@@ -31,7 +31,7 @@ index = {}
 Q_total = {}
 
 centers = np.array([ [1,6], [2,4], [3,5] ])
-num_samples = 10
+num_samples = 5
 k = 3
 seed = 0
 upper_limit = 100
@@ -106,7 +106,6 @@ qubo_vars = qubo.parser.Parser(v,k)
 
 v_dict, x_dict, x_dict_rev, p, n = qubo_vars.get_vars()
 
-
 # The below for offset_list and scale_list is based on # of x variables
 
 x_var_len = len(x_dict)
@@ -129,8 +128,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 10 
-delta2 = 20 
+delta1 = 25
+delta2 = 50
 
 
 
@@ -142,9 +141,10 @@ num_sweeps = 9999
 num_reads = 999
 
 #tabu_timeout = 1
-#tabu_timeout = 10000   # 10 sec
+#tabu_timeout = 5000 # 5 sec
+tabu_timeout = 10000   # 10 sec
 #tabu_timeout = 30000  # 30 sec
-tabu_timeout =  60000  # 1 min
+#tabu_timeout =  60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
@@ -180,6 +180,15 @@ W, H = myqubo.get_w_h()
 
 print("W:\n", W)
 print("H:\n", H)
+
+WH = np.matmul(W,H)
+
+whsize = WH.shape[0] * WH.shape[1]
+
+print("WH", WH)
+print("xvar_len", x_var_len)
+print("wh size", whsize)
+
 
 exit(1)
 
