@@ -1,6 +1,29 @@
 20 samples
 =========
 
+Delta1:  10
+Delta2:  20
+num_sweeps: 15000
+num_reads: 2000
+Seed:  0
+Clusters (k):  3
+
+ Norm:  10.597870407528676
+Inertia:  112.31485717477203
+Silhouette Score:  0.014719477819528062
+Homogeneity Score:  0.31186262051047775
+Completeness Score:  0.8653629579883937
+V-measure:  0.4584921780498293
+Frobenius Norm:  56.266581312882884
+
+
+Computed Centers
+[-2.0, 2.0]
+[-2.0, -2.0]
+[0.0, -2.0]
+
+Running time:  0:03:05.665655
+
 
 
 
@@ -9,10 +32,56 @@
 
 
 
+Delta1:  25
+Delta2:  45
+num_sweeps: 15000
+num_reads: 2000
+Seed:  0
+Clusters (k):  3
+
+ Norm:  19.653377195359447
+Inertia:  386.2552351830748
+Silhouette Score:  -0.0482154383540695
+Homogeneity Score:  0.30963781434859317
+Completeness Score:  0.9562582803682808
+V-measure:  0.46780099112668794
+Frobenius Norm:  88.59112594744535
+
+
+Computed Centers
+[6.0, -2.0]
+[-2.0, 2.0]
+[-2.0, -2.0]
+
+Running time:  0:05:35.908402
 
 
 35 samples
 ==========
+
+Num Samples:  35
+
+
+Delta1:  100
+Delta2:  200
+Seed:  0
+Clusters (k):  3
+
+ Norm:  17.622968044166583
+Inertia:  310.56900268571655
+Silhouette Score:  -0.05166966062113178
+Homogeneity Score:  0.27605257289478197
+Completeness Score:  0.8886868692652135
+V-measure:  0.42125180598936346
+Frobenius Norm:  101.36707425268564
+
+
+Computed Centers
+[2.0, -2.0]
+[-2.0, -2.0]
+[-2.0, -2.0]
+
+Running time:  0:44:20.593359
 
 
 

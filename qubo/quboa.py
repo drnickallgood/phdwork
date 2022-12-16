@@ -366,7 +366,7 @@ class QuboA:
 
         self.offset_xvar_dict = {}
 
-        while(w_itr < 5):
+        while(w_itr < 3):
 
             # temp scale lists
             new_scale_list = []
@@ -423,12 +423,8 @@ class QuboA:
         # End while loop
         off_ctr = 0
         for k,v in self.x_dict_rev.items():
-            self.offset_xvar_dict[k] = self.offset_list[off_ctr]
+            self.offset_xvar_dict[v] = self.offset_list[off_ctr]
             off_ctr += 1
-
-        pprint.pprint(self.offset_xvar_dict)
-
-        exit(1)
 
     # End method 
 
@@ -476,16 +472,24 @@ class QuboA:
                 self.H[i,j] = self.solution_dict[temp_h]
                 
         # For W we have to basically subtract the scale list from W
+
         for i in range(0,self.p):
             for j in range(0,self.k):
                 temp_w = "w" + str(i+1) + str(j+1)
                 for sol_key, sol_val in self.solution_dict.items():
-                    if temp_w in sol_key:
-                       
+                    #print("sol_key:", sol_key)
+                    #print("sol_val:", sol_val)
+                    if temp_w in sol_key:   
+                        #print(list(self.offset_xvar_dict.keys())[list(self.offset_xvar_dict.values())]) 
+                        # Loop through xvar dict, see if tempw is in part of it, if so get value
+                        #print(list(self.offset_xvar_dict.keys())[0][0])
+                        #print(list(self.offset_xvar_dict.values())[0])                    
+                        #exit(1)
+                 
                        # This is the part we need to do stuff with the scale list
                         temp_str = sol_key.split('_')[1]
                         temp_w_entry = (2**int(temp_str))*sol_val
-                        temp_w_entry = self.scale_list[0] * temp_w_entry + self.offset_list[0]
+                        temp_w_entry = self.scale_list[i] * temp_w_entry + self.offset_list[i]
                         self.W[i,j] += temp_w_entry 
 
         
@@ -504,10 +508,6 @@ class QuboA:
             for j in range(0,self.n):
                 temp_h = "h" + str(i+1) + str(j+1)
                 self.H[i,j] = self.solution_dict[temp_h]
-
-        for sol_key, sol_val in self.solution_dict.items():
-            print(sol_key, ":", sol_val)
-        exit(1)
                 
         # For W we have to basically subtract the scale list from W
         for i in range(0,self.p):
@@ -526,7 +526,7 @@ class QuboA:
                         #final_W_entry = scale * temp_W_entry + offset
                         # (temp_W_entry is what you have after doing the get_W_h procedure currently)
                             temp_w_entry = (2**int(temp_str))*sol_val
-                            temp_w_entry = self.scale_list[i] * temp_w_entry + self.offset_list[i]
+                            temp_w_entry = self.scale_list[i] * temp_w_entry - self.offset_list[i]
                             self.W[i,j] += temp_w_entry 
                             #self.W[i,j] += scale * temp_w_entry + offset 
                             #self.W[i,j] += (2**int(temp_str))*sol_val

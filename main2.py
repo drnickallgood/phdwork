@@ -167,6 +167,7 @@ solver = "tabu"
 # New method submits when qubo is built
 #myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver, x_var_len)
 
+
 myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver)
 
 #myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
@@ -183,11 +184,7 @@ print("H:\n", H)
 
 WH = np.matmul(W,H)
 
-whsize = WH.shape[0] * WH.shape[1]
-
 print("WH", WH)
-print("xvar_len", x_var_len)
-print("wh size", whsize)
 
 
 exit(1)

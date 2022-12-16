@@ -1,5 +1,15 @@
 ** Research Notes **
 
+  ** How do we get proper scale value to W? 
+   ** seems if we go through we're alreayd kinda doing this by checking for specific W value in solution_dictionary
+   ** seems we have multiple entries for w and when we have them, we simply add it to our entry
+      ** because we're doing another loop over the items, and adding to the existing W.. so that's why this works
+      ** Just need to get the w_ij format to the tuple.. that maps to offset
+
+  ** Also issue seems to be H has more than a single 1 in a column, OR in the past, it would work but all botom
+  rows of H had a 1 and that's it, currently in all examples it violates H rules
+  
+
   ** Things seem to be working as expected, or better than thay were after breaking adaptive code out to 
   its own method
     ** Seems to stop after 10 iterations, or ther size of b_list.. this doesn't match
@@ -10,7 +20,9 @@
     ** attempting to work around it by using just a single b value..
       ** The norm reduces but after a certain point it's very minmal
         ** for iterations, perhaps keep a delta between what changed? And if it's >= 1 iterate.. 
-        
+    ** WH # of elements are same size as B
+
+
 
   ** Need to update the WH stuff next, basically i have to go through each entry in WH and subtract from teh computed offset
     ** I think i need to make another dictionary where the x_var is the key and the offset is the value
