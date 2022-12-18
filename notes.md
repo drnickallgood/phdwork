@@ -1,14 +1,79 @@
 ** Research Notes **
 
+** 12/18/2022 **
+
+*** Issue seems mostly resolved, in that if i increase delta's, then H behaves correctly, but deltas seem to be much higher
+than the previous formulation.
+
+*** We now have the following parameters to work with:
+  **** num_reads, num_sweeps, timeout, etc for the solver  (This is sorta new in the way we use it in conjunction with iterations)
+  **** delta1, delta2 for the lagrange params
+  **** NEW: Upper and lower limits for scale values to zoom in
+  **** NEW: w_itr or number of iterations , seems sometimes when this is too high we get a super. In papers it's based on a tolerance
+  variable which can be determined froma norm but we don't always converge on that norm.. so it's not a good idea to use this.
+
+*** Still need to finish up MOTIF for 35 40 45 and 50 samples for sim annealing
+*** Still need to finish up MOTIF for few samples for Hybrid
+*** Need to do K-means for Motif for Tabu, sim annealing, Hybrid
+*** Need to go and update document too, put in fixes and suggestions.
+
+
+
+** 12/17/2022 ** 
+
+*** So i managed to get the floating point / adaptive stuff to work, ended up also converting dictionary to w11 style
+*** Had to adjust the scale value from -8 to +7 , which seems to help quite a bit instead of -100 to +100
+*** Still the issue of H having violated columns, perhaps the deltas are not enough? 
+*** Need to continue with rest of code and get actual cluster analysis...
+*** seems to be an issue with how H is built, not only are the columns violated a lot, but
+it seems that the length gets doubled per my sample size. -- need to compare while running mmain and the new stuff
+  **** Need to check penalization for linearization and H, make sure it's happening, this might be why it's not working
+     - Confirmed this, when the computed label size doesn't match or is greater than the blob labels, then we have violations
+     - this causes issues 
+
+*** Not sure why I didn't keep dating my logs before, but here we go in starting that.
+*** Managed to get a W entry paried with a scale and offset list, getting adjusted per iteration
+  **** To adjust on W's the keys are the same so this part should be easier now.
+  **** In scale list for each W, value is same, so we can pick the first
+  **** In offset list, we have 3 values, that correspond, so which do we pick?
+
+
+** Questions for AJ
+  - Issue with H and getting just 1 in a single column, and the fact when it did happen it was only in bottom
+  - How to map offsets to specific W values
+      -- We can ignore 'h' values in ('w11', 'h11')
+      -- In build qubo, we need to build a scale list and offset list for W
+      -- We then go through when building W to apply scale and offsets 
+      So we basically are adding a scale list and offset list in a W-dict as the value of a w key
+      -- we then will go through this and basically do the iterative pieece for the scale and offset lists in the speicifc
+      w stuff..
+
+
+      the w_scale and w_offset will
+what you send into qubo_adaptive_prep will be a subset of those matching the correct xs
+I don't think addition will work for this because what we are doing is zooming into the range of w11. (Ie making its value more precise)
+
+Also don't think we are using offset (and scales) of x to figure out ws , think of it like we are assigning offsets of ws as offsets of x , getting back all values and adjusting the offsets of ws . Rinse and repeat
+
+  - What about b values, limited here, not enough to go through all xvars for the norm and figure out iteration
+
+
   ** How do we get proper scale value to W? 
    ** seems if we go through we're alreayd kinda doing this by checking for specific W value in solution_dictionary
    ** seems we have multiple entries for w and when we have them, we simply add it to our entry
       ** because we're doing another loop over the items, and adding to the existing W.. so that's why this works
       ** Just need to get the w_ij format to the tuple.. that maps to offset
+      ** Could further see if tempw is in the tuple of self.offset_xvar_dict..
+          print(list(self.offset_xvar_dict.keys())[0][0])
+          print(list(self.offset_xvar_dict.values())[0])        
+      ** Need to go through the above, and basically create a dictionary that:
+         ** uses the first as the key and the value is another dictionary 
+            # Loop through xvar dict, see if tempw is in part of it, if so get value
 
   ** Also issue seems to be H has more than a single 1 in a column, OR in the past, it would work but all botom
   rows of H had a 1 and that's it, currently in all examples it violates H rules
-  
+
+
 
   ** Things seem to be working as expected, or better than thay were after breaking adaptive code out to 
   its own method

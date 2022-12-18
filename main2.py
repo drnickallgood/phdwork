@@ -23,6 +23,7 @@ from sklearn.preprocessing import MinMaxScaler
 import ember
 
 
+
 start_time = datetime.now()
 # In a 2x2 situation, we basicallay have to send one quadratic expression at a time
 Q = {}
@@ -31,11 +32,11 @@ index = {}
 Q_total = {}
 
 centers = np.array([ [1,6], [2,4], [3,5] ])
-num_samples = 5
+num_samples = 20
 k = 3
 seed = 0
-upper_limit = 100
-lower_limit  = -100
+upper_limit = 5   # How many bits
+lower_limit  = -5   # How many bits
 bits_no = 3
 
 
@@ -104,22 +105,11 @@ v = np.transpose(V)
 
 qubo_vars = qubo.parser.Parser(v,k)
 
-v_dict, x_dict, x_dict_rev, p, n = qubo_vars.get_vars()
-
-# The below for offset_list and scale_list is based on # of x variables
-
-x_var_len = len(x_dict)
-
-
-s = (upper_limit - lower_limit)/(2**(bits_no) - 1)
-scale_list = [s for i in range(0, k)]
-offset_list = [lower_limit for i in range(0, k)]
-
+v_dict, x_dict, x_dict_rev, p, n, w_dict = qubo_vars.get_vars()
 
 Q_total = {}
 
 prec_list = [2, 1, 0]   #-8 to +7
-
 
 # Get string versions of prec_list_stirngs
 #prec_strings = [prec_list_str.append(str(x)) for x in prec_list]
@@ -128,9 +118,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 25
-delta2 = 50
-
+delta1 = 400
+delta2 = 400
 
 
 #Q_total = myqubo.get_qtotal()
@@ -141,8 +130,9 @@ num_sweeps = 9999
 num_reads = 999
 
 #tabu_timeout = 1
-#tabu_timeout = 5000 # 5 sec
-tabu_timeout = 10000   # 10 sec
+#tabu_timeout = 1000 # 1 sec
+tabu_timeout = 5000 # 5 sec
+#tabu_timeout = 10000   # 10 sec
 #tabu_timeout = 30000  # 30 sec
 #tabu_timeout =  60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
@@ -179,15 +169,13 @@ myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, d
 
 W, H = myqubo.get_w_h()
 
-print("W:\n", W)
-print("H:\n", H)
+#print("W:\n", W)
+#print("H:\n", H)
 
 WH = np.matmul(W,H)
 
-print("WH", WH)
+#print("WH", WH)
 
-
-exit(1)
 
 myqubo.get_results()
 qcenters = myqubo.get_quantum_centers()
@@ -202,14 +190,12 @@ transposed_h = np.transpose(H)
 
 for j in range(0, transposed_h.shape[0]):       # row
     for l in range(0, transposed_h.shape[1]):   # col
-        #print(transposed_h[j][l])
-        # k is right val for label
-        if transposed_h[j][l] == 1:
-            #print("h[" + str(j) + "][" + str(l) + "] = ", 1)
+        if transposed_h[j][l] == 1: 
             computed_labels.append(l)
 
 ## RIght now this will break so we're existing early...
 
+print(blob_labels)
 print(computed_labels)
 computed_labels = np.array(computed_labels)
 
@@ -217,8 +203,6 @@ computed_labels = np.array(computed_labels)
 
 print("Blob label size", blob_labels.size)
 print("Computed Label size", computed_labels.size)
-
-exit(1)
 
 # Set V back to the way it was format wise with transpose
 s_score = metrics.silhouette_score(np.transpose(v), computed_labels, metric='euclidean')
@@ -256,9 +240,11 @@ print("Frobenius Norm: ", LA.norm(v, 'fro')**2, "\n")
 
 print("\nComputed Centers")
 #print(qcenters)
-
+print("W:\n", W)
+'''
 for coords in qcenters:
     print(coords)
+'''
 
 
 print("\nRunning time: ", datetime.now()-start_time, "\n")

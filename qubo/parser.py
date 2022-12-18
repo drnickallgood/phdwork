@@ -49,6 +49,13 @@ class Parser:
         h_rows = self.k
         h_cols = self.n
 
+        self.w_dict = {}
+
+        # Get W
+        for i in range(0, self.p):
+            for j in range(0, self.k):
+                temp_w = "w" + str(i+1) + str(j+1)
+                self.w_dict[i,j] = temp_w 
 
         #Get the V's
         # V is p x n 
@@ -114,7 +121,7 @@ class Parser:
     def get_vars(self):
         self.find_vars()
         #self.parse_vdict()
-        return self.v_dict, self.x_dict, self.x_dict_rev, self.p, self.n
+        return self.v_dict, self.x_dict, self.x_dict_rev, self.p, self.n, self.w_dict 
         
     def get_qtotal(self):
         return self.Q_total

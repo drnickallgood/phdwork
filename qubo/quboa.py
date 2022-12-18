@@ -18,6 +18,7 @@ import sys
 from .penalizer import Penalizer
 from sklearn import metrics
 
+
 class QuboA:
     #def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver, num_x):
     def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver):
@@ -273,14 +274,28 @@ class QuboA:
         offset_temp = []
         b_list = []
 
+        ## use these with adaptive calls... 
+        self.w_scale_dict = {}
+        self.w_offset_dict = {}
+
         for key, val in self.v_dict.items():
 
+            # This is for storing W stuff
+            self.w_scale_dict[key] = list()
+            self.w_offset_dict[key] = list() 
             # Go through individual list of tuples
             varnames = []
             for item in self.v_dict[key]['wh']:
                 
+                #print(key)   # example: (1,1)
+                #print(val)   # example ('v_val"..)
+                #print(item)  # example ('w11, 'h11')
+                #print(item[0]) # example w11
+
                 # Get our corresponding x values to WH values
                 varnames.append(self.x_dict_rev[item])
+
+                # Populates dictionary with keys, default values
                 # Build a row vector of 1's for A
                 #A = np.zeros([1,k])
                 #A += 1
@@ -293,28 +308,37 @@ class QuboA:
                 # A for adaptive is size n x 1
                 #A = np.zeros([1,self.num_x])
                 
+            ### Get value of scale and offset for corresponding W's
+            ## this tells us 
             #Build scale list based on # of x variables in current pass
+            #s2 = (self.upper_limit - self.lower_limit)/(2**(self.bits_no) - 1)
+            #scale_list2 = [s2 for i in range(0, len(varnames))]
+            #offset_list2 = [self.lower_limit for i in range(0, len(varnames))]
+
             s2 = (self.upper_limit - self.lower_limit)/(2**(self.bits_no) - 1)
-            scale_list2 = [s2 for i in range(0, len(varnames))]
-            offset_list2 = [self.lower_limit for i in range(0, len(varnames))]
+            w_scale_list = [s2 for i in range(0, len(varnames))]
+            w_offset_list = [self.lower_limit for i in range(0, len(varnames))]
 
             # extend main scale list with new items
             # Temp holding spot to keep building up all the stuff we have
-            scale_temp.extend(scale_list2)
-            offset_temp.extend(offset_list2)
+            scale_temp.extend(w_scale_list)
+            offset_temp.extend(w_offset_list)
 
             #A = np.zeros([1,self.k])
 
-            A = np.zeros([1, len(scale_list2)])
+            A = np.zeros([1, len(w_scale_list)])
             A += 1
             b = np.array(float(self.v_dict[key]['v_val']))
             #print(b)
             b_list.append(b)
 
+
             #Q, Q_alt, index = self.qubo_prep(A,b,self.k,self.prec_list,varnames=varnames)
             ## SHould be not self.k but something else , perhaps len(varnames)
             #Q, Q_alt, index = self.qubo_prep_adaptive(A, b, self.k, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
-            Q, Q_alt, index = self.qubo_prep_adaptive(A, b, len(scale_list2), scale_list2, offset_list2, self.bits_no, varnames=varnames)
+            Q, Q_alt, index , scale_offset_index = self.qubo_prep_adaptive(A, b, len(w_scale_list), w_scale_list, w_offset_list, self.bits_no, varnames=varnames)
+            self.w_scale_dict[key].extend(w_scale_list)
+            self.w_offset_dict[key].extend(w_offset_list)
 
             #Q, Q_alt, index = self.qubo_prep_adaptive(A,b,self.num_x, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
 
@@ -325,6 +349,9 @@ class QuboA:
                     self.Q_total[key] += val
                 else:
                     self.Q_total[key] = val
+
+        #pprint.pprint(self.w_scale_dict)
+        #pprint.pprint(self.w_offset_dict)
 
         ## QTOTAL IS BUILT AT THIS POINT !! ## 
         # Q_total is done, lets get the correct scale and offset list per Q_total to use later
@@ -354,6 +381,8 @@ class QuboA:
         
             penal.h_penalty(Q2_alt)
 
+        #self.Q_total = penal.get_penalized_qtotal()
+
         # Q_total is built, now we can run it through the adaptive piece
         self.adaptive_form(b_list)
 
@@ -366,7 +395,7 @@ class QuboA:
 
         self.offset_xvar_dict = {}
 
-        while(w_itr < 3):
+        while(w_itr < 5):
 
             # temp scale lists
             new_scale_list = []
@@ -389,42 +418,72 @@ class QuboA:
                     binstr_vec[i]+= binstr[temp_ctr]
                     temp_ctr += 1
 
-            x_cur = self.qubo_to_real_adaptive(binstr, len(self.scale_list), self.scale_list, self.offset_list, self.bits_no)
-            x_cur = np.array(x_cur)
 
-            #print("x_cur: ", x_cur)
+
+            scale_len = 0
+
+            b = b_list[0]
+            x_cur_list = list()
+
+            for key, val in self.w_offset_dict.items():
+                # Returns list
+                x_cur = self.qubo_to_real_adaptive(binstr, len(self.w_scale_dict[key]), self.w_scale_dict[key], self.w_offset_dict[key], self.bits_no)
+                x_cur = np.array(x_cur)
+                scale_len = len(self.w_scale_dict[key])
+                A = np.zeros([1, scale_len])
+                A += 1
+                x_cur_list.extend(x_cur)
+                #print(x_cur)
+                #print("curr norm:", LA.norm(np.matmul(A,x_cur)-b), "\n", x_cur, "\n")
+
+            #x_cur = self.qubo_to_real_adaptive(binstr, len(self.scale_list), self.scale_list, self.offset_list, self.bits_no)
+            #x_cur = np.array(x_cur)
+
+            # print("x_cur: ", x_cur)
 
 
             #This is intended to be used for scaling/iterations
             #Problem is we need ot ensure it subtracts from correct b value
             #possibly need to store all b values.. and go that way
-
-            A = np.zeros([1, len(self.scale_list)])
+            x_cur_v = np.array(x_cur_list)
+            A = np.zeros([1, len(x_cur_list)])
             A += 1
-            
-            b = b_list[0]
-            print("curr norm:", LA.norm(np.matmul(A,x_cur)-b), "\n", x_cur, "\n")
 
-            # This adjust the scale list 
-            for i in range(0, len(self.scale_list)):
-                temp_scale,temp_offset = self.get_scale_offset(binstr_vec[i], self.scale_list[i], self.offset_list[i],
-                self.upper_limit, self.lower_limit, self.bits_no, 2)
-                new_scale_list.append(temp_scale)
-                new_offset_list.append(temp_offset)
+            print("\ncurr norm:", LA.norm(np.matmul(A,x_cur_list)-b), "\nx_cur_list:\n", x_cur_list, "\n")
 
-            self.scale_list = new_scale_list
-            self.offset_list = new_offset_list         
+           # self.w_scale_dict[key].extend(w_scale_list)
+            #self.w_offset_dict[key].extend(w_offset_list)
+
+            dict_ctr = 0
+
+
+            for i in range(scale_len):
+                for key, val in self.w_scale_dict.items():
+                    temp_scale, temp_offset = self.get_scale_offset(binstr_vec[i], self.w_scale_dict[key][i], self.w_offset_dict[key][i],
+                    self.upper_limit, self.lower_limit, self.bits_no, 2)
+
+                    self.w_scale_dict[key][i] = temp_scale
+                    self.w_offset_dict[key][i] = temp_offset
+  
+                #self.w_scale_dict[key] = temp_scale
+
+            #pprint.pprint(self.w_scale_dict)
+            #pprint.pprint(self.w_offset_dict)
 
             w_itr += 1
-      
-            #print("scale_list:", self.scale_list, "\n")
-            #print("offset_list:", self.offset_list, "\n")  
+        # Convert dicts keys to w11 keys
+        self.w_scale = {}
+        self.w_offset = {}
 
-        # End while loop
-        off_ctr = 0
-        for k,v in self.x_dict_rev.items():
-            self.offset_xvar_dict[v] = self.offset_list[off_ctr]
-            off_ctr += 1
+        for i in range(0,self.p):
+            for j in range(0,self.k):
+                temp_w = "w" + str(i+1) + str(j+1)
+                for k, v in self.w_scale_dict.items():
+                    self.w_scale[temp_w] = v 
+                    self.w_offset[temp_w] = self.w_offset_dict[k]
+
+        #print(self.w_scale)
+        #print(self.w_offset)                
 
     # End method 
 
@@ -470,6 +529,7 @@ class QuboA:
             for j in range(0,self.n):
                 temp_h = "h" + str(i+1) + str(j+1)
                 self.H[i,j] = self.solution_dict[temp_h]
+                #print(temp_h, self.solution_dict[temp_h])
                 
         # For W we have to basically subtract the scale list from W
 
@@ -477,20 +537,15 @@ class QuboA:
             for j in range(0,self.k):
                 temp_w = "w" + str(i+1) + str(j+1)
                 for sol_key, sol_val in self.solution_dict.items():
-                    #print("sol_key:", sol_key)
-                    #print("sol_val:", sol_val)
-                    if temp_w in sol_key:   
-                        #print(list(self.offset_xvar_dict.keys())[list(self.offset_xvar_dict.values())]) 
-                        # Loop through xvar dict, see if tempw is in part of it, if so get value
-                        #print(list(self.offset_xvar_dict.keys())[0][0])
-                        #print(list(self.offset_xvar_dict.values())[0])                    
-                        #exit(1)
-                 
+                    if temp_w in sol_key:  
                        # This is the part we need to do stuff with the scale list
                         temp_str = sol_key.split('_')[1]
                         temp_w_entry = (2**int(temp_str))*sol_val
-                        temp_w_entry = self.scale_list[i] * temp_w_entry + self.offset_list[i]
-                        self.W[i,j] += temp_w_entry 
+                        final_w_entry = self.w_scale[temp_w][j] * (temp_w_entry + self.w_offset[temp_w][j])
+                        #temp_w_entry = self.scale_list[i] * temp_w_entry + self.offset_list[i]
+                        #self.W[i,j] += temp_w_entry 
+                        self.W[i,j] += final_w_entry
+                        #print("W" + str(i) + str(j), self.W[i,j])
 
         
         self.count_ones()
@@ -716,28 +771,29 @@ class QuboA:
     # x = n x 1 
     # b = 1 x 1
     # Example call - self.qubo_prep_adaptive(A,b,self.num_x, self.scale_list, self.offset_list, self.bits_no, varnames=varnames)
-    def qubo_prep_adaptive(self, A, b, n, scale_list, offset_list, bits_no, varnames=None):
-
+    def qubo_prep_adaptive(self, A,b,n,scale_list,offset_list,bits_no,varnames=None):
         n_i_ctr = 0
         i_powerctr = 0
         i_twosymb = 0
+        
+        scale_offset_index_dict = {}
 
         offset_vector = np.array(offset_list)
         offset_total = np.matmul(A,offset_vector)
         Qinit = np.zeros([n,n])
         Qdict = {}
         powersoftwo = np.zeros(bits_no)
-
+        
         Qdict_alt = {} #This dictionary saves the alternate QUBO with alphanumeric variable (keys) names
         index_dict = {} #Dictionary that maps alphanumeric variables to the integer ones
-
+        
 
         #powersoftwo
         for i in range(0,bits_no):
             powersoftwo[i] = 2**(bits_no - i-1)
         
         str_bitspower = [str(item) for item in range(bits_no-1,-1,-1)] #For the labelled variables, goes from [bits_no -1 ... 0]
-
+        #print(str_bitspower)
         #prepare Qinit
         for i in range(0,n):
             for j in range(i,n):
@@ -746,49 +802,41 @@ class QuboA:
         bnew = float(copy.deepcopy(b))
         bnew -= offset_total #we subtract offset here coz the whole bnew is gonna be subtracted from other parts
         bnew = 2*bnew
-
         
-        ### Check ipad notebook, the math is written down, sorta
-
+        
         for i in range(0,n*bits_no):
             if i%bits_no==0 and i>0:
                 n_i_ctr = n_i_ctr + 1
                 i_powerctr=0
             n_j_ctr = n_i_ctr
             j_powerctr = i_powerctr
-
             for j in range(i,n*bits_no):
                 if i==j: #Linear coefficients
                     Qdict[i,i] = (scale_list[n_i_ctr]**2)*(powersoftwo[i_powerctr]**2)*(sum(A[:,n_i_ctr]**2)) - scale_list[n_i_ctr]*powersoftwo[i_powerctr]*sum(A[:,n_i_ctr]*bnew)
-
                     if varnames != None:
                         tempvar1 = varnames[n_i_ctr] + '_' + str_bitspower[i_powerctr]
-                        #print("tempvar1", tempvar1)
                         index_dict[tempvar1] = i
                         Qdict_alt[tempvar1,tempvar1] = Qdict[i,i]
-                        #print("Qdict[i][i]:", Qdict[i,i])
+                        scale_offset_index_dict[varnames[n_i_ctr]] = n_i_ctr
                 else:
                     if j%bits_no==0 and j>0:
                         n_j_ctr = n_j_ctr + 1
                         j_powerctr = 0
                     
                     Qdict[i,j] = scale_list[n_i_ctr]*scale_list[n_j_ctr]*powersoftwo[i_powerctr]*powersoftwo[j_powerctr]*Qinit[n_i_ctr,n_j_ctr]
-
                     if varnames != None:
                         tempvar2 = varnames[n_j_ctr] + '_' + str_bitspower[j_powerctr]
                         Qdict_alt[tempvar1,tempvar2] = Qdict[i,j]
-
-
+                
                 j_powerctr = j_powerctr + 1
-
             i_powerctr = i_powerctr + 1
-
-
+        
         if varnames != None:
-            return Qdict, Qdict_alt, index_dict
+            return Qdict, Qdict_alt, index_dict, scale_offset_index_dict
         else:
             return Qdict #just return the bare bones if varnames not requested
 
+            
     def get_scale_offset(self, binstr,scale,offset,upper_limit,lower_limit,bits_no,scale_factor):
         num_binstr = int(binstr,2)
         new_scale = None
