@@ -31,28 +31,20 @@ index = {}
 Q_total = {}
 
 
-num_samples = 20 
+num_samples = 50 
 k = 3
 
 centers = np.array([ [1,6], [2,4], [3,5] ])
 seed = 0
 
 # Get EMBER vectors for MOTIF dataset
-#ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
+ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
 
 # Normalize EMBER vectors and apply PCA
-#ember_norm_X = ember_X.copy()
-#ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
+ember_norm_X = ember_X.copy()
+ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
 
 #random.seed(a=0)
-
-#motif = np.zeros([num_samples, 2])
-
-#for i in range(0,num_samples):
-    #rand_sample = random.randint(0,num_samples)
-    #print(ember_norm_X[rand_sample])
-    #motif[i] = ember_norm_X[rand_sample]
-    #motif[i] = ember_norm_X[i]
 
 
 # Test Data
@@ -65,12 +57,11 @@ V, blob_labels, blob_centers = make_blobs(
 motif = np.zeros([num_samples, 2])
 motif_y = np.zeros([num_samples,])
 
+
+# Motif samples 
 for i in range(0,num_samples):
-    rand_sample = random.randint(0,num_samples)
-    #print(ember_norm_X[rand_sample])
-	# Get random sample for motif X
+    #rand_sample = random.randint(0,num_samples)
     motif[i] = ember_norm_X[i]
-	# get random sample for motif y
     motif_y[i] = ember_y[i]
 
 
@@ -96,6 +87,7 @@ motif50_t = np.transpose(motif50)
 
 # Motif
 v = np.transpose(motif)
+
 
 ## This is for mnotif samplesets
 #v = motif20_t
@@ -126,8 +118,10 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 10 
-delta2 = 20 
+# d1 = 35, d2 = 80 gets slightly diff results
+# d1 = 36, d2 = 81 gets diff results 
+delta1 = 11.123 
+delta2 = 36.321 
 
 # Builds the qubo with appropriate penalties
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
@@ -136,14 +130,18 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 9999 
-num_reads = 999 
+num_sweeps = 25000 
+num_reads = 2500 
+
+#tabu_timeout =   1  
+tabu_timeout = 10000 #10 sec
+#tabu_timeout = 30000 # 30 sec
 #tabu_timeout =   60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
 #tabu_timeout = 1200000  #ms  #20min
-tabu_timeout = 1800000  #ms  #30min
+#tabu_timeout = 1800000  #ms  #30min
 
 #tabu_timeout = 3600000  #ms #1hr
 #tabu_timeout = 7200000  #ms  #2hr
@@ -175,33 +173,35 @@ for j in range(0, transposed_h.shape[0]):       # row
         if transposed_h[j][l] == 1:
             computed_labels.append(l)
 
-
 computed_labels = np.array(computed_labels)
 
-print("Blob label size", blob_labels.size)
+print("Blob label size", motif_y.size)
 print("Computed Label size", computed_labels.size)
-
 
 # Set V back to the way it was format wise with transpose
 s_score = metrics.silhouette_score(np.transpose(v), computed_labels, metric='euclidean')
 #print("Silhouette score: ", s_score)
 # Homogeneity
-homogeneity_score = metrics.homogeneity_score(blob_labels, computed_labels)
+homogeneity_score = metrics.homogeneity_score(motif_y, computed_labels)
 
 # Completeness
-completeness_score =  metrics.completeness_score(blob_labels, computed_labels)
+completeness_score =  metrics.completeness_score(motif_y, computed_labels)
 
 # V-measure
-vmeasure = metrics.v_measure_score(blob_labels, computed_labels)
+vmeasure = metrics.v_measure_score(motif_y, computed_labels)
 
 
 print("Num Samples: ", num_samples)
 print("Initial Centers: ", blob_centers)
 #print("V: ", V)
+print("V shape: ", V.shape)
 #print("blob labels", blob_labels)
 #print("W: ", W, "\n")
+print("W shape: ", W.shape, "\n")
 #print("H: ", H, "\n")
+print("H shape ", H.shape, "\n")
 #print("WH:", np.matmul(W, H), "\n")
+print("WH shape", np.matmul(W, H).shape, "\n")
 
 
 print("Delta1: ", delta1)
