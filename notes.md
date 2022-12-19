@@ -12,10 +12,11 @@ than the previous formulation.
   **** NEW: w_itr or number of iterations , seems sometimes when this is too high we get a super. In papers it's based on a tolerance
   variable which can be determined froma norm but we don't always converge on that norm.. so it's not a good idea to use this.
 
-*** Still need to finish up MOTIF for 35 40 45 and 50 samples for sim annealing
-*** Still need to finish up MOTIF for few samples for Hybrid
-*** Need to do K-means for Motif for Tabu, sim annealing, Hybrid
+*** DONE -- Still need to finish up MOTIF for 35 40 45 and 50 samples for sim annealing
+*** DONE -- Still need to finish up MOTIF for few samples for Hybrid
+*** DONE -- Need to do K-means for Motif for Tabu, sim annealing, Hybrid
 *** Need to go and update document too, put in fixes and suggestions.
+*** Need to make notebook for graphs of kmeans results and such for motif
 
 
 

@@ -1,0 +1,111 @@
+
+
+20 samples
+==========
+
+Num Samples:  20
+Num Clusters:  3
+Centroids:  [[-0.69258893  1.19993074]
+ [-0.92949694 -0.77917483]
+ [ 0.63449465 -1.14392161]]
+Iterations:  3
+Inertia:  21.36860646964973
+Silhouette Score:  0.3711137316085884
+Homogeneity Score:  0.3734880946151494
+Completeness Score:  1.0
+V-measure:  0.5438534139166318
+
+
+
+
+30 samples
+==========
+
+Num Samples:  30
+Num Clusters:  3
+Centroids:  [[ 2.38766336  2.07245451]
+ [-1.26633684  0.93988355]
+ [ 0.28504298 -0.89842241]]
+Iterations:  4
+Inertia:  24.540661896705366
+Silhouette Score:  0.5104974635836582
+Homogeneity Score:  0.27043449799059793
+Completeness Score:  1.0
+V-measure:  0.42573544471333985
+
+
+
+
+35 samples
+==========
+
+Num Samples:  35
+Num Clusters:  3
+Centroids:  [[ 0.19956302 -0.81183984]
+ [-1.47404869  1.01791661]
+ [ 2.38766003  2.07245642]]
+Iterations:  6
+Inertia:  28.19021290534678
+Silhouette Score:  0.5254119371845447
+Homogeneity Score:  0.24357707939161108
+Completeness Score:  0.9999999999999996
+V-measure:  0.39173619943329135
+
+
+
+
+40 samples
+===========
+
+Num Samples:  40
+Num Clusters:  3
+Centroids:  [[-0.31017069 -0.25589617]
+ [ 1.99644506  2.50752616]
+ [ 2.77887893  1.63738525]]
+Iterations:  2
+Inertia:  85.69834682217073
+Silhouette Score:  0.4585589184823048
+Homogeneity Score:  0.06632526148291673
+Completeness Score:  0.9999999999999996
+V-measure:  0.12439968155810086
+
+
+
+
+45 samples
+===========
+
+Num Samples:  45
+Num Clusters:  3
+Centroids:  [[-0.26830145 -0.29983334]
+ [ 1.9964447   2.50752592]
+ [ 2.77887821  1.63738513]]
+Iterations:  2
+Inertia:  100.76517835443052
+Silhouette Score:  0.45350575936178866
+Homogeneity Score:  0.05821198322752321
+Completeness Score:  1.0000000000000018
+V-measure:  0.11001951244206847
+
+
+
+
+
+50 samples
+===========
+
+
+Num Samples:  50
+Num Clusters:  3
+Centroids:  [[ 0.28036725 -0.88688458]
+ [-1.56862468  0.83016687]
+ [ 1.77765534  1.86513841]]
+Iterations:  8
+Inertia:  44.3895216127924
+Silhouette Score:  0.5078194974005027
+Homogeneity Score:  0.21990969003557256
+Completeness Score:  1.0000000000000002
+V-measure:  0.36053437698188956
+
+
+

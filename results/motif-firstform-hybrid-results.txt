@@ -158,13 +158,41 @@ Running time:  0:00:09.892401
 
 
 
-
-
 45 samples
 =============
 
 
+Blob label size 45
+Computed Label size 45
+Num Samples:  45
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+V shape:  (45, 2)
+W shape:  (2, 3)
 
+H shape  (3, 45)
+
+WH shape (2, 45)
+
+Delta1:  75
+Delta2:  179.987654
+Seed:  0
+Clusters (k):  3
+
+ Norm:  20.648606964137265
+Inertia:  426.36496955941794
+Silhouette Score:  -0.06882443742233585
+Homogeneity Score:  0.2738435356816205
+Completeness Score:  0.915418437534478
+V-measure:  0.4215747702496081
+Frobenius Norm:  128.40315925463474
+
+
+Computed Centers
+[-2.0, -2.0]
+[-2.0, -2.0]
+[-2.0, -2.0]
 
 
 

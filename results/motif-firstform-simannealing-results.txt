@@ -89,11 +89,78 @@ Running time:  0:44:20.593359
 40 samples
 ==========
 
+Blob label size 40
+Computed Label size 40
+Num Samples:  40
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+V shape:  (40, 2)
+W shape:  (2, 3)
+
+H shape  (3, 40)
+
+WH shape (2, 40)
+
+Delta1:  100
+Delta2:  350
+Seed:  0
+Clusters (k):  3
+
+ Norm:  19.548864120498003
+Inertia:  382.15808840169416
+Silhouette Score:  -0.06933052096640391
+Homogeneity Score:  0.2566344456953857
+Completeness Score:  0.8388792653332685
+V-measure:  0.3930308002480578
+Frobenius Norm:  112.5193468991558
+
+
+Computed Centers
+[-2.0, -2.0]
+[-2.0, -2.0]
+[-2.0, -2.0]
+
+Running time:  0:05:05.970031
+
 
 
 45 samples
 ===========
 
+Blob label size 45
+Computed Label size 45
+Num Samples:  45
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+V shape:  (45, 2)
+W shape:  (2, 3)
+
+H shape  (3, 45)
+
+WH shape (2, 45)
+
+Delta1:  100
+Delta2:  350
+Seed:  0
+Clusters (k):  3
+
+ Norm:  20.6486001968499
+Inertia:  426.36469008934966
+Silhouette Score:  -0.061477991224927364
+Homogeneity Score:  0.2654094640158376
+Completeness Score:  0.887224583379304
+V-measure:  0.4085907433821453
+Frobenius Norm:  128.40289115787766
+
+
+Computed Centers
+[-2.0, -2.0]
+[-2.0, -2.0]
+[-2.0, -2.0]
+
+Running time:  0:05:41.148867
 
 
 
@@ -101,3 +168,38 @@ Running time:  0:44:20.593359
 
 50 samples
 =========
+
+
+Blob label size 50
+Computed Label size 50
+Num Samples:  50
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+V shape:  (50, 2)
+W shape:  (2, 3)
+
+H shape  (3, 50)
+
+WH shape (2, 50)
+
+Delta1:  100
+Delta2:  350
+Seed:  0
+Clusters (k):  3
+
+ Norm:  21.512005312700968
+Inertia:  462.76637257367463
+Silhouette Score:  -0.06512370713798758
+Homogeneity Score:  0.26652992729308517
+Completeness Score:  0.923613129258431
+V-measure:  0.4136822692584147
+Frobenius Norm:  141.52226385299218
+
+
+Computed Centers
+[-2.0, -2.0]
+[-2.0, -2.0]
+[-2.0, -2.0]
+
+Running time:  0:06:21.569410
