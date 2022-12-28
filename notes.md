@@ -1,4 +1,20 @@
-** Research Notes **
+* Research Notes *
+
+** 12/28/2022 **
+
+*** Motif results for original formulation completed and kmeans results completed, added to dissertation 
+*** Will start working on Gaussian data for 20 - 50 samples, and then do 100, 1000, 10000 samples using 3 processes
+
+
+** 12/19/2022 **
+
+*** Created Motif results in mathematica notebook with graphs, all that data is ready to be uploaded to Ch 6 of dissertation
+*** Need to Update Dissertation with data from motif default form
+*** Need to start running experiments with adaptive form, 20, 30, 35, 40, 45, 50 samples
+*** Need to do K-means runs with adaptive Results
+*** Need to do adaptive experiements on MOTIF data
+*** Need to do kmeansr uns on adaptive results for MOTIF data
+
 
 ** 12/18/2022 **
 

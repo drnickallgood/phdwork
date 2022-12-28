@@ -3,6 +3,9 @@
 20 samples
 ==========
 
+centers - [-2, 2], [-2, -2], [0, -2] ])
+
+
 Num Samples:  20
 Num Clusters:  3
 Centroids:  [[-0.69258893  1.19993074]
@@ -20,6 +23,8 @@ V-measure:  0.5438534139166318
 
 30 samples
 ==========
+
+centers - [6, -2], [-2, 2], [-2, -2] ])
 
 Num Samples:  30
 Num Clusters:  3
@@ -39,6 +44,9 @@ V-measure:  0.42573544471333985
 35 samples
 ==========
 
+centers - [2, -2], [-2, -2], [-2, -2] ])
+
+
 Num Samples:  35
 Num Clusters:  3
 Centroids:  [[ 0.19956302 -0.81183984]
@@ -56,6 +64,9 @@ V-measure:  0.39173619943329135
 
 40 samples
 ===========
+
+centers - [-2, -2], [-2, -2], [-2, -2] ])
+
 
 Num Samples:  40
 Num Clusters:  3
@@ -75,6 +86,9 @@ V-measure:  0.12439968155810086
 45 samples
 ===========
 
+centers - [-2, -2], [-2, -2], [-2, -2] ])
+
+
 Num Samples:  45
 Num Clusters:  3
 Centroids:  [[-0.26830145 -0.29983334]
@@ -93,6 +107,8 @@ V-measure:  0.11001951244206847
 
 50 samples
 ===========
+
+centers - [-2, -2], [-2, -2], [-2, -2] ])
 
 
 Num Samples:  50
