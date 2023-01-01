@@ -298,15 +298,15 @@ class Qubo:
         if solver == "hybrid":
             print("Submitted to Hybrid Solver...")
             sampler = LeapHybridSampler(solver={'category': 'hybrid'})
-            self.sampleset = sampler.sample_qubo(self.Q_total)
+            sampleset = sampler.sample_qubo(self.Q_total)
         elif solver == "tabu":
             print("Submitted to TABU Solver...")
             sampler = tabu.TabuSampler()
-            self.sampleset = sampler.sample_qubo(self.Q_total, timeout=tabu_timeout)
+            sampleset = sampler.sample_qubo(self.Q_total, timeout=tabu_timeout)
         elif solver == "sim":
             print("Submitted to Simulated Annealer...")
             sampler = neal.SimulatedAnnealingSampler()
-            self.sampleset = sampler.sample_qubo(self.Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
+            sampleset = sampler.sample_qubo(self.Q_total, num_sweeps=num_sweeps, num_reads=num_reads)
         else:
             print("Invalid options for qubo submission")
             exit(1)

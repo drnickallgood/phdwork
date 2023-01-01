@@ -66,6 +66,29 @@ hybrid40_5_1725 = np.array([ [-2, 6], [-2, 14], [-2, -6], [-2, -2], [14, -2] ])
 hybrid45_5_1725 = np.array([ [-2, 14], [-2, -2], [-10, -2], [14, -2], [-2, 6] ])
 hybrid50_5_1725 = np.array([ [-2, -2], [14, -2], [-2, 14], [0, -2], [2, -2] ])
  
+### MOTIF DATA ###
+
+motif20_tabu = np.array([ [0, 2], [-4, 4], [0, -2] ])
+motif30_tabu = np.array([ [4, 4], [-4, -2], [0, 0] ])
+motif35_tabu = np.array([ [6,4], [-4, 2], [0, 0] ])
+motif40_tabu = np.array([ [-4, 2], [4, 4], [0, 0] ])
+motif45_tabu = np.array([ [4, 4], [-4, 2], [0, 0] ])
+motif50_tabu = np.array([ [6, 4], [-4, 2], [0, 0] ])
+
+motif20_sim = np.array([ [-2, 2], [-2, -2], [0, -2] ])
+motif30_sim = np.array([ [6, -2], [-2, 2], [-2, -2] ])
+motif35_sim = np.array([ [2, -2], [-2, -2], [-2, -2] ])
+motif40_sim = np.array([ [-2, -2], [-2, -2], [-2, -2] ])
+motif45_sim = np.array([ [-2, -2], [-2, -2], [-2, -2] ])
+motif50_sim = np.array([ [-2, -2], [-2, -2], [-2, -2] ])
+
+motif20_hybrid = np.array([ [-2, 0], [-2, -2], [-2, 2] ])
+motif30_hybrid = np.array([ [-2, 0], [-2, -2], [0, -2] ])
+motif35_hybrid = np.array([ [-4, -2], [-6, -2], [-2, -2] ])
+motif40_hybrid = np.array([ [0, -2], [-2, -2], [-4, -2] ])
+motif45_hybrid = np.array([ [-2, -2], [-2, -2], [-2, -2] ])
+motif50_hybrid = np.array([ [2, -2], [0, -2], [-2, -2] ])
+
 
 
 ## Default K-Means ###
@@ -101,7 +124,7 @@ for i in range(0,num_samples):
 default_km = KMeans(
     n_clusters=num_clusters, 
     n_init=10, max_iter=10000,
-    tol=1e-04, init='random', random_state=0 
+    tol=1e-04, init=motif50_hybrid 
 )
 
 #default_y_km = default_km.fit_predict(X)

@@ -100,7 +100,7 @@ v = np.transpose(motif)
 qubo_vars = qubo.parser.Parser(v,k)
 
 
-v_dict, x_dict, x_dict_rev, p, n = qubo_vars.get_vars()
+v_dict, x_dict, x_dict_rev, p, n, w_dict = qubo_vars.get_vars()
 
 
 Q_total = {}
@@ -120,8 +120,8 @@ prec_list = [2, 1, 0]   #-8 to +7
 
 # d1 = 35, d2 = 80 gets slightly diff results
 # d1 = 36, d2 = 81 gets diff results 
-delta1 = 11.123 
-delta2 = 36.321 
+delta1 = 100 
+delta2 = 350 
 
 # Builds the qubo with appropriate penalties
 myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
@@ -130,8 +130,8 @@ myqubo = qubo.Qubo(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, de
 
 #print(Q_total)
 
-num_sweeps = 25000 
-num_reads = 2500 
+num_sweeps = 15000 
+num_reads = 1500 
 
 #tabu_timeout =   1  
 tabu_timeout = 10000 #10 sec
