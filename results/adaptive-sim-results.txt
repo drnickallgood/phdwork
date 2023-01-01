@@ -260,8 +260,8 @@ Num Samples:  250
 Initial Centers:  [[1 6]
  [2 4]
  [3 5]]
-Delta1:  400
-Delta2:  1000
+Delta1:  300
+Delta2:  910
 num_reads 1000
 num_sweeps 1000
 tabu timeout (seconds):  60.0 sec
@@ -271,18 +271,16 @@ adaptive iterations:  9
 Seed:  0
 Clusters (k):  3
 
- Norm:  88.78775480041385
-Inertia:  7883.265402498413
-Silhouette Score:  -0.022904854361064736
-Homogeneity Score:  0.0004819189716074171
-Completeness Score:  0.0004837675100619112
-V-measure:  0.00048284147157803554
+ Norm:  88.95636546028837
+Inertia:  7913.234955904385
+Silhouette Score:  -0.02934795460937583
+Homogeneity Score:  0.008837128457054024
+Completeness Score:  0.008851118637099803
+V-measure:  0.00884411801444452
 Frobenius Norm:  8079.634911307722
 
 
 Computed Centers
 W:
- [[-0.00051252  0.10415162  0.06866617]
- [-0.00051252  0.10415162  0.06866617]]
-
-Running time:  0:08:42.270348
+ [[0.03855731 0.07475963 0.03425605]
+ [0.03855731 0.07475963 0.03425605]]

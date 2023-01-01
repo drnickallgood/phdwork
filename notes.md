@@ -2,7 +2,9 @@
 
 ** 12/31/2022 **
 
-*** Sim annealing completed for adaptive. 
+*** Gaussian Adaptive Exp Completed
+*** Gaussain Adaptive kmeans exp completed
+
 
 
 ** 12/30/2022 **
