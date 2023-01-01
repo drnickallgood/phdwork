@@ -1,0 +1,288 @@
+20 samples 
+==========
+
+Blob label size 20
+Computed Label size 20
+Num Samples:  20
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+Delta1:  400
+Delta2:  600
+num_reads 999
+num_sweeps 9999
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -0.5529898158340787
+adaptive iterations:  8
+Seed:  0
+Clusters (k):  3
+
+ Norm:  26.59769917129756
+Inertia:  707.4376012068429
+Silhouette Score:  0.047445782865848767
+Homogeneity Score:  0.12131647276160812
+Completeness Score:  0.13333482317041287
+V-measure:  0.1270420429954955
+Frobenius Norm:  715.799658372631
+
+
+Computed Centers
+W:
+ [[ 0.0534529  -0.01414686  0.05865452]
+ [ 0.0730821  -0.00433225  0.04883992]]
+
+
+
+
+30 samples
+==========
+
+Blob label size 30
+Computed Label size 30
+Num Samples:  30
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+Delta1:  400
+Delta2:  600
+num_reads 2500
+num_sweeps 25000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -0.5529898158340787
+adaptive iterations:  8
+Seed:  0
+Clusters (k):  3
+
+ Norm:  29.703956950189433
+Inertia:  882.3250584987071
+Silhouette Score:  -0.08478711001308233
+Homogeneity Score:  0.16824793428572207
+Completeness Score:  0.16974860164793154
+V-measure:  0.16899493656799192
+Frobenius Norm:  983.0049835891405
+
+
+Computed Centers
+W:
+ [[0.26153931 0.25171402 0.1352554 ]
+ [0.30079772 0.28115783 0.1548846 ]]
+
+
+35 samples
+==========
+
+Delta1:  400
+Delta2:  600
+num_reads 1000
+num_sweeps 10000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -1.5529898158340787
+adaptive iterations:  4
+Seed:  0
+Clusters (k):  3
+
+ Norm:  21.674265073202225
+Inertia:  469.77376646343384
+Silhouette Score:  -0.15653729824031692
+Homogeneity Score:  0.17315257690905156
+Completeness Score:  0.18340701669697546
+V-measure:  0.17813234103790465
+Frobenius Norm:  1106.6323959107897
+
+
+Computed Centers
+W:
+ [[1.39016806 1.66544909 1.28114788]
+ [1.7399496  2.01523062 1.28114788]]
+
+Running time:  0:07:12.871842
+
+
+
+
+
+
+40 samples
+===========
+
+
+Blob label size 40
+Computed Label size 40
+Num Samples:  40
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+Delta1:  400
+Delta2:  600
+num_reads 1000
+num_sweeps 10000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -1.5529898158340787
+adaptive iterations:  6
+Seed:  0
+Clusters (k):  3
+
+ Norm:  29.78262892255765
+Inertia:  887.0049855387674
+Silhouette Score:  -0.10257081280265849
+Homogeneity Score:  0.12363686338733607
+Completeness Score:  0.14732528313304163
+V-measure:  0.13444561270369645
+Frobenius Norm:  1254.081632722048
+
+
+Computed Centers
+W:
+ [[0.73465596 0.69593087 0.62711062]
+ [0.82210134 0.69593087 0.62711062]]
+
+Running time:  0:09:35.231914
+
+
+
+45 samples
+===========
+
+Delta1:  400
+Delta2:  600
+num_reads 1000
+num_sweeps 10000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -1.5529898158340787
+adaptive iterations:  8
+Seed:  0
+Clusters (k):  3
+
+ Norm:  37.024921625462284
+Inertia:  1370.8448213716247
+Silhouette Score:  -0.043709880487396865
+Homogeneity Score:  0.06717526678654596
+Completeness Score:  0.07389593221777706
+V-measure:  0.07037551245336156
+Frobenius Norm:  1443.3156103876836
+
+
+Computed Centers
+W:
+ [[0.03401235 0.15982781 0.13150772]
+ [0.03401235 0.18168915 0.13150772]]
+
+Running time:  0:11:02.794040
+
+
+
+
+50 samples
+============
+
+Blob label size 50
+Computed Label size 50
+Num Samples:  50
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+Delta1:  400
+Delta2:  800
+num_reads 1000
+num_sweeps 1000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -1.5529898158340787
+adaptive iterations:  6
+Seed:  0
+Clusters (k):  3
+
+ Norm:  35.25330385394128
+Inertia:  1242.7954326183112
+Silhouette Score:  -0.08835533257467641
+Homogeneity Score:  0.08282463866847167
+Completeness Score:  0.08471896446276703
+V-measure:  0.08376109250198496
+Frobenius Norm:  1655.6731228943681
+
+
+Computed Centers
+W:
+ [[0.64431568 0.63284564 0.63858066]
+ [0.64431568 0.63284564 0.63858066]]
+
+
+
+100 samples
+============
+
+Blob label size 100
+Computed Label size 100
+Num Samples:  100
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+Delta1:  380
+Delta2:  900
+num_reads 1000
+num_sweeps 1000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -1.5529898158340787
+adaptive iterations:  6
+Seed:  0
+Clusters (k):  3
+
+ Norm:  54.44216291905302
+Inertia:  2963.9491033047116
+Silhouette Score:  -0.03241394829561703
+Homogeneity Score:  0.030166858491622015
+Completeness Score:  0.03141314094365006
+V-measure:  0.030777388318119332
+Frobenius Norm:  3358.45407279642
+
+
+Computed Centers
+W:
+ [[-0.08403204  1.01135705  0.26006925]
+ [-0.08403204  1.01135705  0.26006925]]
+
+Running time:  0:03:40.467793
+
+
+250 samples 
+=============
+
+
+Blob label size 250
+Computed Label size 250
+Num Samples:  250
+Initial Centers:  [[1 6]
+ [2 4]
+ [3 5]]
+Delta1:  400
+Delta2:  1000
+num_reads 1000
+num_sweeps 1000
+tabu timeout (seconds):  60.0 sec
+Upper limit:  8.240893199201459
+lower limit:  -1.5529898158340787
+adaptive iterations:  9
+Seed:  0
+Clusters (k):  3
+
+ Norm:  88.78775480041385
+Inertia:  7883.265402498413
+Silhouette Score:  -0.022904854361064736
+Homogeneity Score:  0.0004819189716074171
+Completeness Score:  0.0004837675100619112
+V-measure:  0.00048284147157803554
+Frobenius Norm:  8079.634911307722
+
+
+Computed Centers
+W:
+ [[-0.00051252  0.10415162  0.06866617]
+ [-0.00051252  0.10415162  0.06866617]]
+
+Running time:  0:08:42.270348

@@ -1,5 +1,16 @@
 * Research Notes *
 
+** 12/31/2022 **
+
+*** Sim annealing completed for adaptive. 
+
+
+** 12/30/2022 **
+
+*** Working on adaptive formulation/experiements on gaussian data now. Tabu completed, working with sim annealing.
+*** Might want to check out L1 norm to see what it is, and how it compares
+
+
 ** 12/28/2022 **
 
 *** Motif results for original formulation completed and kmeans results completed, added to dissertation 

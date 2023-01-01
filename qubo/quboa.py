@@ -21,7 +21,7 @@ from sklearn import metrics
 
 class QuboA:
     #def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver, num_x):
-    def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver):
+    def __init__(self, v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2,upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver, adaptive_iter):
         #self.dataset = dataset
         #self.num_centers = num_centers
         #self.num_samples = num_samples
@@ -56,6 +56,7 @@ class QuboA:
         self.solver = solver 
         self.solution_dict = {}
         #self.num_x = num_x 
+        self.adaptive_iter = adaptive_iter 
 
 
         self.build_qtotal()
@@ -395,7 +396,7 @@ class QuboA:
 
         self.offset_xvar_dict = {}
 
-        while(w_itr < 5):
+        while(w_itr < self.adaptive_iter):
 
             # temp scale lists
             new_scale_list = []
@@ -449,7 +450,8 @@ class QuboA:
             A = np.zeros([1, len(x_cur_list)])
             A += 1
 
-            print("\ncurr norm:", LA.norm(np.matmul(A,x_cur_list)-b), "\nx_cur_list:\n", x_cur_list, "\n")
+            #print("\ncurr norm:", LA.norm(np.matmul(A,x_cur_list)-b), "\nx_cur_list:\n", x_cur_list, "\n")
+            print("\nCurrent Norm: ", LA.norm(np.matmul(A,x_cur_list)-b))
 
            # self.w_scale_dict[key].extend(w_scale_list)
             #self.w_offset_dict[key].extend(w_offset_list)

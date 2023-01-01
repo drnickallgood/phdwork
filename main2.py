@@ -32,12 +32,10 @@ index = {}
 Q_total = {}
 
 centers = np.array([ [1,6], [2,4], [3,5] ])
-num_samples = 20
+num_samples = 250
 k = 3
 seed = 0
-upper_limit = 5   # How many bits
-lower_limit  = -5   # How many bits
-bits_no = 3
+
 
 
 
@@ -92,6 +90,12 @@ motif50_t = np.transpose(motif50)
 # Transpose matrix
 v = np.transpose(V)
 
+
+# Lower and upper bounds based on highest and lowest values of V
+upper_limit = v.max()
+lower_limit  = v.min()
+bits_no = 3
+
 # Motif
 #v = np.transpose(motif)
 
@@ -118,23 +122,23 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 400
-delta2 = 400
+delta1 = 100
+delta2 = 600
 
 
 #Q_total = myqubo.get_qtotal()
 
 #print(Q_total)
 
-num_sweeps = 9999 
-num_reads = 999
+num_sweeps = 1000
+num_reads = 1000
 
 #tabu_timeout = 1
 #tabu_timeout = 1000 # 1 sec
-tabu_timeout = 5000 # 5 sec
-#tabu_timeout = 10000   # 10 sec
+#tabu_timeout = 5000 # 5 sec
+#abu_timeout = 10000   # 10 sec
 #tabu_timeout = 30000  # 30 sec
-#tabu_timeout =  60000  # 1 min
+tabu_timeout =  60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
@@ -147,9 +151,18 @@ tabu_timeout = 5000 # 5 sec
 #tabu_timeout = 57600000       #16hr
 
 #solver = "exact"
-solver = "tabu"
+#solver = "tabu"
 #solver = "sim"
-#solver = "hybrid"
+solver = "hybrid"
+
+# TABU ITERATIONS vs time (30 mins max)
+# 360 iterations * 5 sec
+# 180 iterations * 10 sec TABU
+# 60 iterations * 30 sec tabu 
+# 30 iteerations * 1 min TABU
+# 6 iterations  * 5 min TABU
+# 3 iterations * 10 min tabu
+adaptive_iter = 6
 
 # Builds the qubo with appropriate penalties
 #myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
@@ -158,7 +171,7 @@ solver = "tabu"
 #myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, offset_list, scale_list, bits_no, num_sweeps, num_reads, tabu_timeout, solver, x_var_len)
 
 
-myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver)
+myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2, upper_limit, lower_limit, bits_no, num_sweeps, num_reads, tabu_timeout, solver, adaptive_iter)
 
 #myqubo.qubo_submit(num_sweeps, num_reads, tabu_timeout, solver)
 #myqubo.qubo_submit()
@@ -195,8 +208,8 @@ for j in range(0, transposed_h.shape[0]):       # row
 
 ## RIght now this will break so we're existing early...
 
-print(blob_labels)
-print(computed_labels)
+#print(blob_labels)
+#print(computed_labels)
 computed_labels = np.array(computed_labels)
 
 #print(computed_labels.shape)
@@ -228,6 +241,12 @@ print("Initial Centers: ", blob_centers)
 
 print("Delta1: ", delta1)
 print("Delta2: ", delta2)
+print("num_reads", num_reads)
+print("num_sweeps", num_sweeps)
+print("tabu timeout (seconds): ", tabu_timeout/1000, "sec")
+print("Upper limit: ", upper_limit)
+print("lower limit: ", lower_limit)
+print("adaptive iterations: ", adaptive_iter)
 print("Seed: ", seed)
 print("Clusters (k): ", k)
 print("\n Norm: ", LA.norm(v - np.matmul(W, H)))
