@@ -4,6 +4,8 @@
 
 *** Gaussian Adaptive Exp Completed
 *** Gaussain Adaptive kmeans exp completed
+*** Need to make graphics/charts for adaptive gaussian exp and kmeans exp
+*** Need to add data and graphics to Dissertation doc
 
 
 
