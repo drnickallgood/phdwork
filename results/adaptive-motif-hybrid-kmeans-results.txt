@@ -1,0 +1,143 @@
+20 Samples
+=========
+
+Num Samples:  20
+Num Clusters:  3
+Centroids:  [[ 1.99644566  2.50752425]
+ [-0.07641047 -0.97812905]
+ [-1.02871807  1.03648365]]
+Iterations:  4
+Inertia:  18.344254093320885
+Silhouette Score:  0.4269202071289392
+Homogeneity Score:  0.2957937830475828
+Completeness Score:  1.0000000000000002
+V-measure:  0.45654453188053457
+
+
+
+30 Samples
+===========
+
+Num Samples:  30
+Num Clusters:  3
+Centroids:  [[-1.84751361  1.27104178]
+ [ 1.19081191  1.54935296]
+ [ 0.12154307 -0.73926038]]
+Iterations:  4
+Inertia:  27.45086188312797
+Silhouette Score:  0.49004139992175416
+Homogeneity Score:  0.2750903869507529
+Completeness Score:  1.0
+V-measure:  0.43148374384439236
+
+
+
+
+35 Samples
+===========
+
+Num Samples:  35
+Num Clusters:  3
+Centroids:  [[-1.93313593  1.29103705]
+ [ 0.89153438  1.13794602]
+ [ 0.06635369 -0.84974747]]
+Iterations:  4
+Inertia:  30.34211784273604
+Silhouette Score:  0.48912259377096073
+Homogeneity Score:  0.27532914970967654
+Completeness Score:  0.9999999999999997
+V-measure:  0.4317773960900275
+
+
+
+
+
+40 Samples
+==========
+
+
+Num Samples:  40
+Num Clusters:  3
+Centroids:  [[ 0.05195292 -0.88466135]
+ [-1.93313465  1.2910377 ]
+ [ 1.02215541  0.88701076]]
+Iterations:  5
+Inertia:  36.83455702664964
+Silhouette Score:  0.4668633160599692
+Homogeneity Score:  0.2618788831523402
+Completeness Score:  1.0000000000000004
+V-measure:  0.4150618362011609
+
+
+
+
+45 Samples
+==========
+
+Num Samples:  45
+Num Clusters:  3
+Centroids:  [[ 0.34683114 -0.93340316]
+ [ 2.38766271  2.07245803]
+ [-1.41654885  0.88283124]]
+Iterations:  8
+Inertia:  38.85813502942919
+Silhouette Score:  0.5267717464226854
+Homogeneity Score:  0.21896575901328325
+Completeness Score:  0.9999999999999994
+V-measure:  0.35926482330484744
+
+
+
+
+
+
+50 Samples
+==========
+
+
+Num Samples:  50
+Num Clusters:  3
+Centroids:  [[-1.75984177  0.97679002]
+ [-0.44462597 -0.61322996]
+ [ 1.12512128 -0.53678989]]
+Iterations:  5
+Inertia:  49.98334992159775
+Silhouette Score:  0.38887208299889375
+Homogeneity Score:  0.28038147118897516
+Completeness Score:  0.9744630278203262
+V-measure:  0.435466510113778
+
+
+
+
+100 Samples
+============
+
+
+Num Samples:  100
+Num Clusters:  3
+Centroids:  [[ 0.2800825  -0.80271459]
+ [ 1.45979595  1.78368036]
+ [-1.66605923  0.72424292]]
+Iterations:  15
+Inertia:  80.29299906133181
+Silhouette Score:  0.5180784300616681
+Homogeneity Score:  0.16805627823471644
+Completeness Score:  0.8652371962470476
+V-measure:  0.2814467459294615
+
+
+
+250 Samples
+===========
+
+Num Samples:  250
+Num Clusters:  3
+Centroids:  [[ 0.34301435 -0.89836745]
+ [-1.57680377  0.92116883]
+ [ 2.24571302  1.7729153 ]]
+Iterations:  14
+Inertia:  242.73506371993534
+Silhouette Score:  0.5279750671069717
+Homogeneity Score:  0.13986156820876533
+Completeness Score:  0.76763377053
