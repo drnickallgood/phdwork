@@ -1,10 +1,15 @@
 * Research Notes *
 
+
+
 ** 1/2/2023 **
 
 *** Gaussian Adaptive and Kmeans dissertation documented in dissertation and graphics uploaded
-*** Need to do analysis in dissertation for both adaptive and adaptive kmeans
+*** Adaptive Analysis and 
 *** Need to do MOTIF data for adaptive and adaptive kmeans
+*** Need to do MOTIF Data graphs for adaptive and adaptive kmeans
+*** Need to do MOTIF analysis for adaptive and adaptive k-means
+*** Need to do conclusion
 
 
 ** 12/31/2022 **
