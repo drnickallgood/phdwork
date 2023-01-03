@@ -13,7 +13,7 @@ import ember
 import random
 
 
-num_samples = 250
+num_samples = 250 
 num_clusters = 3 
 rand_seed = 0 
 random.seed(a=0)
@@ -125,7 +125,42 @@ adap_hybrid_250 = np.array([ [3.517, 4.217], [1.940, 2.290], [1.281, 1.281] ])
 
 
 ### Motif Adaptive Formulation ###
+### adaptive motif TABU ###
 
+adap_motif_tabu_20 = np.array([ [-0.269, -0.269], [0.145, 0.052], [0.093, 0.093] ])
+adap_motif_tabu_30 = np.array([ [0.166, 0.166], [-0.177, -0.275], [0.080, 0.080] ])
+adap_motif_tabu_35 = np.array([ [0.072, 0.072], [-0.094, 0.101], [0.218, 0.267] ])
+adap_motif_tabu_40 = np.array([ [-0.138, -0.138], [0.015, 0.015], [0.134, 0.134] ])
+adap_motif_tabu_45 = np.array([ [0.016, -0.032], [-0.035, 0.012], [-0.029, -0.005] ])
+adap_motif_tabu_50 = np.array([ [-0.028, -0.028], [0.010, 0.010], [0.050, 0.050] ])
+adap_motif_tabu_100 = np.array([ [0.007, 0.007], [-0.021, -0.021], [-0.039, -0.088] ])
+adap_motif_tabu_250 = np.array([ [-0.212, -0.212], [0.182, 0.182], [-0.103, -0.035] ])
+
+
+
+### adaptive motif SIM ###
+
+adap_motif_sim_20 = np.array([ [-0.061, -0.061], [-0.139, -0.139], [0.429, 0.429] ])
+adap_motif_sim_30 = np.array([ [0.366, 0.366], [0.108, 0.108], [-0.120, -0.120] ])
+adap_motif_sim_35 = np.array([ [0.115, 0.115], [0.208, 0.208], [0.222, 0.222] ])
+adap_motif_sim_40 = np.array([ [0.301, 0.301], [0.645, 0.645], [-0.106, -0.106] ])
+adap_motif_sim_45 = np.array([ [0.066, 0.066], [-0.017, -0.017], [0.033, 0.033] ])
+adap_motif_sim_50 = np.array([ [0.125, 0.125], [0.060, 0.060], [0.081, 0.081] ])
+adap_motif_sim_100 = np.array([ [0.089, 0.089], [0.038, 0.038], [0.003, 0.003] ])
+adap_motif_sim_250 = np.array([ [0.003, 0.003], [-0.007, -0.007], [0.058, 0.058]])
+
+
+
+### adaptive motif HYBRID ###
+
+adap_motif_hybrid_20 = np.array([ [0.0004, 0.0004], [-0.028, -0.028], [0.016, 0.016] ])
+adap_motif_hybrid_30 = np.array([ [0.013, 0.013], [0.058, 0.058], [-0.012, -0.012] ])
+adap_motif_hybrid_35 = np.array([ [0.023, 0.023], [0.037, 0.037], [0.019, 0.019] ])
+adap_motif_hybrid_40 = np.array([ [-0.005, -0.005], [0.037, 0.037], [0.162, 0.162] ])
+adap_motif_hybrid_45 = np.array([ [0.130, 0.130], [0.470, 0.470], [0.092, 0.092] ])
+adap_motif_hybrid_50 = np.array([ [0.006, 0.006], [-0.024, -0.024], [0.051, 0.051] ])
+adap_motif_hybrid_100 = np.array([ [-0.011, -0.011], [0.183, 0.183], [-0.038, -0.038] ])
+adap_motif_hybrid_250 = np.array([ [0.071, 0.071], [0.031, 0.031], [0.108, 0.108] ])
 
 
 
@@ -136,7 +171,6 @@ X, y = make_blobs(
     cluster_std=1,shuffle=True, random_state=rand_seed
     )
 
-'''
 ## Motif Data Set ##
 
 # Get EMBER vectors for MOTIF dataset
@@ -158,18 +192,17 @@ for i in range(0,num_samples):
 	# get random sample for motif y
     motif_y[i] = ember_y[i]
 
-'''
 
 
 ## Kmeans
 default_km = KMeans(
     n_clusters=num_clusters, 
     n_init=10, max_iter=10000,
-    tol=1e-04, init=adap_hybrid_250
+    tol=1e-04, init=adap_motif_hybrid_250
 )
 
-default_y_km = default_km.fit_predict(X)
-#default_y_km = default_km.fit_predict(motif)
+#default_y_km = default_km.fit_predict(X)
+default_y_km = default_km.fit_predict(motif)
 
 
 default_centers = default_km.cluster_centers_
@@ -177,10 +210,10 @@ default_iterations = default_km.n_iter_
 
 ## for motif we need a matching yin the correct dimension?
 
-default_km_sscore = metrics.silhouette_score(X, default_y_km, metric='euclidean')
-default_km_homog = metrics.homogeneity_score(y, default_y_km)
-default_km_compl = metrics.completeness_score(y, default_y_km)
-default_km_vm = metrics.v_measure_score(y, default_y_km)
+default_km_sscore = metrics.silhouette_score(motif, default_y_km, metric='euclidean')
+default_km_homog = metrics.homogeneity_score(motif_y, default_y_km)
+default_km_compl = metrics.completeness_score(motif_y, default_y_km)
+default_km_vm = metrics.v_measure_score(motif_y, default_y_km)
 
 
 

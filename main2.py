@@ -32,7 +32,7 @@ index = {}
 Q_total = {}
 
 centers = np.array([ [1,6], [2,4], [3,5] ])
-num_samples = 250
+num_samples = 250 
 k = 3
 seed = 0
 
@@ -40,18 +40,18 @@ seed = 0
 
 
 
-'''
+
 # Get EMBER vectors for MOTIF dataset
-#ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
+ember_X, ember_y = read_vectorized_features("/media/data1/malware/MOTIF/dataset/", subset="train")
 
 # Normalize EMBER vectors and apply PCA
-#ember_norm_X = ember_X.copy()
-#ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
+ember_norm_X = ember_X.copy()
+ember_norm_X = make_pipeline(MinMaxScaler(), PCA(n_components=2)).fit_transform(ember_norm_X)
 
-#random.seed(a=0)
+random.seed(a=0)
 
-#motif = np.zeros([num_samples, 2])
-#motif_y = np.zeros([num_samples,])
+motif = np.zeros([num_samples, 2])
+motif_y = np.zeros([num_samples,])
 
 for i in range(0,num_samples):
     #rand_sample = random.randint(0,num_samples)
@@ -61,7 +61,7 @@ for i in range(0,num_samples):
 	# get random sample for motif y
     motif_y[i] = ember_y[i]
 
-'''
+
 
 # Test Data
 V, blob_labels, blob_centers = make_blobs(
@@ -88,7 +88,8 @@ motif50_t = np.transpose(motif50)
 
 
 # Transpose matrix
-v = np.transpose(V)
+#v = np.transpose(V)
+v = np.transpose(motif)
 
 
 # Lower and upper bounds based on highest and lowest values of V
@@ -122,23 +123,23 @@ prec_list = [2, 1, 0]   #-8 to +7
 # Create Qubo Object
 #myqubo = qubo.Qubo(v, k, num_samples, prec_list)
 
-delta1 = 100
-delta2 = 600
+delta1 = 50 
+delta2 = 100
 
 
 #Q_total = myqubo.get_qtotal()
 
 #print(Q_total)
 
-num_sweeps = 1000
-num_reads = 1000
+num_sweeps = 2000
+num_reads = 2000
 
 #tabu_timeout = 1
 #tabu_timeout = 1000 # 1 sec
 #tabu_timeout = 5000 # 5 sec
-#abu_timeout = 10000   # 10 sec
+tabu_timeout = 10000   # 10 sec
 #tabu_timeout = 30000  # 30 sec
-tabu_timeout =  60000  # 1 min
+#tabu_timeout =  60000  # 1 min
 #tabu_timeout = 300000  #ms  #5min
 #tabu_timeout = 600000  #ms  #10min
 #tabu_timeout = 900000  #ms  #15min
@@ -162,7 +163,7 @@ solver = "hybrid"
 # 30 iteerations * 1 min TABU
 # 6 iterations  * 5 min TABU
 # 3 iterations * 10 min tabu
-adaptive_iter = 6
+adaptive_iter = 8  
 
 # Builds the qubo with appropriate penalties
 #myqubo = qubo.QuboA(v, v_dict, x_dict, x_dict_rev, prec_list, k, p, n, delta1, delta2)
@@ -221,13 +222,13 @@ print("Computed Label size", computed_labels.size)
 s_score = metrics.silhouette_score(np.transpose(v), computed_labels, metric='euclidean')
 #print("Silhouette score: ", s_score)
 # Homogeneity
-homogeneity_score = metrics.homogeneity_score(blob_labels, computed_labels)
+homogeneity_score = metrics.homogeneity_score(motif_y, computed_labels) 
 
 # Completeness
-completeness_score =  metrics.completeness_score(blob_labels, computed_labels)
+completeness_score =  metrics.completeness_score(motif_y, computed_labels)
 
 # V-measure
-vmeasure = metrics.v_measure_score(blob_labels, computed_labels)
+vmeasure = metrics.v_measure_score(motif_y, computed_labels)
 
 
 print("Num Samples: ", num_samples)
