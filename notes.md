@@ -1,6 +1,27 @@
 * Research Notes *
 
+** 1/5/2023 **
 
+*** Adaptive k-means analysis completed
+*** Had to re-do the graphs do to them being wrong
+*** Need to start on conclusion (Read R's thesis conclusion)
+*** need to start on presentation
+
+** 1/4/2023 **
+
+*** Tables for adaptive motif kmeans added to dissertation
+*** Need to add graphics for daptive motif kmeans
+*** Need to do analysis for adaptive motif kmeans
+*** Need to start on conclusion...
+*** Need to work/start on presentation
+
+
+** 1/3/2023 **
+
+*** Completed Adaptive MOTIF experiements for both clustering and kmeans
+*** Need to make tables for dissertation
+*** Need to make graphs for dissertation
+*** Need to do analysis for dissertation
 
 ** 1/2/2023 **
 
