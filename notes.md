@@ -1,5 +1,16 @@
 * Research Notes *
 
+** 1/19/2023 **
+
+*** We actually don't need to worry about the TABU graphs, these are because we tried different timeout
+values. 
+
+*** We could merge 30 minute TABU timeout, simulated annealing, and hybrid bQM graphs though...
+
+** Fixed graphs
+
+
+
 ** 1/18/2023 **
 
 *** Section 4.1 need to fix TABU graphs, doesn't have samples but time and x-axis is wrong
@@ -9,6 +20,7 @@
 *** Section 4 need to fix hybrid BQM graphs, make them like the rest 
 
 *** Merge above charts into one like i've done previously...
+
 
 *** Need to review any changes suggested by Dr N and others
 
