@@ -1,5 +1,24 @@
 * Research Notes *
 
+** 1/18/2023 **
+
+*** Section 4.1 need to fix TABU graphs, doesn't have samples but time and x-axis is wrong
+
+*** Section 4 need to fix quantum annealing graphs, make them like the rest
+
+*** Section 4 need to fix hybrid BQM graphs, make them like the rest 
+
+*** Merge above charts into one like i've done previously...
+
+*** Need to review any changes suggested by Dr N and others
+
+*** Once that's done, send to committee via email
+
+
+
+
+
+
 ** 1/5/2023 **
 
 *** Adaptive k-means analysis completed
