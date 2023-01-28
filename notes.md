@@ -1,5 +1,25 @@
 * Research Notes *
 
+
+** 1/28/2023 **
+
+*** Missing 5, 1725 graphics from dissertation for default clustering, need to add
+*** Missing Adaptive clustering images from dissertation FOR MOTIF, need to add
+*** Missing Adaptive clustering results from dissertation for MOTIF, need to add
+
+
+
+** 1/27/2023 **
+
+*** Working on PhD Presentation
+
+
+** 1/26/2023 **
+
+*** Working on PhD presentation
+*** PhD Draft sent to committee
+
+
 ** 1/19/2023 **
 
 *** We actually don't need to worry about the TABU graphs, these are because we tried different timeout
@@ -7,7 +27,9 @@ values.
 
 *** We could merge 30 minute TABU timeout, simulated annealing, and hybrid bQM graphs though...
 
-** Fixed graphs
+*** Fixed graphs
+
+*** Need to start on presentation
 
 
 
