@@ -3,10 +3,9 @@
 
 ** 1/28/2023 **
 
-*** Missing 5, 1725 graphics from dissertation for default clustering, need to add
-*** Missing Adaptive clustering images from dissertation FOR MOTIF, need to add
-*** Missing Adaptive clustering results from dissertation for MOTIF, need to add
-
+*** Added adaptive clustering images and results to dissertation and slides for MOTIF
+*** Added 5 cluster, seed 1725 cluster images to dissertation and slides
+*** Working on conclusion for slides
 
 
 ** 1/27/2023 **
